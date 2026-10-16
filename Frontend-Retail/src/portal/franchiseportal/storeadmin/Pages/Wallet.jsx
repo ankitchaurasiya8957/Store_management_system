@@ -15,7 +15,7 @@ export default function Wallet() {
     if (!user?.userId) return;
     setHistoryLoading(true);
     try {
-      const res = await fetchWithAuth(`${import.meta.env.VITE_API_BASE_URL || `${import.meta.env.VITE_API_BASE_URL}`}/api/procurement/credit-transactions?userId=${user.userId}`);
+      const res = await fetchWithAuth(`${import.meta.env.VITE_API_BASE_URL || ''}/api/procurement/credit-transactions?userId=${user.userId}`);
       const data = await res.json();
       setCreditHistory(Array.isArray(data) ? data : []);
     } catch (err) {
@@ -48,14 +48,14 @@ export default function Wallet() {
     <div className="space-y-6">
       <div>
         <h1 className="text-2xl font-bold text-slate-800">Credit Wallet</h1>
-        <p className="text-slate-500">Manage your B2B prepaid balance for Techhansa orders.</p>
+        <p className="text-slate-500">Manage your B2B prepaid balance for AK Solutions orders.</p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <div className="md:col-span-3 bg-gradient-to-br from-indigo-900 to-indigo-700 rounded-3xl p-8 text-white relative overflow-hidden shadow-lg">
           <div className="absolute top-0 right-0 w-64 h-64 bg-white opacity-5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/4"></div>
           <div className="absolute bottom-0 left-0 w-64 h-64 bg-indigo-500 opacity-20 rounded-full blur-3xl translate-y-1/2 -translate-x-1/4"></div>
-          
+
           <div className="relative z-10 flex flex-col h-full justify-between">
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-8">
               <div>
@@ -73,18 +73,18 @@ export default function Wallet() {
                 </p>
               </div>
             </div>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-6 border-t border-indigo-500/30">
-               <div>
-                  <p className="text-indigo-300 text-xs font-semibold tracking-wider uppercase mb-1 flex items-center gap-1">
-                    <ArrowUpRight size={14} className="text-rose-400" />
-                    Used Credit
-                  </p>
-                  <p className="text-xl font-bold flex items-center">
-                    <IndianRupee size={16} className="mr-1" />
-                    {(metrics.usedCredit || 0).toLocaleString()}
-                  </p>
-               </div>
+              <div>
+                <p className="text-indigo-300 text-xs font-semibold tracking-wider uppercase mb-1 flex items-center gap-1">
+                  <ArrowUpRight size={14} className="text-rose-400" />
+                  Used Credit
+                </p>
+                <p className="text-xl font-bold flex items-center">
+                  <IndianRupee size={16} className="mr-1" />
+                  {(metrics.usedCredit || 0).toLocaleString()}
+                </p>
+              </div>
             </div>
           </div>
         </div>
@@ -95,21 +95,19 @@ export default function Wallet() {
         <div className="flex border-b border-slate-100 px-6">
           <button
             onClick={() => setActiveTab('ledger')}
-            className={`px-4 py-4 text-sm font-semibold border-b-2 transition-colors flex items-center gap-2 ${
-              activeTab === 'ledger'
+            className={`px-4 py-4 text-sm font-semibold border-b-2 transition-colors flex items-center gap-2 ${activeTab === 'ledger'
                 ? 'border-indigo-600 text-indigo-700'
                 : 'border-transparent text-slate-500 hover:text-slate-700 hover:border-slate-300'
-            }`}
+              }`}
           >
             <Receipt size={16} /> Transaction Ledger
           </button>
           <button
             onClick={() => setActiveTab('history')}
-            className={`px-4 py-4 text-sm font-semibold border-b-2 transition-colors flex items-center gap-2 ${
-              activeTab === 'history'
+            className={`px-4 py-4 text-sm font-semibold border-b-2 transition-colors flex items-center gap-2 ${activeTab === 'history'
                 ? 'border-indigo-600 text-indigo-700'
                 : 'border-transparent text-slate-500 hover:text-slate-700 hover:border-slate-300'
-            }`}
+              }`}
           >
             <History size={16} /> Credit History
             {creditHistory.length > 0 && activeTab !== 'history' && (
@@ -169,7 +167,7 @@ export default function Wallet() {
           /* Credit History Tab */
           <div className="p-6">
             <div className="flex items-center justify-between mb-4">
-              <p className="text-sm text-slate-500">All credit limit changes, assignments, and deductions by Techhansa Admin.</p>
+              <p className="text-sm text-slate-500">All credit limit changes, assignments, and deductions by AK Solutions Admin.</p>
               <button
                 onClick={fetchCreditHistory}
                 className="p-2 text-slate-400 hover:text-indigo-600 hover:bg-indigo-50 rounded-lg transition-colors"

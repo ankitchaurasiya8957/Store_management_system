@@ -22,11 +22,11 @@ const AnimatedCounter = ({ end, duration = 2000, suffix = '' }) => {
       },
       { threshold: 0.1 }
     );
-    
+
     if (counterRef.current) {
       observer.observe(counterRef.current);
     }
-    
+
     return () => {
       observer.disconnect();
     };
@@ -38,9 +38,9 @@ const AnimatedCounter = ({ end, duration = 2000, suffix = '' }) => {
     const step = (timestamp) => {
       if (!startTimestamp) startTimestamp = timestamp;
       const progress = Math.min((timestamp - startTimestamp) / duration, 1);
-      const easeOutQuad = progress * (2 - progress); 
+      const easeOutQuad = progress * (2 - progress);
       setCount(Math.floor(easeOutQuad * end));
-      
+
       if (progress < 1) {
         window.requestAnimationFrame(step);
       } else {
@@ -98,13 +98,13 @@ export default function PartnersMain() {
 
   return (
     <div className="w-full min-h-screen bg-[var(--soft-bg)] pb-20">
-      
+
       {/* ================= 1. HERO SECTION ================= */}
       <section className="relative w-full h-[350px] md:h-[310px] flex items-center justify-center overflow-hidden bg-slate-900">
-        <div 
+        <div
           className="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat opacity-60"
-   
-       style={{ backgroundImage: `url(${PartnerEcosystemHero})` }}
+
+          style={{ backgroundImage: `url(${PartnerEcosystemHero})` }}
         >
           <div className="absolute inset-0 bg-gradient-to-b from-slate-900/40 to-slate-900/80"></div>
         </div>
@@ -120,72 +120,72 @@ export default function PartnersMain() {
             Partner <span className="text-transparent bg-clip-text bg-gradient-to-r from-[var(--premium-gold)] to-yellow-300">Ecosystem</span>
           </h1>
           <p className="text-gray-300 text-[16px] md:text-[20px] font-medium max-w-2xl mx-auto">
-            Collaborate, Grow, and Succeed with Techhansa Retail
+            Collaborate, Grow, and Succeed with AK Solutions Retail
           </p>
         </div>
       </section>
 
       {/* ================= 2. CONTENT SECTION ================= */}
       <div className="relative max-w-4xl mx-auto px-6 pt-20 pb-12 text-center z-10" data-aos="fade-up" data-aos-delay="100">
-        
+
         <h2 className="text-3xl md:text-4xl font-extrabold text-[var(--text-dark)] leading-tight mb-6">
           Choose Your Path to <span className="text-[var(--tech-blue)]">Growth</span>
         </h2>
-        
+
         <p className="text-gray-600 text-[16.5px] md:text-[18px] leading-relaxed font-medium mb-6">
-          At Techhansa Retail, we believe in building strong, mutually beneficial relationships. Whether you manufacture world-class hardware, distribute to regional markets, or want to build your own retail business, we have a tailored partnership model for you.
+          At AK Solutions Retail, we believe in building strong, mutually beneficial relationships. Whether you manufacture world-class hardware, distribute to regional markets, or want to build your own retail business, we have a tailored partnership model for you.
         </p>
-        
+
         <div className="w-24 h-1 bg-[var(--premium-gold)] mx-auto rounded-full mt-8"></div>
       </div>
 
       {/* ================= 3. PARTNERSHIP CARDS GRID ================= */}
       <div className="relative max-w-[1300px] mx-auto px-6 pt-8 pb-10 z-10">
-        
+
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 relative z-10">
-          
+
           {partnerCategories.map((partner, index) => (
-            <div 
+            <div
               key={partner.id}
               data-aos="fade-up"
               data-aos-delay={index * 100}
               className="group h-full cursor-pointer block"
             >
-              <Link 
+              <Link
                 to={partner.link}
                 className="bg-white rounded-2xl shadow-sm border border-gray-100 group-hover:shadow-2xl group-hover:-translate-y-2 transition-all duration-300 overflow-hidden flex flex-col h-full"
               >
-              {/* Card Image Container */}
-              <div className="h-56 overflow-hidden relative">
-                 <img 
-                    src={partner.img} 
-                    alt={partner.title} 
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-in-out" 
-                 />
-                 
-                 {/* Standard dark gradient overlay */}
-                 <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent pointer-events-none"></div>
+                {/* Card Image Container */}
+                <div className="h-56 overflow-hidden relative">
+                  <img
+                    src={partner.img}
+                    alt={partner.title}
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-in-out"
+                  />
 
-                 {/* CENTER-OUT SHUTTER EFFECT */}
-                 <div className="absolute inset-0 bg-white/20 scale-x-0 group-hover:scale-x-100 origin-center transition-transform duration-500 ease-in-out pointer-events-none"></div>
-              </div>
-              
-              {/* Card Content Area */}
-              <div className="p-8 relative z-10 bg-white flex flex-col h-full">
-                 <h3 className="text-2xl font-bold text-[var(--premium-gold)] mb-2 tracking-tight group-hover:text-[var(--tech-blue)] transition-colors duration-300">
+                  {/* Standard dark gradient overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent pointer-events-none"></div>
+
+                  {/* CENTER-OUT SHUTTER EFFECT */}
+                  <div className="absolute inset-0 bg-white/20 scale-x-0 group-hover:scale-x-100 origin-center transition-transform duration-500 ease-in-out pointer-events-none"></div>
+                </div>
+
+                {/* Card Content Area */}
+                <div className="p-8 relative z-10 bg-white flex flex-col h-full">
+                  <h3 className="text-2xl font-bold text-[var(--premium-gold)] mb-2 tracking-tight group-hover:text-[var(--tech-blue)] transition-colors duration-300">
                     {partner.title}
-                 </h3>
-                 <p className="text-[var(--tech-blue)] font-semibold text-[15px] italic mb-4">
+                  </h3>
+                  <p className="text-[var(--tech-blue)] font-semibold text-[15px] italic mb-4">
                     {partner.subtitle}
-                 </p>
-                 <p className="text-gray-600 leading-relaxed text-[15px]">
+                  </p>
+                  <p className="text-gray-600 leading-relaxed text-[15px]">
                     {partner.desc}
-                 </p>
-              </div>
+                  </p>
+                </div>
               </Link>
             </div>
           ))}
-          
+
         </div>
       </div>
 
@@ -194,15 +194,15 @@ export default function PartnersMain() {
         {/* Soft Aura Glows */}
         <div className="absolute top-[0%] left-[-10%] w-[600px] h-[600px] bg-[var(--tech-blue)]/5 rounded-full blur-[120px] pointer-events-none"></div>
         <div className="absolute bottom-[0%] right-[-10%] w-[600px] h-[600px] bg-[var(--premium-gold)]/10 rounded-full blur-[120px] pointer-events-none"></div>
-        
+
         <div className="max-w-[1300px] mx-auto px-6 relative z-10">
-          
+
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
-            
+
             {/* Left: Why Our Partnerships Matter */}
             <div className="lg:col-span-7" data-aos="fade-right">
               <h2 className="text-3xl md:text-[2.5rem] font-black text-[#0a294b] mb-10 leading-tight tracking-tight">
-                Why Our Partnerships <br/>
+                Why Our Partnerships <br />
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-[var(--tech-blue)] to-[var(--premium-gold)] drop-shadow-[0_4px_10px_rgba(221,167,60,0.2)]">
                   Truly Matter
                 </span>
@@ -233,30 +233,30 @@ export default function PartnersMain() {
             {/* Right: Partner Network Statistics */}
             <div className="lg:col-span-5 relative" data-aos="fade-left">
               <div className="absolute inset-0 bg-gradient-to-b from-gray-100 to-transparent rounded-[2rem] transform rotate-3 blur-sm opacity-50"></div>
-              
+
               <div className="relative p-10 bg-white border border-gray-100 rounded-[2rem] shadow-[0_20px_50px_rgba(13,56,99,0.08)] overflow-hidden">
                 {/* Glass Shine effect */}
                 <div className="absolute top-0 -left-[100%] h-full w-[150%] z-0 block transform -skew-x-12 bg-gradient-to-r from-transparent via-white/80 to-transparent animate-sweep pointer-events-none"></div>
-                
+
                 <h2 className="text-2xl font-black text-[#0a294b] mb-10 relative z-10 tracking-wide">
                   Network <span className="text-[var(--premium-gold)]">Scale</span>
                 </h2>
-                
+
                 <div className="flex flex-col gap-8 relative z-10">
                   <div className="flex items-center gap-6 group">
                     <h3 className="text-6xl font-black text-transparent bg-clip-text bg-gradient-to-b from-[#0a294b] to-[var(--tech-blue)] drop-shadow-[0_4px_10px_rgba(13,56,99,0.15)]">
                       <AnimatedCounter end={11} suffix="+" />
                     </h3>
-                    <p className="text-[15px] font-bold text-gray-500 group-hover:text-[var(--tech-blue)] transition-colors duration-300 uppercase tracking-widest">Global Tech<br/>Partners</p>
+                    <p className="text-[15px] font-bold text-gray-500 group-hover:text-[var(--tech-blue)] transition-colors duration-300 uppercase tracking-widest">Global Tech<br />Partners</p>
                   </div>
-                  
+
                   <div className="w-full h-px bg-gradient-to-r from-gray-200 via-gray-100 to-transparent"></div>
-                  
+
                   <div className="flex items-center gap-6 group">
                     <h3 className="text-6xl font-black text-transparent bg-clip-text bg-gradient-to-b from-[var(--premium-gold)] to-yellow-600 drop-shadow-[0_4px_10px_rgba(221,167,60,0.2)]">
                       <AnimatedCounter end={100} suffix="%" />
                     </h3>
-                    <p className="text-[15px] font-bold text-gray-500 group-hover:text-[var(--premium-gold)] transition-colors duration-300 uppercase tracking-widest">Genuine<br/>Products</p>
+                    <p className="text-[15px] font-bold text-gray-500 group-hover:text-[var(--premium-gold)] transition-colors duration-300 uppercase tracking-widest">Genuine<br />Products</p>
                   </div>
                 </div>
 
@@ -283,7 +283,7 @@ export default function PartnersMain() {
       {/* ================= 5. INDUSTRIES WE SERVE (LIGHT MARQUEE) ================= */}
       <section className="relative w-full py-24 bg-gray-50/50 overflow-hidden text-[#0a294b] border-t border-gray-100">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-[200px] bg-[var(--premium-gold)]/5 rounded-[100%] blur-[120px] pointer-events-none"></div>
-        
+
         <div className="max-w-[1300px] mx-auto px-6 relative z-10 text-center mb-16">
           <div data-aos="fade-up">
             <h2 className="text-sm font-bold tracking-[0.3em] text-[var(--tech-blue)] uppercase mb-4">Empowering</h2>
@@ -314,7 +314,7 @@ export default function PartnersMain() {
         `}</style>
 
         <div className="relative w-full overflow-hidden flex z-10">
-          
+
           {/* Gradient Masks for smooth fading edges */}
           <div className="absolute top-0 left-0 w-32 h-full bg-gradient-to-r from-gray-50/50 to-transparent z-20 pointer-events-none"></div>
           <div className="absolute top-0 right-0 w-32 h-full bg-gradient-to-l from-gray-50/50 to-transparent z-20 pointer-events-none"></div>
@@ -334,8 +334,8 @@ export default function PartnersMain() {
                   "IT & Software",
                   "System Integrators"
                 ].map((industry, idx) => (
-                  <div 
-                    key={idx} 
+                  <div
+                    key={idx}
                     className="group relative px-8 py-5 bg-white border border-gray-200 hover:border-[var(--tech-blue)]/50 rounded-2xl shadow-[0_4px_20px_rgba(0,0,0,0.03)] transition-all duration-500 cursor-pointer overflow-hidden hover:shadow-[0_15px_30px_rgba(13,56,99,0.1)] hover:-translate-y-1"
                   >
                     {/* Inner glowing hover effect */}

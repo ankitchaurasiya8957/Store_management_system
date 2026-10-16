@@ -129,7 +129,7 @@ export default function Quotations() {
 
   const quotationItems = rawItems.map(p => {
     let unitPrice = p.unitPrice ?? p.price;
-    
+
     if (unitPrice === undefined || unitPrice === 0 || unitPrice == null) {
       if (rawItems.length === 1 && fallbackTotalAmount > 0) {
         // If we only have the fallback total, assume it is GST inclusive
@@ -138,7 +138,7 @@ export default function Quotations() {
         unitPrice = 0;
       }
     }
-    
+
     const qty = p.quantity || 1;
     const baseAmt = unitPrice * qty;
     const gstAmt = baseAmt * gstRateDecimal;
@@ -147,7 +147,7 @@ export default function Quotations() {
     return { ...p, unitPrice, totalAmount, gstAmt, baseAmt };
   });
 
-  const displayTotalAmount = quotationItems.length > 0 
+  const displayTotalAmount = quotationItems.length > 0
     ? quotationItems.reduce((sum, item) => sum + (item.totalAmount || 0), 0)
     : (fallbackTotalAmount * gstMultiplier);
 
@@ -205,7 +205,7 @@ export default function Quotations() {
                   </button>
                 </div>
               </div>
-              <h3 className="text-base font-semibold text-slate-900 mb-2">{qt.vendorName || (qt.vendor === 'TBD' ? 'Techhansa Retail' : qt.vendor)}</h3>
+              <h3 className="text-base font-semibold text-slate-900 mb-2">{qt.vendorName || (qt.vendor === 'TBD' ? 'AK Solutions Retail' : qt.vendor)}</h3>
               <div className="flex flex-wrap gap-x-6 gap-y-2 text-sm text-slate-500">
                 <div className="flex items-center gap-1.5">
                   <span className="text-slate-400 font-medium">Value:</span>
@@ -255,7 +255,7 @@ export default function Quotations() {
               <div className="grid grid-cols-2 gap-6 mb-8">
                 <div>
                   <p className="text-sm font-medium text-slate-500 mb-1">Vendor</p>
-                  <p className="text-slate-900 font-semibold">{selectedQuotation.vendorName || (selectedQuotation.vendor === 'TBD' ? 'Techhansa Retail' : selectedQuotation.vendor) || 'Techhansa Retail'}</p>
+                  <p className="text-slate-900 font-semibold">{selectedQuotation.vendorName || (selectedQuotation.vendor === 'TBD' ? 'AK Solutions Retail' : selectedQuotation.vendor) || 'AK Solutions Retail'}</p>
                 </div>
                 <div>
                   <p className="text-sm font-medium text-slate-500 mb-1">Total Amount</p>
@@ -377,7 +377,7 @@ export default function Quotations() {
               <div>
                 <label className="block text-sm font-semibold text-slate-700 mb-2">Select Payment Method</label>
                 <div className="grid grid-cols-1 gap-2">
-                  <button 
+                  <button
                     onClick={() => setPaymentMethod('Credit Lines')}
                     className={`p-2.5 border rounded-xl text-left transition-all flex items-center justify-between ${paymentMethod === 'Credit Lines' ? 'border-blue-500 bg-blue-50' : 'border-slate-200 hover:border-slate-300'}`}
                   >
@@ -389,7 +389,7 @@ export default function Quotations() {
                       {paymentMethod === 'Credit Lines' && <div className="w-2 h-2 rounded-full bg-blue-500" />}
                     </div>
                   </button>
-                  <button 
+                  <button
                     onClick={() => setPaymentMethod('NEFT')}
                     className={`p-2.5 border rounded-xl text-left transition-all flex items-center justify-between ${paymentMethod === 'NEFT' ? 'border-blue-500 bg-blue-50' : 'border-slate-200 hover:border-slate-300'}`}
                   >
@@ -401,7 +401,7 @@ export default function Quotations() {
                       {paymentMethod === 'NEFT' && <div className="w-2 h-2 rounded-full bg-blue-500" />}
                     </div>
                   </button>
-                  <button 
+                  <button
                     onClick={() => setPaymentMethod('UPI')}
                     className={`p-2.5 border rounded-xl text-left transition-all flex items-center justify-between ${paymentMethod === 'UPI' ? 'border-blue-500 bg-blue-50' : 'border-slate-200 hover:border-slate-300'}`}
                   >
@@ -420,9 +420,9 @@ export default function Quotations() {
                 <div className="bg-slate-50 p-3 rounded-xl border border-slate-200 text-center">
                   <p className="text-xs font-medium text-slate-700 mb-1.5">Scan QR Code</p>
                   <div className="w-24 h-24 bg-white border border-slate-200 rounded-lg mx-auto flex items-center justify-center p-1.5 mb-1.5">
-                    <img src={`https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=upi://pay?pa=Techhansa@bank&pn=Techhansa&am=${displayTotalAmount}`} alt="UPI QR" className="w-full h-full object-contain" />
+                    <img src={`https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=upi://pay?pa=AK Solutions@bank&pn=AK Solutions&am=${displayTotalAmount}`} alt="UPI QR" className="w-full h-full object-contain" />
                   </div>
-                  <p className="text-[10px] text-slate-500 font-mono">Techhansa@bank</p>
+                  <p className="text-[10px] text-slate-500 font-mono">AK Solutions@bank</p>
                 </div>
               )}
 
@@ -432,7 +432,7 @@ export default function Quotations() {
                   <div className="grid grid-cols-[auto_1fr] gap-x-3 gap-y-1 mt-1.5">
                     <span className="text-slate-500">Bank:</span><span className="font-semibold text-slate-900">{companySettings?.bankDetails?.bankName || 'HDFC Bank'}</span>
                     <span className="text-slate-500">Branch:</span><span className="font-semibold text-slate-900">{companySettings?.bankDetails?.branchName || 'N/A'}</span>
-                    <span className="text-slate-500">A/C Name:</span><span className="font-semibold text-slate-900">{companySettings?.bankDetails?.accountHolderName || 'Techhansa Retail'}</span>
+                    <span className="text-slate-500">A/C Name:</span><span className="font-semibold text-slate-900">{companySettings?.bankDetails?.accountHolderName || 'AK Solutions Retail'}</span>
                     <span className="text-slate-500">A/C No:</span><span className="font-semibold text-slate-900 font-mono">{companySettings?.bankDetails?.accountNo || '50200012345678'}</span>
                     <span className="text-slate-500">IFSC:</span><span className="font-semibold text-slate-900 font-mono">{companySettings?.bankDetails?.ifscCode || 'HDFC0001234'}</span>
                   </div>
@@ -457,7 +457,7 @@ export default function Quotations() {
               <button onClick={() => setIsPaymentModalOpen(false)} className="px-5 py-2 text-sm bg-white border border-slate-200 text-slate-700 font-medium rounded-lg hover:bg-slate-50 transition-colors">
                 Cancel
               </button>
-              <button 
+              <button
                 onClick={submitPayment}
                 disabled={isPaying || !paymentMethod}
                 className="px-5 py-2 text-sm bg-blue-600 hover:bg-blue-700 disabled:bg-blue-300 text-white font-medium rounded-lg transition-colors flex items-center gap-2"

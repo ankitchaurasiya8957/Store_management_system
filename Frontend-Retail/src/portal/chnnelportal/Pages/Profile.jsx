@@ -7,11 +7,11 @@ export default function Profile() {
   const { user, updateUser } = useContext(AuthContext) || { user: null };
   const [isEditing, setIsEditing] = useState(false);
   const [profilePhoto, setProfilePhoto] = useState(user?.profilePhoto || null);
-  
+
   const [formData, setFormData] = useState({
     name: user?.name || 'John Doe',
     email: user?.email || 'admin@partner.com',
-    companyName: user?.companyName || 'Techhansa Retail Pvt Ltd',
+    companyName: user?.companyName || 'AK Solutions Retail Pvt Ltd',
     phone: user?.phone || '+91 98765 43210',
     address: user?.address || '123 Business Avenue, Tech Park, Bangalore 560001'
   });
@@ -21,7 +21,7 @@ export default function Profile() {
       setFormData({
         name: user.name || 'John Doe',
         email: user.email || 'admin@partner.com',
-        companyName: user.companyName || 'Techhansa Retail Pvt Ltd',
+        companyName: user.companyName || 'AK Solutions Retail Pvt Ltd',
         phone: user.phone || '+91 98765 43210',
         address: user.address || '123 Business Avenue, Tech Park, Bangalore 560001'
       });
@@ -62,7 +62,7 @@ export default function Profile() {
     setFormData({
       name: user?.name || 'John Doe',
       email: user?.email || 'admin@partner.com',
-      companyName: user?.companyName || 'Techhansa Retail Pvt Ltd',
+      companyName: user?.companyName || 'AK Solutions Retail Pvt Ltd',
       phone: user?.phone || '+91 98765 43210',
       address: user?.address || '123 Business Avenue, Tech Park, Bangalore 560001'
     });
@@ -76,7 +76,7 @@ export default function Profile() {
           <h1 className="text-2xl font-bold text-gray-900 tracking-tight">Profile Settings</h1>
           <p className="text-gray-500 text-sm mt-1">Manage your account and company details.</p>
         </div>
-        
+
         {isEditing ? (
           <div className="flex items-center gap-3">
             <button onClick={handleCancel} className="flex items-center gap-2 px-4 py-2 bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 rounded-lg font-medium transition-colors">
@@ -104,27 +104,27 @@ export default function Profile() {
                   <User className="w-10 h-10" />
                 )}
               </div>
-              <button 
+              <button
                 onClick={() => fileInputRef.current?.click()}
                 className="absolute bottom-0 right-0 p-1.5 bg-blue-600 text-white rounded-full hover:bg-blue-700 shadow-sm transition-colors"
                 title="Change Photo"
               >
                 <Camera className="w-4 h-4" />
               </button>
-              <input 
-                type="file" 
-                ref={fileInputRef} 
-                onChange={handlePhotoUpload} 
-                accept="image/*" 
-                className="hidden" 
+              <input
+                type="file"
+                ref={fileInputRef}
+                onChange={handlePhotoUpload}
+                accept="image/*"
+                className="hidden"
               />
             </div>
-            
+
             {isEditing ? (
-              <input 
-                type="text" 
+              <input
+                type="text"
                 name="name"
-                value={formData.name} 
+                value={formData.name}
                 onChange={handleChange}
                 className="text-center font-bold text-slate-900 border-b border-slate-300 focus:border-blue-500 focus:outline-none bg-transparent w-full mb-2 pb-1"
                 placeholder="Full Name"
@@ -134,10 +134,10 @@ export default function Profile() {
             )}
 
             {isEditing ? (
-              <input 
-                type="email" 
+              <input
+                type="email"
                 name="email"
-                value={formData.email} 
+                value={formData.email}
                 onChange={handleChange}
                 className="text-center text-sm text-slate-500 border-b border-slate-300 focus:border-blue-500 focus:outline-none bg-transparent w-full mb-4 pb-1"
                 placeholder="Email Address"
@@ -161,8 +161,8 @@ export default function Profile() {
                 <div className="w-full">
                   <p className="text-sm font-medium text-slate-700 mb-1">Company Name</p>
                   {isEditing ? (
-                    <input 
-                      type="text" 
+                    <input
+                      type="text"
                       name="companyName"
                       value={formData.companyName}
                       onChange={handleChange}
@@ -178,7 +178,7 @@ export default function Profile() {
                 <div className="w-full">
                   <p className="text-sm font-medium text-slate-700 mb-1">Registered Address</p>
                   {isEditing ? (
-                    <textarea 
+                    <textarea
                       name="address"
                       value={formData.address}
                       onChange={handleChange}
@@ -201,8 +201,8 @@ export default function Profile() {
                 <div className="w-full">
                   <p className="text-sm font-medium text-slate-700 mb-1">Primary Email</p>
                   {isEditing ? (
-                    <input 
-                      type="email" 
+                    <input
+                      type="email"
                       name="email"
                       value={formData.email}
                       onChange={handleChange}
@@ -218,8 +218,8 @@ export default function Profile() {
                 <div className="w-full">
                   <p className="text-sm font-medium text-slate-700 mb-1">Phone Number</p>
                   {isEditing ? (
-                    <input 
-                      type="tel" 
+                    <input
+                      type="tel"
                       name="phone"
                       value={formData.phone}
                       onChange={handleChange}

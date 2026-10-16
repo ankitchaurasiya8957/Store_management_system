@@ -75,19 +75,19 @@ export default function OemPartner() {
     },
     {
       name: 'Logitech',
-      logoSrc: LogitechLogo, 
+      logoSrc: LogitechLogo,
       tagline: 'Productivity Without Limits',
       desc: 'Logitech designs premium peripherals and collaboration devices.'
     },
     {
       name: 'Intel',
-      logoSrc: IntelLogo, 
+      logoSrc: IntelLogo,
       tagline: 'The Power Behind Modern Computing',
       desc: 'Intel processors deliver exceptional processing performance and enterprise-grade reliability.'
     },
     {
       name: 'MSI',
-      logoSrc: MsiLogo, 
+      logoSrc: MsiLogo,
       tagline: 'High-Performance Computing',
       desc: 'MSI is recognized for premium workstations, gaming systems, and business laptops.'
     },
@@ -111,10 +111,10 @@ export default function OemPartner() {
 
   return (
     <div className="w-full min-h-screen bg-white">
-      
+
       {/* ================= 1. HERO SECTION ================= */}
       <section className="relative w-full h-[250px] md:h-[300px] flex items-center justify-center overflow-hidden bg-slate-900">
-        <div 
+        <div
           className="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat"
           style={{ backgroundImage: `url(${OEMHero})` }}
         >
@@ -132,12 +132,12 @@ export default function OemPartner() {
 
       {/* ================= 2. CONTENT & VALUE SECTION ================= */}
       <div className="relative max-w-[1300px] mx-auto px-6 pt-20 lg:pt-28 pb-10 overflow-hidden">
-        
+
         {/* Subtle Background Glow */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] bg-[var(--tech-blue)]/5 rounded-[100%] blur-[80px] pointer-events-none z-0"></div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center relative z-10">
-          
+
           {/* Left Side: Bold Statement */}
           <div className="lg:col-span-5 text-center lg:text-left" data-aos="fade-right">
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[var(--soft-bg)] border border-gray-200 mb-6">
@@ -147,7 +147,7 @@ export default function OemPartner() {
               </span>
               <span className="text-[12px] font-bold text-[var(--tech-blue)] uppercase tracking-widest">The OEM Advantage</span>
             </div>
-            
+
             <h2 className="text-3xl md:text-4xl lg:text-[2.75rem] font-extrabold text-[var(--text-dark)] leading-tight mb-6">
               Authentic Hardware for <span className="text-transparent bg-clip-text bg-gradient-to-r from-[var(--tech-blue)] to-[#0a294b]">Modern Enterprises</span>
             </h2>
@@ -157,7 +157,7 @@ export default function OemPartner() {
           {/* Right Side: Description */}
           <div className="lg:col-span-7 flex flex-col justify-center" data-aos="fade-left" data-aos-delay="100">
             <p className="text-gray-600 text-[16.5px] md:text-[18px] leading-relaxed font-medium mb-6">
-              Techhansa Retail partners with globally recognized Original Equipment Manufacturers (OEMs) to deliver genuine enterprise IT hardware backed by official manufacturer warranties, cutting-edge innovation, and world-class reliability.
+              AK Solutions Retail partners with globally recognized Original Equipment Manufacturers (OEMs) to deliver genuine enterprise IT hardware backed by official manufacturer warranties, cutting-edge innovation, and world-class reliability.
             </p>
             <div className="relative pl-6 border-l-4 border-[var(--premium-gold)] bg-gray-50/50 p-4 rounded-r-xl">
               <p className="text-gray-500 text-[15.5px] md:text-[16.5px] leading-relaxed">
@@ -169,7 +169,7 @@ export default function OemPartner() {
 
         {/* 3 Trust Badges / Highlights */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-6 mt-16 relative z-10">
-          
+
           {/* Badge 1 */}
           <div data-aos="fade-up" data-aos-delay="0" className="group flex items-center gap-4 p-5 rounded-2xl bg-white border border-gray-100 shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:border-[var(--tech-blue)]/30 hover:shadow-[0_10px_30px_rgba(13,56,99,0.08)] transition-all duration-300">
             <div className="w-12 h-12 rounded-full bg-[var(--soft-bg)] text-[var(--tech-blue)] group-hover:bg-[var(--tech-blue)] group-hover:text-white transition-colors duration-300 flex items-center justify-center flex-shrink-0">
@@ -214,7 +214,7 @@ export default function OemPartner() {
 
       {/* ================= 3. 3D CAROUSEL SECTION ================= */}
       <section className="relative w-full pt-8 pb-20 bg-[var(--soft-bg)] overflow-hidden">
-        
+
         {/* --- In-built CSS for 3D Carousel Animation --- */}
         <style>{`
           @keyframes rotate-carousel {
@@ -239,22 +239,22 @@ export default function OemPartner() {
         `}</style>
 
         {/* BACKGROUND DECORATION */}
-        <div className="absolute inset-0 z-0 opacity-50" 
-             style={{ backgroundImage: 'radial-gradient(circle at center, #cbd5e1 1px, transparent 1px)', backgroundSize: '30px 30px' }}>
+        <div className="absolute inset-0 z-0 opacity-50"
+          style={{ backgroundImage: 'radial-gradient(circle at center, #cbd5e1 1px, transparent 1px)', backgroundSize: '30px 30px' }}>
         </div>
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] bg-white rounded-full mix-blend-overlay filter blur-[100px] opacity-80 pointer-events-none z-0"></div>
 
         {/* 3D CAROUSEL CONTAINER with AOS fade-up */}
         <div data-aos="fade-up" data-aos-delay="100" className="relative w-full h-[320px] md:h-[450px] flex justify-center items-center transform scale-[0.6] sm:scale-75 md:scale-100 z-10">
-          
+
           <div className="relative w-[240px] h-[300px] carousel-3d-wrapper">
             <div className="absolute inset-0 carousel-track">
-              
+
               {oemBrands.map((brand, index) => {
-                const angle = (360 / oemBrands.length) * index; 
-                
+                const angle = (360 / oemBrands.length) * index;
+
                 return (
-                  <div 
+                  <div
                     key={index}
                     className="carousel-card absolute inset-0"
                     style={{
@@ -263,19 +263,19 @@ export default function OemPartner() {
                   >
                     <div className="group w-full h-full cursor-pointer">
                       <div className="w-full h-full bg-white/80 backdrop-blur-xl rounded-2xl shadow-[0_8px_30px_rgba(13,56,99,0.08)] border border-white/60 flex flex-col items-center justify-center p-8 overflow-hidden transition-all duration-500 group-hover:shadow-[0_0_40px_rgba(221,167,60,0.15)] group-hover:border-[var(--premium-gold)]/40 group-hover:-translate-y-2 relative">
-                    
-                    {/* Subtle Inner Glow on Hover */}
-                    <div className="absolute inset-0 bg-gradient-to-b from-transparent to-[var(--premium-gold)]/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
 
-                    {/* FULL COLOR LOGO */}
-                    <img
-                      src={brand.logoSrc}
-                      alt={brand.name}
-                      className="w-full h-full object-contain relative z-10 p-2 drop-shadow-sm transition-all duration-500 ease-out group-hover:scale-110 group-hover:drop-shadow-2xl"
-                    />
-                    
-                    {/* Glowing Bottom Line Effect */}
-                    <div className="absolute bottom-0 left-0 w-full h-1.5 bg-gray-200/50 group-hover:bg-[var(--premium-gold)] transition-colors duration-500 shadow-[0_-2px_15px_rgba(221,167,60,0.6)] opacity-0 group-hover:opacity-100"></div>
+                        {/* Subtle Inner Glow on Hover */}
+                        <div className="absolute inset-0 bg-gradient-to-b from-transparent to-[var(--premium-gold)]/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+
+                        {/* FULL COLOR LOGO */}
+                        <img
+                          src={brand.logoSrc}
+                          alt={brand.name}
+                          className="w-full h-full object-contain relative z-10 p-2 drop-shadow-sm transition-all duration-500 ease-out group-hover:scale-110 group-hover:drop-shadow-2xl"
+                        />
+
+                        {/* Glowing Bottom Line Effect */}
+                        <div className="absolute bottom-0 left-0 w-full h-1.5 bg-gray-200/50 group-hover:bg-[var(--premium-gold)] transition-colors duration-500 shadow-[0_-2px_15px_rgba(221,167,60,0.6)] opacity-0 group-hover:opacity-100"></div>
                       </div>
                     </div>
                   </div>
@@ -283,7 +283,7 @@ export default function OemPartner() {
               })}
 
             </div>
-            
+
             {/* Virtual Floor Reflection */}
             <div className="absolute -bottom-24 left-1/2 -translate-x-1/2 w-[700px] h-[100px] bg-[var(--tech-blue)]/5 rounded-[100%] blur-2xl transform rotateX(60deg) pointer-events-none"></div>
 
@@ -294,12 +294,12 @@ export default function OemPartner() {
 
       {/* ================= 4. DETAILED PARTNERS SECTION ================= */}
       <section className="relative w-full py-24 bg-white overflow-hidden z-10">
-        
+
         {/* Subtle Background Glow */}
         <div className="absolute bottom-0 right-0 w-[600px] h-[600px] bg-[var(--tech-blue)]/5 rounded-full blur-[120px] pointer-events-none z-0"></div>
 
         <div className="max-w-[1300px] mx-auto px-6 relative z-10">
-          
+
           {/* Header */}
           <div className="text-center max-w-4xl mx-auto mb-16 md:mb-20" data-aos="fade-up">
             <h2 className="text-4xl md:text-[2.75rem] font-extrabold text-[var(--text-dark)] leading-tight mb-4">
@@ -316,27 +316,27 @@ export default function OemPartner() {
           {/* Partners Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {partnerDetails.map((partner, index) => (
-              <div 
-                key={index} 
-                data-aos="fade-up" 
+              <div
+                key={index}
+                data-aos="fade-up"
                 data-aos-delay={(index % 3) * 100}
                 className="group h-full perspective-1000"
               >
                 <div className="relative bg-white rounded-2xl p-8 border border-gray-100 shadow-[0_4px_20px_rgba(0,0,0,0.03)] group-hover:shadow-[0_20px_40px_-10px_rgba(13,56,99,0.12)] transition-all duration-700 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] group-hover:-translate-y-2 overflow-hidden flex flex-col h-full transform-gpu">
-                  
+
                   {/* Subtle Inner Glow */}
                   <div className="absolute inset-0 bg-gradient-to-br from-[var(--tech-blue)]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none z-0"></div>
-                  
+
                   {/* Glass Shine */}
                   <div className="absolute top-0 -left-[100%] h-full w-[150%] z-20 block transform -skew-x-12 bg-gradient-to-r from-transparent via-white/40 to-transparent group-hover:left-[200%] transition-all duration-1000 ease-in-out pointer-events-none"></div>
 
                   {/* Logo Container */}
                   <div className="h-16 mb-8 flex items-center justify-start relative z-10">
                     {partner.logoSrc ? (
-                      <img 
-                        src={partner.logoSrc} 
-                        alt={partner.name} 
-                        className="h-full max-w-[140px] object-contain filter grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500 mix-blend-multiply origin-left group-hover:scale-105" 
+                      <img
+                        src={partner.logoSrc}
+                        alt={partner.name}
+                        className="h-full max-w-[140px] object-contain filter grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500 mix-blend-multiply origin-left group-hover:scale-105"
                       />
                     ) : (
                       <span className="text-3xl font-black text-gray-300 group-hover:text-[var(--tech-blue)] transition-colors duration-500 tracking-tight">
@@ -354,10 +354,10 @@ export default function OemPartner() {
                       {partner.desc}
                     </p>
                   </div>
-                  
+
                   {/* Animated Bottom Line */}
                   <div className="absolute bottom-0 left-0 w-full h-1.5 bg-gradient-to-r from-[var(--tech-blue)] to-[var(--premium-gold)] transform scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-700 ease-[cubic-bezier(0.25,0.46,0.45,0.94)]"></div>
-                  
+
                 </div>
               </div>
             ))}

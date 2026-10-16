@@ -72,7 +72,7 @@ export default function InvoiceActions({ invoice, storeData, invoiceRef, company
       if (!dataUrl) return;
 
       // Build a formatted text summary of the invoice
-      const storeName = storeData?.storeName || 'Techhansa Retail';
+      const storeName = storeData?.storeName || 'AK Solutions Retail';
       const invoiceDate = new Date(invoice.createdAt).toLocaleDateString('en-GB');
       const total = invoice.amount || 0;
       const subtotal = invoice.subtotalAmount || 0;
@@ -109,7 +109,7 @@ _Thank you for your purchase!_`;
           const fetchRes = await fetch(dataUrl);
           const blob = await fetchRes.blob();
           const file = new File([blob], `${invoice.invoiceNumber}.png`, { type: 'image/png' });
-          
+
           const shareData = {
             title: `Invoice ${invoice.invoiceNumber}`,
             text: message,
@@ -155,7 +155,7 @@ _Thank you for your purchase!_`;
     const phone = invoice.customerPhone?.replace(/[^0-9]/g, '') || '';
     const fullPhone = phone.startsWith('91') ? phone : `91${phone}`;
     const encodedMessage = encodeURIComponent(message);
-    
+
     // Small delay so the download starts first
     setTimeout(() => {
       window.open(`https://wa.me/${fullPhone}?text=${encodedMessage}`, '_blank');
@@ -167,7 +167,7 @@ _Thank you for your purchase!_`;
   return (
     <>
       {/* Download as Image */}
-      <button 
+      <button
         onClick={handleDownload}
         disabled={isGenerating}
         className="flex items-center justify-center gap-2 px-4 py-2.5 bg-white border border-slate-200 text-slate-700 font-medium rounded-xl hover:bg-slate-100 transition-all shadow-sm disabled:opacity-50"
@@ -177,7 +177,7 @@ _Thank you for your purchase!_`;
       </button>
 
       {/* Share on WhatsApp */}
-      <button 
+      <button
         onClick={handleWhatsAppShare}
         disabled={isGenerating}
         className="flex items-center justify-center gap-2 px-4 py-2.5 bg-[#25D366] text-white font-medium rounded-xl hover:bg-[#1fb855] transition-all shadow-sm shadow-green-200 disabled:opacity-50"
@@ -191,7 +191,7 @@ _Thank you for your purchase!_`;
       </button>
 
       {/* Print Invoice */}
-      <button 
+      <button
         onClick={handlePrint}
         disabled={isGenerating}
         className="flex items-center justify-center gap-2 px-4 py-2.5 bg-indigo-600 text-white font-medium rounded-xl hover:bg-indigo-700 transition-all shadow-md shadow-indigo-200 disabled:opacity-50"

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link } from 'react-router-dom'; 
+import { Link } from 'react-router-dom';
 import logo from "../../assets/logo.png";
 
 /* ---------- Inline icons (zero extra dependency) ---------- */
@@ -39,37 +39,37 @@ const CircuitPattern = ({ id, color, opacity }) => (
 
 /* ---------- Data ---------- */
 const shopLinks = [
-  { name: "Bulk Catalog", path: "/#bulkcatalog" },        
-  { name: "Brands We Deal In", path: "/#brands" }, 
-  { name: "Why Buy in Bulk", path: "/about#BuyBulk" }, 
- 
+  { name: "Bulk Catalog", path: "/#bulkcatalog" },
+  { name: "Brands We Deal In", path: "/#brands" },
+  { name: "Why Buy in Bulk", path: "/about#BuyBulk" },
+
 ];
 const companyLinks = [
-  { name: "Home", path: "/" }, 
-  { name: "About Us", path: "/about" }, 
-  { name: "Partners", path: "/partners" }, 
-  { name: "Investors", path: "/investors" }, 
+  { name: "Home", path: "/" },
+  { name: "About Us", path: "/about" },
+  { name: "Partners", path: "/partners" },
+  { name: "Investors", path: "/investors" },
   { name: "Contact Us", path: "/contact" }
 ];
 
 const franchiseLinks = [
-  { name: "Apply for Franchise", path: "/partnerpage?franchise" }, 
+  { name: "Apply for Franchise", path: "/partnerpage?franchise" },
   { name: "Franchise / Partner Login", path: "/login" },
-  { name: "Store Setup Support", path: "/contact#contactform" }, 
- 
+  { name: "Store Setup Support", path: "/contact#contactform" },
+
 ];
 
 /* ================= EXACT LINK COLUMN MATCHING YOUR OLD FOOTER.JSX ================= */
 const LinkColumn = ({ title, links, customMargin = "ml-10" }) => (
   <div>
-    <h3 className={`text-[17px] font-bold text-[#113a71] mb-5 tracking-wide ${customMargin}`}>
+    <h3 className={`text-[16px] font-bold text-white mb-5 tracking-wide ${customMargin}`}>
       {title}
     </h3>
     <ul className={`space-y-3 ${customMargin}`}>
       {links.map((item, index) => (
         <li key={index} className="flex items-start group">
-          <span className="text-gray-400 mr-2 text-[10px] mt-1.5 group-hover:text-[var(--premium-gold)] transition-colors">●</span>
-          <Link to={item.path} className="text-[14px] text-gray-600 group-hover:text-[var(--premium-gold)] transition-colors duration-200">
+          <span className="text-[#00D2FF] mr-2 text-[10px] mt-1.5 group-hover:text-[#FF007A] transition-colors">●</span>
+          <Link to={item.path} className="text-[14px] text-slate-400 group-hover:text-[#00D2FF] transition-colors duration-200">
             {item.name}
           </Link>
         </li>
@@ -90,9 +90,9 @@ export default function Footer() {
   const scrollTop = () => window.scrollTo({ top: 0, behavior: "smooth" });
 
   return (
-    <footer className="w-full flex flex-col relative overflow-hidden" style={{ fontFamily: "Inter, sans-serif" }}>
+    <footer className="w-full flex flex-col relative overflow-hidden bg-[#05070D]" style={{ fontFamily: "Inter, sans-serif" }}>
       <style>{`
-        @keyframes techhansa-pulse-move {
+        @keyframes AK-pulse-move {
           0% { left: -2%; opacity: 0; }
           12% { opacity: 1; }
           88% { opacity: 1; }
@@ -102,34 +102,33 @@ export default function Footer() {
 
       {/* ================= TOP CTA BANNER ================= */}
       <div
-        className="relative py-6 md:py-8 overflow-hidden" 
-        style={{ background: "radial-gradient(ellipse at top left,#123a66 0%,#0b1f3a 55%,#081527 100%)" }}
+        className="relative py-8 md:py-10 overflow-hidden bg-gradient-to-r from-[#07090e] via-[#0C101A] to-[#101626] border-t border-white/[0.08]"
       >
-        <CircuitPattern id="circuit-banner" color="#ffffff" opacity={0.09} />
-        <div className="absolute -top-24 -right-24 w-72 h-72 rounded-full blur-3xl" style={{ background: "rgba(42,133,209,0.3)" }} />
-        <div className="absolute -bottom-24 left-1/3 w-72 h-72 rounded-full blur-3xl" style={{ background: "rgba(221,167,60,0.18)" }} />
+        <CircuitPattern id="circuit-banner" color="#00D2FF" opacity={0.06} />
+        <div className="absolute -top-24 -right-24 w-80 h-80 rounded-full blur-3xl pointer-events-none" style={{ background: "rgba(0, 210, 255, 0.15)" }} />
+        <div className="absolute -bottom-24 left-1/3 w-80 h-80 rounded-full blur-3xl pointer-events-none" style={{ background: "rgba(255, 0, 122, 0.12)" }} />
 
         {/* Strict padding added here to match old layout edge-to-edge */}
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col lg:flex-row items-center justify-between gap-6 z-10">
           <div>
-            <p className="text-[var(--premium-gold)] text-sm font-semibold tracking-[0.2em] uppercase mb-1">
+            <p className="text-[#00D2FF] text-xs font-bold tracking-[0.25em] uppercase mb-1">
               Pan-India IT hardware network
             </p>
-            <h2 className="text-white text-2xl md:text-4xl font-bold leading-tight drop-shadow-[0_2px_10px_rgba(0,0,0,0.35)]">
-              Your Growth. Our Hardware.
+            <h2 className="text-white text-2xl md:text-4xl font-extrabold leading-tight drop-shadow-[0_2px_15px_rgba(0,210,255,0.2)]">
+              Your Growth. <span className="bg-gradient-to-r from-[#00D2FF] via-[#c084fc] to-[#FF007A] bg-clip-text text-transparent">Our Hardware.</span>
             </h2>
           </div>
 
           <div className="flex flex-col sm:flex-row gap-4">
-            {/*  Changed button to Link and added route */}
             <Link
               to="/partnerpage?franchise"
-              className="group relative px-7 py-3 rounded-xl font-semibold text-white
-                         shadow-[0_1px_0_rgba(255,255,255,0.25)_inset,0_6px_0_0_#c59942,0_18px_30px_-8px_rgba(0,0,0,0.5)]
-                         transition-all duration-150 ease-out
-                         hover:-translate-y-1 active:translate-y-1 active:shadow-[0_1px_0_rgba(255,255,255,0.25)_inset,0_2px_0_0_#D4A22E,0_8px_14px_-6px_rgba(0,0,0,0.4)]
+              className="group relative px-8 py-3.5 rounded-xl font-bold text-white
+                         bg-gradient-to-r from-[#00D2FF] via-[#7928CA] to-[#FF007A]
+                         shadow-[0_10px_30px_rgba(0,210,255,0.3)]
+                         hover:shadow-[0_15px_40px_rgba(0,210,255,0.5)]
+                         transition-all duration-200 ease-out
+                         hover:-translate-y-0.5 active:translate-y-0.5
                          flex items-center gap-2"
-              style={{ background: "linear-gradient(135deg,#DDA73C,#D4A22E)" }}
             >
               Apply for Franchise
               <ArrowRightIcon className="w-4 h-4 transition-transform group-hover:translate-x-1" />
@@ -139,43 +138,43 @@ export default function Footer() {
       </div>
 
       {/* glowing pulse seam */}
-      <div className="relative h-[2px] w-full overflow-hidden" style={{ background: "linear-gradient(90deg, transparent, rgba(221,167,60,0.55), transparent)" }}>
+      <div className="relative h-[2px] w-full overflow-hidden bg-gradient-to-r from-transparent via-[#00D2FF] to-transparent">
         <span
-          className="absolute top-1/2 -translate-y-1/2 w-2 h-2 rounded-full"
+          className="absolute top-1/2 -translate-y-1/2 w-3 h-3 rounded-full"
           style={{
-            background: "var(--premium-gold)",
-            boxShadow: "0 0 8px 2px rgba(221,167,60,0.8)",
-            animation: "techhansa-pulse-move 4.5s linear infinite",
+            background: "linear-gradient(135deg, #00D2FF, #FF007A)",
+            boxShadow: "0 0 12px 3px rgba(0, 210, 255, 0.9)",
+            animation: "AK-pulse-move 4.5s linear infinite",
           }}
         />
       </div>
 
       {/* ================= MAIN FOOTER ================= */}
-      <div className="relative pt-12 pb-8 border-t border-gray-200" style={{ background: "linear-gradient(to bottom,var(--soft-bg),#ffffff)" }}>
-        <CircuitPattern id="circuit-body" color="var(--tech-blue)" opacity={0.05} />
+      <div className="relative pt-12 pb-8 border-t border-white/[0.05] bg-[#05070D]">
+        <CircuitPattern id="circuit-body" color="#00D2FF" opacity={0.03} />
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-10">
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
-            
+
             <div className="flex flex-col pr-4">
-              <a href="/" className="flex items-center mb-4 ml-6 md:ml-8 cursor-pointer">
-                <div className="w-24 h-24 lg:w-26 lg:h-26 bg-transparent border-0 -mt-2 lg:-mt-6 rounded-full flex items-center justify-center shadow-none overflow-hidden">
-                  <img 
-                    src={logo} 
-                    alt="Company Logo" 
-                    className="w-full h-full object-contain drop-shadow-sm"
+              <a href="/" className="flex items-center mb-4 cursor-pointer">
+                <div className="w-20 h-20 bg-transparent rounded-full flex items-center justify-center overflow-hidden">
+                  <img
+                    src={logo}
+                    alt="Company Logo"
+                    className="w-full h-full object-contain drop-shadow-[0_2px_12px_rgba(0,210,255,0.3)]"
                   />
                 </div>
               </a>
-              <span className="text-[22px] font-extrabold tracking-tight mb-4 -ml-2 leading-none" style={{ color: "var(--premium-gold)" }}>
-                Techhansa Retail
+              <span className="text-[22px] font-extrabold tracking-tight mb-3 leading-none bg-gradient-to-r from-[#00D2FF] via-[#c084fc] to-[#FF007A] bg-clip-text text-transparent">
+                AK Solutions Retail
               </span>
-              <p className="text-[13px] text-gray-600 leading-relaxed mb-6">
+              <p className="text-[13px] text-slate-400 leading-relaxed mb-6">
                 IT hardware bulk supply and franchise network for corporates, institutions and resellers across India.
               </p>
-              <div className="flex items-center gap-2 text-gray-600 hover:text-[var(--premium-gold)] transition-colors cursor-pointer w-fit mb-4">
-                <PhoneIcon className="w-5 h-5" />
+              <div className="flex items-center gap-2 text-slate-300 hover:text-[#00D2FF] transition-colors cursor-pointer w-fit mb-4">
+                <PhoneIcon className="w-4 h-4 text-[#00D2FF]" />
                 <a href="tel:+919711888951" className="text-[14px] font-medium">+91 9711888951</a>
               </div>
             </div>
@@ -190,28 +189,27 @@ export default function Footer() {
       </div>
 
       {/* ================= BOTTOM BAR ================= */}
-      <div className="bg-white py-4 border-t border-gray-200 relative">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center text-[13px] text-gray-600">
-          <p className="font-medium">© {new Date().getFullYear()} Techhansa Retail. All rights reserved.</p>
-          
+      <div className="bg-[#07090e] py-4 border-t border-white/[0.06] relative">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center text-[13px] text-slate-400">
+          <p className="font-medium">© {new Date().getFullYear()} AK Solutions Retail. All rights reserved.</p>
+
           <div className="flex items-center space-x-6 mt-3 md:mt-0">
-            <div className="flex space-x-4 border-r border-gray-300 pr-6">
-               <a href="https://www.linkedin.com/company/techhansa-solutions/" target="_blank" rel="noopener noreferrer" className="font-medium transition-colors hover:text-[var(--premium-gold)]" style={{ color: "var(--text-dark)" }}>LinkedIn</a>
+            <div className="flex space-x-4 border-r border-white/10 pr-6">
+              <a href="https://www.linkedin.com/company/AK Solutions-solutions/" target="_blank" rel="noopener noreferrer" className="font-medium transition-colors text-slate-400 hover:text-[#00D2FF]">LinkedIn</a>
             </div>
             <div className="flex space-x-4">
-               <Link to="/policies" className="font-medium transition-colors hover:text-[var(--premium-gold)]" style={{ color: "var(--text-dark)" }}>Legal & Policies</Link>
+              <Link to="/policies" className="font-medium transition-colors text-slate-400 hover:text-[#00D2FF]">Legal & Policies</Link>
             </div>
           </div>
         </div>
 
         {/* Back to Top Button */}
-        <button 
+        <button
           onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-          className="absolute right-6 -top-5 w-10 h-10 bg-white border border-gray-200 text-gray-600 hover:text-white rounded-full flex items-center justify-center shadow-lg transition-all duration-300 group"
-          style={{ hover: { backgroundColor: "var(--premium-gold)"} }}
+          className="absolute right-6 -top-5 w-10 h-10 bg-[#0C101A] border border-white/10 text-slate-300 hover:text-[#00D2FF] hover:border-cyan-500/40 rounded-full flex items-center justify-center shadow-lg transition-all duration-300 group hover:shadow-[0_0_15px_rgba(0,210,255,0.3)]"
           aria-label="Back to top"
         >
-          <svg className="w-5 h-5 transform group-hover:-translate-y-1 transition-transform group-hover:text-[var(--premium-gold)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg className="w-5 h-5 transform group-hover:-translate-y-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 15l7-7 7 7" />
           </svg>
         </button>

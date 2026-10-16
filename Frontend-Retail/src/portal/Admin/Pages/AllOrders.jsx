@@ -177,20 +177,24 @@ export default function AllOrders() {
   };
 
   const getStatusColor = (status, paymentStatus) => {
-    if (paymentStatus === 'Rejected' || (status === 'Declined' && paymentStatus === 'Pending Verification')) return 'bg-red-100 text-red-700';
-    if (status === 'Paid') return 'bg-emerald-100 text-emerald-800';
-    if (status === 'Payment Verification' || paymentStatus === 'Pending Verification') return 'bg-orange-100 text-orange-700';
+    if (paymentStatus === 'Rejected' || (status === 'Declined' && paymentStatus === 'Pending Verification')) {
+      return 'bg-rose-500/10 text-rose-400 border border-rose-500/30';
+    }
+    if (status === 'Paid') return 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/30';
+    if (status === 'Payment Verification' || paymentStatus === 'Pending Verification') {
+      return 'bg-amber-500/10 text-amber-400 border border-amber-500/30';
+    }
 
     switch (status) {
       case 'Pending':
-      case 'PENDING': return 'bg-amber-100 text-amber-700';
-      case 'Quotation Sent': return 'bg-blue-100 text-blue-700';
-      case 'Confirmed': return 'bg-blue-100 text-blue-700';
-      case 'Processing': return 'bg-indigo-100 text-indigo-700';
-      case 'Dispatched': return 'bg-purple-100 text-purple-700';
-      case 'Delivered': return 'bg-emerald-100 text-emerald-700';
-      case 'Declined': return 'bg-red-100 text-red-700';
-      default: return 'bg-slate-100 text-slate-700';
+      case 'PENDING': return 'bg-amber-500/10 text-amber-400 border border-amber-500/30';
+      case 'Quotation Sent': return 'bg-purple-500/10 text-purple-300 border border-purple-500/30';
+      case 'Confirmed': return 'bg-cyan-500/10 text-cyan-300 border border-cyan-500/30';
+      case 'Processing': return 'bg-blue-500/10 text-blue-400 border border-blue-500/30';
+      case 'Dispatched': return 'bg-violet-500/10 text-violet-300 border border-violet-500/30';
+      case 'Delivered': return 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/30';
+      case 'Declined': return 'bg-rose-500/10 text-rose-400 border border-rose-500/30';
+      default: return 'bg-slate-500/10 text-slate-400 border border-slate-500/30';
     }
   };
 
@@ -248,33 +252,36 @@ export default function AllOrders() {
 
   return (
     <div className="space-y-6 pb-10">
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-[#0C101A] p-6 rounded-2xl shadow-xl border border-white/5">
         <div className="flex items-center gap-4">
-          <div className="w-12 h-12 bg-indigo-100 text-indigo-600 rounded-xl flex items-center justify-center">
+          <div className="w-12 h-12 bg-gradient-to-br from-cyan-500/20 via-purple-500/20 to-pink-500/20 text-[#00D2FF] border border-cyan-500/30 rounded-xl flex items-center justify-center shadow-lg shadow-cyan-500/10">
             <ShoppingCart size={24} />
           </div>
           <div>
-            <h1 className="text-2xl font-bold text-slate-800">Global Orders</h1>
-            <p className="text-slate-500 text-sm mt-1">Monitor all network orders</p>
+            <h1 className="text-2xl font-bold text-white tracking-tight flex items-center gap-2">
+              Global Orders
+              <span className="text-xs px-2.5 py-0.5 rounded-full bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 font-medium">Live</span>
+            </h1>
+            <p className="text-slate-400 text-sm mt-1">Monitor and manage network-wide partner orders</p>
           </div>
         </div>
       </div>
 
-      <div className="bg-white p-4 rounded-xl shadow-sm border border-slate-100 flex flex-col sm:flex-row gap-4">
+      <div className="bg-[#0C101A] p-4 rounded-xl shadow-lg border border-white/5 flex flex-col sm:flex-row gap-4">
         <div className="relative flex-1 max-w-md">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={20} />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
           <input
             type="text"
             placeholder="Search by Order ID or Partner ID..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full pl-10 pr-4 py-2 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-shadow"
+            className="w-full pl-10 pr-4 py-2 bg-[#05070D] border border-white/10 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:border-[#00D2FF] focus:ring-1 focus:ring-[#00D2FF] transition-all text-sm"
           />
         </div>
         <select
           value={roleFilter}
           onChange={(e) => setRoleFilter(e.target.value)}
-          className="border border-slate-200 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-slate-700 bg-white"
+          className="border border-white/10 rounded-lg px-4 py-2 focus:outline-none focus:border-[#00D2FF] focus:ring-1 focus:ring-[#00D2FF] text-slate-200 bg-[#05070D] text-sm"
         >
           <option value="All">All Partners</option>
           <option value="franchise">Franchise Partners</option>
@@ -282,11 +289,11 @@ export default function AllOrders() {
         </select>
       </div>
 
-      <div className="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+      <div className="bg-[#0C101A] rounded-2xl shadow-xl border border-white/5 overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse">
             <thead>
-              <tr className="bg-slate-50 border-b border-slate-100 text-sm font-semibold text-slate-600">
+              <tr className="bg-[#101626] border-b border-white/5 text-xs font-semibold text-slate-400 uppercase tracking-wider">
                 <th className="p-4">Order Details</th>
                 <th className="p-4">Partner</th>
                 <th className="p-4">Amount</th>
@@ -295,16 +302,18 @@ export default function AllOrders() {
                 <th className="p-4 text-center">Action</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody className="divide-y divide-white/5">
               {loading ? (
                 <tr>
-                  <td colSpan="6" className="p-8 text-center text-slate-500">
-                    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-600 mx-auto"></div>
+                  <td colSpan="6" className="p-12 text-center text-slate-400">
+                    <div className="inline-block animate-spin rounded-full h-8 w-8 border-2 border-cyan-500 border-t-transparent mx-auto"></div>
+                    <p className="mt-2 text-sm text-slate-400">Loading orders...</p>
                   </td>
                 </tr>
               ) : filteredOrders.length === 0 ? (
                 <tr>
-                  <td colSpan="6" className="p-8 text-center text-slate-500">
+                  <td colSpan="6" className="p-12 text-center text-slate-400">
+                    <Package className="w-10 h-10 text-slate-600 mx-auto mb-2 opacity-50" />
                     No orders found.
                   </td>
                 </tr>
@@ -314,17 +323,17 @@ export default function AllOrders() {
                     key={order._id}
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: idx * 0.05 }}
-                    className="border-b border-slate-50 hover:bg-slate-50/50 transition-colors"
+                    transition={{ delay: idx * 0.03 }}
+                    className="hover:bg-white/[0.02] transition-colors"
                   >
                     <td className="p-4">
                       <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-lg bg-slate-100 flex items-center justify-center text-slate-500">
+                        <div className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-[#00D2FF]">
                           <Package size={18} />
                         </div>
                         <div>
-                          <p className="font-semibold text-slate-800">{order.orderNumber}</p>
-                          <div className="flex items-center gap-1 text-xs text-slate-500 mt-0.5">
+                          <p className="font-semibold text-white text-sm">{order.orderNumber}</p>
+                          <div className="flex items-center gap-1 text-xs text-slate-400 mt-0.5">
                             <Calendar size={12} />
                             {new Date(order.createdAt).toLocaleDateString()}
                           </div>
@@ -333,23 +342,23 @@ export default function AllOrders() {
                     </td>
                     <td className="p-4">
                       <div className="flex flex-col items-start gap-1">
-                        <span className="inline-flex items-center px-2.5 py-1 rounded-md text-xs font-medium bg-slate-100 text-slate-700 border border-slate-200">
+                        <span className="inline-flex items-center px-2.5 py-1 rounded-md text-xs font-medium bg-white/5 text-slate-200 border border-white/10">
                           {order.userId || 'Unknown'}
                         </span>
                         {order.userRole && (
-                          <span className={`text-[10px] font-bold uppercase tracking-wider ${order.userRole === 'franchise' ? 'text-indigo-500' : 'text-blue-500'}`}>
+                          <span className={`text-[10px] font-bold uppercase tracking-wider ${order.userRole === 'franchise' ? 'text-[#00D2FF]' : 'text-[#FF007A]'}`}>
                             {order.userRole}
                           </span>
                         )}
                       </div>
                     </td>
-                    <td className="p-4 font-semibold text-slate-700">
+                    <td className="p-4 font-bold text-white text-sm">
                       ₹{getOrderAmount(order).toLocaleString('en-IN', { maximumFractionDigits: 0 })}
                     </td>
                     <td className="p-4">
                       <div className="flex flex-col">
-                        <span className="text-sm font-medium text-slate-700">{order.paymentMethod || 'N/A'}</span>
-                        <span className="text-xs text-slate-500">{order.paymentStatus === 'Paid' ? 'Verified' : order.paymentStatus}</span>
+                        <span className="text-sm font-medium text-slate-200">{order.paymentMethod || 'N/A'}</span>
+                        <span className="text-xs text-slate-400">{order.paymentStatus === 'Paid' ? 'Verified' : order.paymentStatus}</span>
                       </div>
                     </td>
                     <td className="p-4">
@@ -358,42 +367,43 @@ export default function AllOrders() {
                       </span>
                     </td>
                     <td className="p-4 text-center">
-                      <div className="flex items-center justify-center gap-2">
+                      <div className="flex items-center justify-center gap-1.5">
                         {getDisplayStatus(order.status, order.paymentStatus) === 'New Order' && (
                           <>
                             <button
                               onClick={() => handleViewOrder(order._id, order.orderType)}
-                              className="p-2 text-emerald-600 hover:bg-emerald-50 rounded-lg transition-colors inline-flex"
+                              className="p-2 text-emerald-400 hover:bg-emerald-500/10 border border-emerald-500/20 rounded-lg transition-colors inline-flex"
                               title="Send Quotation"
                             >
-                              <Check size={18} />
+                              <Check size={16} />
                             </button>
                             <button
                               onClick={() => handleUpdateStatus(order._id, 'Declined')}
-                              className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors inline-flex"
+                              className="p-2 text-rose-400 hover:bg-rose-500/10 border border-rose-500/20 rounded-lg transition-colors inline-flex"
                               title="Decline Order"
                             >
-                              <X size={18} />
+                              <X size={16} />
                             </button>
                           </>
                         )}
                         <button
                           onClick={() => handleViewOrder(order._id, order.orderType)}
-                          className="p-2 text-indigo-600 hover:bg-indigo-50 rounded-lg transition-colors inline-flex"
+                          className="p-2 text-[#00D2FF] hover:bg-cyan-500/10 border border-cyan-500/20 rounded-lg transition-colors inline-flex"
                           title="View Details"
                         >
-                          <Eye size={18} />
+                          <Eye size={16} />
                         </button>
 
                         {order.status === 'Paid' && (order.orderType === 'Enterprise' || order.orderType === 'Franchise Procurement') && (user?.role === 'account_manager' || user?.role === 'finance_manager' || user?.role === 'admin') && (
                           <button
                             onClick={() => handleSendToInventory(order._id)}
-                            className="p-2 bg-indigo-50 text-indigo-600 rounded-lg hover:bg-indigo-100 transition-colors"
+                            className="p-2 bg-purple-500/10 text-purple-300 border border-purple-500/20 rounded-lg hover:bg-purple-500/20 transition-colors"
                             title="Send to Inventory Manager"
                           >
-                            <Package size={18} />
+                            <Package size={16} />
                           </button>
-                        )}</div>
+                        )}
+                      </div>
                     </td>
                   </motion.tr>
                 ))
@@ -405,28 +415,28 @@ export default function AllOrders() {
 
       {/* Order Details Modal */}
       {isModalOpen && selectedOrder && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-slate-900/40 backdrop-blur-sm" onClick={() => setIsModalOpen(false)}>
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/80 backdrop-blur-md" onClick={() => setIsModalOpen(false)}>
           <motion.div
             initial={{ opacity: 0, scale: 0.95, y: 10 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 10 }}
             onClick={(e) => e.stopPropagation()}
-            className="bg-white rounded-3xl w-full max-w-3xl max-h-[90vh] flex flex-col shadow-2xl overflow-hidden"
+            className="bg-[#0C101A] border border-white/10 rounded-3xl w-full max-w-3xl max-h-[90vh] flex flex-col shadow-2xl overflow-hidden"
           >
-            <div className="flex items-center justify-between p-6 border-b border-slate-100 bg-slate-50/50">
+            <div className="flex items-center justify-between p-6 border-b border-white/5 bg-[#101626]/80">
               <div className="flex items-center gap-4">
-                <div className="w-12 h-12 bg-indigo-100 text-indigo-600 rounded-2xl flex items-center justify-center">
+                <div className="w-12 h-12 bg-gradient-to-br from-cyan-500/20 via-purple-500/20 to-pink-500/20 text-[#00D2FF] border border-cyan-500/30 rounded-2xl flex items-center justify-center shadow-lg shadow-cyan-500/10">
                   <Package size={24} />
                 </div>
                 <div>
-                  <h3 className="text-xl font-bold text-slate-900">
+                  <h3 className="text-xl font-bold text-white">
                     {getDisplayStatus(selectedOrder.status, selectedOrder.paymentStatus) === 'Verification Pending'
                       ? 'Payment Verification Pending'
                       : getDisplayStatus(selectedOrder.status, selectedOrder.paymentStatus) === 'New Order'
                         ? 'Send Quotation'
                         : 'Order Details'}
                   </h3>
-                  <p className="text-sm text-slate-500 mt-1">
+                  <p className="text-sm text-slate-400 mt-1">
                     {getDisplayStatus(selectedOrder.status, selectedOrder.paymentStatus) === 'Verification Pending'
                       ? 'This order is currently awaiting payment verification by the Finance Department.'
                       : getDisplayStatus(selectedOrder.status, selectedOrder.paymentStatus) === 'New Order'
@@ -437,7 +447,7 @@ export default function AllOrders() {
               </div>
               <button
                 onClick={() => setIsModalOpen(false)}
-                className="w-10 h-10 flex items-center justify-center bg-white text-slate-400 hover:text-slate-600 hover:bg-slate-100 rounded-full transition-colors border border-slate-200"
+                className="w-10 h-10 flex items-center justify-center bg-white/5 text-slate-400 hover:text-white hover:bg-white/10 rounded-full transition-colors border border-white/10"
               >
                 <X size={20} />
               </button>
@@ -446,37 +456,37 @@ export default function AllOrders() {
             <div className="flex-1 overflow-y-auto p-6 space-y-8">
               {/* Status and Details Grid */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="bg-slate-50 p-5 rounded-2xl border border-slate-100">
-                  <h3 className="text-sm font-bold text-slate-700 uppercase tracking-wider mb-4">Status & Delivery</h3>
+                <div className="bg-[#05070D] p-5 rounded-2xl border border-white/5">
+                  <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-4">Status & Delivery</h3>
                   <div className="space-y-3">
                     <div className="flex justify-between items-center">
-                      <span className="text-slate-500 text-sm font-medium">Order Status</span>
+                      <span className="text-slate-400 text-sm font-medium">Order Status</span>
                       <span className={`px-2.5 py-1 rounded-md text-xs font-bold ${getStatusColor(selectedOrder.status, selectedOrder.paymentStatus)}`}>
                         {getDisplayStatus(selectedOrder.status, selectedOrder.paymentStatus)}
                       </span>
                     </div>
                     <div className="flex justify-between items-center">
-                      <span className="text-slate-500 text-sm font-medium">Expected Delivery</span>
-                      <span className="text-slate-700 text-sm font-bold">{selectedOrder.expectedDelivery ? new Date(selectedOrder.expectedDelivery).toLocaleDateString() : 'N/A'}</span>
+                      <span className="text-slate-400 text-sm font-medium">Expected Delivery</span>
+                      <span className="text-slate-200 text-sm font-bold">{selectedOrder.expectedDelivery ? new Date(selectedOrder.expectedDelivery).toLocaleDateString() : 'N/A'}</span>
                     </div>
                   </div>
                 </div>
 
-                <div className="bg-slate-50 p-5 rounded-2xl border border-slate-100">
-                  <h3 className="text-sm font-bold text-slate-700 uppercase tracking-wider mb-4">Payment Details</h3>
+                <div className="bg-[#05070D] p-5 rounded-2xl border border-white/5">
+                  <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-4">Payment Details</h3>
                   <div className="space-y-3">
                     <div className="flex justify-between items-center">
-                      <span className="text-slate-500 text-sm font-medium">Payment Status</span>
-                      <span className="text-slate-700 text-sm font-bold">{selectedOrder.paymentStatus === 'Paid' ? 'Verified' : selectedOrder.paymentStatus}</span>
+                      <span className="text-slate-400 text-sm font-medium">Payment Status</span>
+                      <span className="text-slate-200 text-sm font-bold">{selectedOrder.paymentStatus === 'Paid' ? 'Verified' : selectedOrder.paymentStatus}</span>
                     </div>
                     <div className="flex justify-between items-center">
-                      <span className="text-slate-500 text-sm font-medium">Payment Method</span>
-                      <span className="text-slate-700 text-sm font-bold">{selectedOrder.paymentMethod || 'N/A'}</span>
+                      <span className="text-slate-400 text-sm font-medium">Payment Method</span>
+                      <span className="text-slate-200 text-sm font-bold">{selectedOrder.paymentMethod || 'N/A'}</span>
                     </div>
                     {selectedOrder.utr && (
                       <div className="flex justify-between items-center">
-                        <span className="text-slate-500 text-sm font-medium">UTR No</span>
-                        <span className="text-slate-700 text-sm font-bold">{selectedOrder.utr}</span>
+                        <span className="text-slate-400 text-sm font-medium">UTR No</span>
+                        <span className="text-slate-200 text-sm font-bold">{selectedOrder.utr}</span>
                       </div>
                     )}
                   </div>
@@ -486,48 +496,48 @@ export default function AllOrders() {
               {/* Items List */}
               {selectedOrder.orderType === 'Franchise Procurement' ? (
                 <div>
-                  <h3 className="text-sm font-bold text-slate-700 uppercase tracking-wider mb-4">Requested Items</h3>
-                  <div className="bg-white border border-slate-200 rounded-2xl overflow-hidden">
+                  <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-4">Requested Items</h3>
+                  <div className="bg-[#05070D] border border-white/5 rounded-2xl overflow-hidden">
                     <table className="w-full text-left border-collapse">
                       <thead>
-                        <tr className="bg-slate-50 border-b border-slate-200 text-xs font-semibold text-slate-500 uppercase tracking-wider">
+                        <tr className="bg-[#101626] border-b border-white/5 text-xs font-semibold text-slate-400 uppercase tracking-wider">
                           <th className="px-4 py-3">Hardware Type</th>
                           <th className="px-4 py-3">Brand & Specs</th>
                           <th className="px-4 py-3 text-right">Quantity</th>
                         </tr>
                       </thead>
-                      <tbody className="divide-y divide-slate-100">
+                      <tbody className="divide-y divide-white/5">
                         {selectedOrder.items?.map((item, index) => {
                           const catalogMatch = getCatalogMatch(item);
                           const isWarning = catalogMatch && Number(item.quantity) > Number(catalogMatch.availableStock);
                           const isOutOfStock = catalogMatch && Number(catalogMatch.availableStock) <= 0;
 
                           return (
-                          <tr key={index} className="hover:bg-slate-50/50">
-                            <td className="px-4 py-3 font-semibold text-slate-700 text-sm">
+                          <tr key={index} className="hover:bg-white/[0.02]">
+                            <td className="px-4 py-3 font-semibold text-white text-sm">
                               {item.hardwareType === 'Other' ? item.otherType : item.hardwareType}
                             </td>
                             <td className="px-4 py-3">
-                              <p className="text-sm font-semibold text-slate-700">{item.brand}</p>
+                              <p className="text-sm font-semibold text-slate-200">{item.brand}</p>
                               {typeof item.specs === 'string' && item.specs ? (
-                                <p className="text-xs text-slate-500 line-clamp-2">
+                                <p className="text-xs text-slate-400 line-clamp-2">
                                   {item.specs}
                                 </p>
                               ) : item.specs && typeof item.specs === 'object' && Object.keys(item.specs).length > 0 ? (
-                                <p className="text-xs text-slate-500 line-clamp-2">
+                                <p className="text-xs text-slate-400 line-clamp-2">
                                   {Object.entries(item.specs).map(([k, v]) => `${k}: ${v}`).join(', ')}
                                 </p>
                               ) : null}
                               {item.comments && (
-                                <p className="text-xs text-amber-600 mt-1 line-clamp-1 italic">"{item.comments}"</p>
+                                <p className="text-xs text-amber-400 mt-1 line-clamp-1 italic">"{item.comments}"</p>
                               )}
                               {catalogMatch && isWarning && (
-                                <p className="text-xs text-red-600 mt-1 font-semibold flex items-center gap-1">
+                                <p className="text-xs text-rose-400 mt-1 font-semibold flex items-center gap-1">
                                   ⚠️ {isOutOfStock ? 'Out of stock' : `Only ${catalogMatch.availableStock} in stock`}
                                 </p>
                               )}
                             </td>
-                            <td className="px-4 py-3 text-sm font-bold text-slate-700 text-right">{item.quantity}</td>
+                            <td className="px-4 py-3 text-sm font-bold text-white text-right">{item.quantity}</td>
                           </tr>
                         )})}
                       </tbody>
@@ -536,35 +546,35 @@ export default function AllOrders() {
                 </div>
               ) : selectedOrder.quotationReference?.rfpReference?.products && (
                 <div>
-                  <h3 className="text-sm font-bold text-slate-700 uppercase tracking-wider mb-4">Ordered Items</h3>
-                  <div className="bg-white border border-slate-200 rounded-2xl overflow-hidden">
+                  <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-4">Ordered Items</h3>
+                  <div className="bg-[#05070D] border border-white/5 rounded-2xl overflow-hidden">
                     <table className="w-full text-left border-collapse">
                       <thead>
-                        <tr className="bg-slate-50 border-b border-slate-200 text-xs font-semibold text-slate-500 uppercase tracking-wider">
+                        <tr className="bg-[#101626] border-b border-white/5 text-xs font-semibold text-slate-400 uppercase tracking-wider">
                           <th className="px-4 py-3">Item</th>
                           <th className="px-4 py-3">Category</th>
                           <th className="px-4 py-3 text-right">Quantity</th>
                         </tr>
                       </thead>
-                      <tbody className="divide-y divide-slate-100">
+                      <tbody className="divide-y divide-white/5">
                         {selectedOrder.quotationReference.rfpReference.products.map((item, index) => {
                           const catalogMatch = getCatalogMatch(item);
                           const isWarning = catalogMatch && item.quantity > catalogMatch.availableStock;
                           const isOutOfStock = catalogMatch && catalogMatch.availableStock <= 0;
 
                           return (
-                          <tr key={index} className="hover:bg-slate-50/50">
+                          <tr key={index} className="hover:bg-white/[0.02]">
                             <td className="px-4 py-3">
-                              <p className="font-semibold text-slate-700 text-sm">{item.brand} {item.model}</p>
-                              <p className="text-xs text-slate-500 line-clamp-1">{item.configuration}</p>
+                              <p className="font-semibold text-white text-sm">{item.brand} {item.model}</p>
+                              <p className="text-xs text-slate-400 line-clamp-1">{item.configuration}</p>
                               {catalogMatch && isWarning && (
-                                <p className="text-xs text-red-600 mt-1 font-semibold flex items-center gap-1">
+                                <p className="text-xs text-rose-400 mt-1 font-semibold flex items-center gap-1">
                                   ⚠️ {isOutOfStock ? 'Out of stock' : `Only ${catalogMatch.availableStock} in stock`}
                                 </p>
                               )}
                             </td>
-                            <td className="px-4 py-3 text-sm text-slate-600">{item.category}</td>
-                            <td className="px-4 py-3 text-sm font-bold text-slate-700 text-right">{item.quantity} {item.unit}</td>
+                            <td className="px-4 py-3 text-sm text-slate-400">{item.category}</td>
+                            <td className="px-4 py-3 text-sm font-bold text-white text-right">{item.quantity} {item.unit}</td>
                           </tr>
                         )})}
                       </tbody>
@@ -574,21 +584,22 @@ export default function AllOrders() {
               )}
 
               {/* Total Amount Footer */}
-              <div className="bg-indigo-50 border border-indigo-100 rounded-2xl p-5 flex flex-col md:flex-row items-center justify-between gap-4">
+              <div className="bg-gradient-to-r from-cyan-950/40 via-purple-950/40 to-pink-950/40 border border-cyan-500/30 rounded-2xl p-5 flex flex-col md:flex-row items-center justify-between gap-4">
                 <div className="flex flex-col">
-                  <span className="text-indigo-800 font-bold uppercase tracking-wider text-sm mb-1">Total Amount</span>
-                  <span className="text-2xl font-black text-indigo-900">₹{getOrderAmount(selectedOrder).toLocaleString('en-IN', { maximumFractionDigits: 0 })}</span>
+                  <span className="text-[#00D2FF] font-bold uppercase tracking-wider text-xs mb-1">Total Amount</span>
+                  <span className="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-[#00D2FF] via-[#7928CA] to-[#FF007A]">
+                    ₹{getOrderAmount(selectedOrder).toLocaleString('en-IN', { maximumFractionDigits: 0 })}
+                  </span>
                 </div>
                 {getDisplayStatus(selectedOrder.status, selectedOrder.paymentStatus) === 'New Order' ? (
                   <div className="flex flex-col items-end">
-                    {/* Fallback debug display */}
                     {!hasStockWarning && catalog.length === 0 && (
-                      <p className="text-orange-500 text-xs mb-2">Loading catalog...</p>
+                      <p className="text-amber-400 text-xs mb-2">Loading catalog...</p>
                     )}
                     <button
                       onClick={() => handleApproveProcurement(selectedOrder._id)}
                       disabled={hasStockWarning || catalog.length === 0}
-                      className={`px-6 py-2 font-medium rounded-lg transition-colors whitespace-nowrap ${hasStockWarning || catalog.length === 0 ? 'bg-slate-300 text-slate-500 cursor-not-allowed' : 'bg-indigo-600 text-white hover:bg-indigo-700'}`}
+                      className={`px-6 py-2.5 font-bold rounded-xl transition-all whitespace-nowrap ${hasStockWarning || catalog.length === 0 ? 'bg-white/10 text-slate-500 cursor-not-allowed' : 'bg-gradient-to-r from-[#00D2FF] via-[#7928CA] to-[#FF007A] text-white shadow-lg shadow-cyan-500/20 hover:shadow-cyan-500/40 hover:scale-[1.02] active:scale-[0.98]'}`}
                     >
                       {catalog.length > 0 ? (
                         (() => {
@@ -604,13 +615,13 @@ export default function AllOrders() {
                       ) : 'Confirm & Send Quotation'}
                     </button>
                     {hasStockWarning && (
-                      <p className="text-red-500 text-xs mt-2 max-w-xs text-right font-bold">Cannot send quotation. One or more requested items exceed available inventory.</p>
+                      <p className="text-rose-400 text-xs mt-2 max-w-xs text-right font-bold">Cannot send quotation. One or more requested items exceed available inventory.</p>
                     )}
                   </div>
                 ) : selectedOrder.status === 'Paid' && (selectedOrder.orderType === 'Enterprise' || selectedOrder.orderType === 'Franchise Procurement') && (user?.role === 'account_manager' || user?.role === 'finance_manager' || user?.role === 'admin') ? (
                   <button
                     onClick={() => handleSendToInventory(selectedOrder._id)}
-                    className="px-6 py-2 bg-indigo-600 text-white font-medium rounded-lg hover:bg-indigo-700 transition-colors whitespace-nowrap"
+                    className="px-6 py-2.5 bg-gradient-to-r from-[#00D2FF] to-[#7928CA] text-white font-bold rounded-xl hover:shadow-lg hover:shadow-cyan-500/25 transition-all whitespace-nowrap"
                   >
                     Send to Inventory Manager
                   </button>
@@ -623,17 +634,17 @@ export default function AllOrders() {
 
       {/* Confirmation Modal */}
       {confirmDialog.isOpen && (
-        <div className="fixed inset-0 z-[70] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm">
+        <div className="fixed inset-0 z-[70] flex items-center justify-center p-4 bg-black/80 backdrop-blur-md">
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="bg-white rounded-2xl shadow-2xl w-full max-w-sm overflow-hidden p-6 text-center"
+            className="bg-[#0C101A] border border-white/10 rounded-2xl shadow-2xl w-full max-w-sm overflow-hidden p-6 text-center"
           >
-            <div className={`w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 ${confirmDialog.type === 'approve' ? 'bg-indigo-100 text-indigo-600' : 'bg-red-100 text-red-600'}`}>
+            <div className={`w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 ${confirmDialog.type === 'approve' ? 'bg-cyan-500/10 text-[#00D2FF] border border-cyan-500/20' : 'bg-rose-500/10 text-rose-400 border border-rose-500/20'}`}>
               {confirmDialog.type === 'approve' ? <Check size={32} /> : <X size={32} />}
             </div>
-            <h3 className="text-xl font-bold text-slate-900 mb-2">Are you sure?</h3>
-            <p className="text-slate-500 mb-6">
+            <h3 className="text-xl font-bold text-white mb-2">Are you sure?</h3>
+            <p className="text-slate-400 mb-6 text-sm">
               {confirmDialog.type === 'approve' 
                 ? 'Are you sure you want to confirm and send a quotation for this order?' 
                 : 'Are you sure you want to decline this order? This action cannot be undone.'}
@@ -641,7 +652,7 @@ export default function AllOrders() {
             <div className="flex justify-center gap-3">
               <button
                 onClick={() => setConfirmDialog({ isOpen: false, type: '', orderId: null, newStatus: '' })}
-                className="px-5 py-2.5 bg-slate-100 text-slate-700 font-bold rounded-xl hover:bg-slate-200 transition-colors"
+                className="px-5 py-2.5 bg-white/5 border border-white/10 text-slate-300 font-bold rounded-xl hover:bg-white/10 transition-colors text-sm"
                 disabled={isProcessing}
               >
                 Cancel
@@ -655,10 +666,10 @@ export default function AllOrders() {
                   }
                   setConfirmDialog({ isOpen: false, type: '', orderId: null, newStatus: '' });
                 }}
-                className={`px-5 py-2.5 text-white font-bold rounded-xl transition-colors ${
+                className={`px-5 py-2.5 text-white font-bold rounded-xl transition-all text-sm ${
                   confirmDialog.type === 'approve' 
-                    ? 'bg-indigo-600 hover:bg-indigo-700' 
-                    : 'bg-red-600 hover:bg-red-700'
+                    ? 'bg-gradient-to-r from-[#00D2FF] to-[#7928CA] shadow-lg shadow-cyan-500/20' 
+                    : 'bg-rose-600 hover:bg-rose-700'
                 }`}
                 disabled={isProcessing}
               >

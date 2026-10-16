@@ -25,7 +25,7 @@ export const printInvoice = ({ invoice, companySettings, user, rfp, preview = fa
   // Left Side: Company Details
   doc.setFontSize(10);
   doc.setFont('helvetica', 'bold');
-  const compName = companySettings?.companyName || 'Techhansa Retail';
+  const compName = companySettings?.companyName || 'AK Solutions Retail';
   doc.text(compName, 15, 26);
 
   doc.setFont('helvetica', 'normal');
@@ -93,7 +93,7 @@ export const printInvoice = ({ invoice, companySettings, user, rfp, preview = fa
   doc.setFont('helvetica', 'normal');
   doc.text('Buyer (Bill to)', 15, 65);
   doc.setFont('helvetica', 'bold');
-  const buyerName = user?.companyName || 'Techhansa Retail Pvt Ltd';
+  const buyerName = user?.companyName || 'AK Solutions Retail Pvt Ltd';
   doc.text(buyerName, 15, 70);
   doc.setFont('helvetica', 'normal');
   const userAddr = user?.address || '123 Business Avenue, Tech Park, Bangalore 560001';
@@ -225,7 +225,7 @@ export const printInvoice = ({ invoice, companySettings, user, rfp, preview = fa
   const prodList = baseProdList.map(p => {
     const perItemRate = p.rate || p.unitPrice || assumedRate;
     const gst = p.gstAmount || (perItemRate * (p.taxRate || globalGst) / 100);
-    
+
     let serialStr = p.serialNumber || '-';
     if (p.assignedSerials && p.assignedSerials.length > 0) {
       serialStr = p.assignedSerials.join(', ');
@@ -305,7 +305,7 @@ export const printInvoice = ({ invoice, companySettings, user, rfp, preview = fa
     : {
       buyerId: user?.userId || invoice.userId || '-',
       productId: rfp?.rfpId || invoice.orderReference?.orderNumber || '-',
-      buyerName: user?.companyName || 'Techhansa Retail Pvt Ltd',
+      buyerName: user?.companyName || 'AK Solutions Retail Pvt Ltd',
       paymentDetails: (user?.totalCredit > 0) ? 'Credit Limit' : 'Advance Payment'
     };
 

@@ -12,7 +12,7 @@ export default function PartnerForm({ showToast }) {
 
   const [noOfDirOption, setNoOfDirOption] = useState('1');
   const [directors, setDirectors] = useState([{ ...emptyDirector }]);
-  
+
   const [errors, setErrors] = useState({});
   const [dirErrors, setDirErrors] = useState([{}]);
   const [formStatus, setFormStatus] = useState({ loading: false, message: '', isError: false });
@@ -23,7 +23,7 @@ export default function PartnerForm({ showToast }) {
     if (name === 'companyContact' || name === 'authContact') finalValue = value.replace(/[^0-9]/g, '').slice(0, 10);
     if (name === 'companyPan' || name === 'companyTan' || name === 'cinGst') finalValue = value.toUpperCase();
     setFormData(prev => ({ ...prev, [name]: finalValue }));
-    setErrors(prev => ({...prev, [name]: null}));
+    setErrors(prev => ({ ...prev, [name]: null }));
   };
 
   const handleFileChange = (e) => {
@@ -31,7 +31,7 @@ export default function PartnerForm({ showToast }) {
     if (file) {
       const ext = file.name.split('.').pop().toLowerCase();
       if (ext !== 'pdf' && ext !== 'zip') {
-        setErrors(prev => ({...prev, documents: "Only PDF or ZIP files are allowed"}));
+        setErrors(prev => ({ ...prev, documents: "Only PDF or ZIP files are allowed" }));
         setFormData(prev => ({ ...prev, documents: null }));
         return;
       }
@@ -41,7 +41,7 @@ export default function PartnerForm({ showToast }) {
         return;
       }
     }
-    setErrors(prev => ({...prev, documents: null}));
+    setErrors(prev => ({ ...prev, documents: null }));
     setFormData(prev => ({ ...prev, documents: file }));
   };
 
@@ -74,7 +74,7 @@ export default function PartnerForm({ showToast }) {
 
     updatedDirectors[index][field] = finalValue;
     setDirectors(updatedDirectors);
-    
+
     const updatedErrors = [...dirErrors];
     updatedErrors[index] = { ...updatedErrors[index], [field]: null };
     setDirErrors(updatedErrors);
@@ -124,7 +124,7 @@ export default function PartnerForm({ showToast }) {
       return;
     }
     setFormStatus({ loading: true, message: '', isError: false });
-    
+
     try {
       const data = new FormData();
       data.append('companyName', formData.companyName);
@@ -136,14 +136,14 @@ export default function PartnerForm({ showToast }) {
       data.append('authName', formData.authName);
       data.append('authContact', formData.authContact);
       data.append('authEmail', formData.authEmail);
-      
+
       if (formData.documents) {
         data.append('documents', formData.documents);
       }
-      
+
       data.append('directors', JSON.stringify(directors));
 
-      const response = await fetchWithAuth('http://techhansaretail.com/api/channel/apply', {
+      const response = await fetchWithAuth(`${import.meta.env.VITE_API_BASE_URL || ''}/api/channel/apply`, {
         method: 'POST',
         body: data,
       });
@@ -171,7 +171,7 @@ export default function PartnerForm({ showToast }) {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-8">
-      
+
       {formStatus.message && (
         <div className={`p-5 rounded-2xl text-base font-medium border shadow-sm ${formStatus.isError ? 'bg-red-50 text-red-600 border-red-200' : 'bg-emerald-50 text-emerald-700 border-emerald-200'}`}>
           <div className="flex items-center gap-3"><ShieldCheck className="w-6 h-6" /> {formStatus.message}</div>
@@ -221,7 +221,7 @@ export default function PartnerForm({ showToast }) {
         </div>
       </div>
 
-    
+
 
       {/* 3. DIRECTOR DETAILS */}
       <div className="bg-white rounded-[2rem] p-8 md:p-10 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-100">
@@ -252,7 +252,7 @@ export default function PartnerForm({ showToast }) {
                 <div><label className="block text-sm font-bold mb-2">Full Name *</label><input type="text" value={dir.name} onChange={(e) => handleDirectorChange(index, 'name', e.target.value)} className="w-full px-5 py-3.5 rounded-xl border border-gray-200 bg-gray-50 outline-none" required /></div>
                 <div><label className="block text-sm font-bold mb-2">Email *</label><input type="email" value={dir.email} onChange={(e) => handleDirectorChange(index, 'email', e.target.value)} className={`w-full px-5 py-3.5 rounded-xl border ${dirErrors[index]?.email ? 'border-red-400' : 'border-gray-200'} bg-gray-50 outline-none`} required />{dirErrors[index]?.email && <p className="text-red-500 text-xs">{dirErrors[index].email}</p>}</div>
                 <div><label className="block text-sm font-bold mb-2">Contact *</label><input type="tel" value={dir.contact} onChange={(e) => handleDirectorChange(index, 'contact', e.target.value)} className={`w-full px-5 py-3.5 rounded-xl border ${dirErrors[index]?.contact ? 'border-red-400' : 'border-gray-200'} bg-gray-50 outline-none`} required />{dirErrors[index]?.contact && <p className="text-red-500 text-xs">{dirErrors[index].contact}</p>}</div>
-                
+
                 <div>
                   <label className="block text-sm font-bold text-gray-700 mb-2">Monthly Income *</label>
                   <div className="flex gap-3">

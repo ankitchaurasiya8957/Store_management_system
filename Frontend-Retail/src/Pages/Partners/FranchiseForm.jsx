@@ -29,7 +29,7 @@ export default function FranchiseForm({ showToast }) {
     name: '', dob: '', contactNumber: '', panCard: '', aadharCard: '', permanentAddress: '',
     // Occupation Details
     occupation: '', companyName: '', designation: '', experience: '',
-   
+
     // Message
     message: '',
     // Bank Details
@@ -91,7 +91,7 @@ export default function FranchiseForm({ showToast }) {
     // Occupation
     if (!formData.occupation.trim()) { newErrors.occupation = "Occupation is required"; isValid = false; }
 
-    
+
 
     // Bank Details
     if (!formData.accountNumber || formData.accountNumber.length < 9) { newErrors.accountNumber = "Valid account number required"; isValid = false; }
@@ -113,7 +113,7 @@ export default function FranchiseForm({ showToast }) {
       return;
     }
     setFormStatus({ loading: true, message: '', isError: false });
-    
+
     try {
       const data = new FormData();
       data.append('name', formData.name);
@@ -122,24 +122,24 @@ export default function FranchiseForm({ showToast }) {
       data.append('panCard', formData.panCard);
       data.append('aadharCard', formData.aadharCard);
       data.append('permanentAddress', formData.permanentAddress);
-      
+
       data.append('occupation', formData.occupation);
       data.append('companyName', formData.companyName);
       data.append('designation', formData.designation);
       data.append('experience', formData.experience);
-      
+
       data.append('message', formData.message);
-      
+
       data.append('accountNumber', formData.accountNumber);
       data.append('ifscCode', formData.ifscCode);
       data.append('bankAddress', formData.bankAddress);
       data.append('bankName', formData.bankName);
-      
+
       if (formData.documents) {
         data.append('documents', formData.documents);
       }
 
-      const response = await fetchWithAuth('http://techhansaretail.com/api/franchise/apply', {
+      const response = await fetchWithAuth(`${import.meta.env.VITE_API_BASE_URL || ''}/api/franchise/apply`, {
         method: 'POST',
         body: data,
       });
@@ -246,7 +246,7 @@ export default function FranchiseForm({ showToast }) {
         </div>
       </div>
 
-   
+
 
       {/* ================= 4. MESSAGE ================= */}
       <div className="bg-white rounded-[2rem] p-8 md:p-10 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-100">

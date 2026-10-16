@@ -6,9 +6,7 @@ const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
 const bcrypt = require('bcrypt');
-const { Resend } = require('resend');
-
-const resend = new Resend(process.env.RESEND_API_KEY);
+const resend = require('../utils/resendClient');
 
 // Ensure uploads directory exists
 const uploadDir = path.join(__dirname, '../uploads/franchise');
@@ -28,7 +26,7 @@ const storage = multer.diskStorage({
   }
 });
 
-const upload = multer({ 
+const upload = multer({
   storage: storage,
   limits: { fileSize: 10 * 1024 * 1024 }, // 10 MB
   fileFilter: (req, file, cb) => {
@@ -104,7 +102,7 @@ router.post('/apply', upload.single('documents'), async (req, res) => {
       }
 
       await resend.emails.send({
-        from: 'Techhansa Notifications <onboarding@resend.dev>',
+        from: 'AK Solutions Notifications <onboarding@resend.dev>',
         to: 'customer.support@techhansha.com',
         subject: 'Notification from Franchise Partner Form',
         html: `
@@ -132,21 +130,21 @@ router.post('/apply', upload.single('documents'), async (req, res) => {
       console.error("❌ Failed to send franchise email:", emailError);
     }
 
-    res.status(201).json({ 
-      success: true, 
+    res.status(201).json({
+      success: true,
       message: 'Franchise application submitted successfully',
-      applicationId 
+      applicationId
     });
 
   } catch (error) {
     console.error('Error submitting franchise application:', error);
-    
+
     // Clean up uploaded file if DB insertion failed
     if (req.file && fs.existsSync(req.file.path)) {
       fs.unlinkSync(req.file.path);
     }
-    res.status(500).json({ 
-      success: false, 
+    res.status(500).json({
+      success: false,
       message: 'Server error while submitting application',
       error: error.message
     });
@@ -172,9 +170,9 @@ router.get('/:storeId/profile', async (req, res) => {
   try {
     const profile = await StoreProfile.findOne({ storeId: req.params.storeId }).lean();
     if (!profile) return res.status(404).json({ success: false, message: 'Store not found' });
-    
+
     // Find the franchise owner user (not employees) — supports comma-separated storeIds
-    const user = await User.findOne({ 
+    const user = await User.findOne({
       role: 'franchise',
       storeId: { $regex: req.params.storeId }
     });
@@ -185,7 +183,7 @@ router.get('/:storeId/profile', async (req, res) => {
 
     // Map credit logic to walletBalance for frontend compatibility
     profile.walletBalance = (profile.totalCredit || 0) - (profile.usedCredit || 0);
-    
+
     res.json({ success: true, data: profile });
   } catch (error) {
     console.error('Error fetching store profile:', error);
@@ -214,13 +212,13 @@ router.put('/:storeId/profile', async (req, res) => {
         updateData[key] = req.body[key];
       }
     }
-    
+
     const profile = await StoreProfile.findOneAndUpdate(
       { storeId: req.params.storeId },
       { $set: updateData },
       { new: true }
     );
-    
+
     if (!profile) return res.status(404).json({ success: false, message: 'Store not found' });
     res.json({ success: true, data: profile });
   } catch (error) {
@@ -248,7 +246,7 @@ router.get('/:storeId/b2b-invoices', async (req, res) => {
     const Quotation = require('../models/Quotation');
     const quotations = await Quotation.find({ storeId: req.params.storeId }).populate('procurementReference').sort({ createdAt: -1 });
     const invoices = await B2BInvoice.find({ storeId: req.params.storeId }).sort({ createdAt: -1 });
-    
+
     // Map quotations to the format expected by the frontend 'approvals' tab
     const mappedQuotations = quotations.map(q => ({
       _id: q._id,
@@ -289,10 +287,10 @@ router.put('/:storeId/b2b-invoices/:id/approve', async (req, res) => {
   try {
     const { storeId, id } = req.params;
     const { paymentMethod, utrNumber, transactionDate, receiptUrl } = req.body;
-    
+
     const Quotation = require('../models/Quotation');
     const ProcurementRequest = require('../models/ProcurementRequest');
-    
+
     // Check if it's a quotation first
     let itemToApprove = await Quotation.findById(id);
     let isQuotation = true;
@@ -305,21 +303,21 @@ router.put('/:storeId/b2b-invoices/:id/approve', async (req, res) => {
     if (!itemToApprove) return res.status(404).json({ success: false, message: 'Item not found' });
     if ((isQuotation ? itemToApprove.paymentStatus : itemToApprove.status) === 'Paid') return res.status(400).json({ success: false, message: 'Already paid' });
     if (itemToApprove.storeId !== storeId) return res.status(403).json({ success: false, message: 'Unauthorized' });
-    
+
     const profile = await StoreProfile.findOne({ storeId });
     if (!profile) return res.status(404).json({ success: false, message: 'Store not found' });
-    
+
     const availableCredit = (profile.totalCredit || 0) - (profile.usedCredit || 0);
-    
+
     const isAdvancePayment = (paymentMethod && paymentMethod !== 'Credit');
 
     const reqstId = isQuotation ? itemToApprove.procurementReference : itemToApprove.requestId;
     if (reqstId) {
-       const reqst = isQuotation ? await ProcurementRequest.findById(reqstId) : await ProcurementRequest.findOne({ requestId: reqstId });
-       if (reqst) {
-          reqst.status = isAdvancePayment ? 'PAYMENT_VERIFICATION' : (isQuotation ? 'Paid' : 'DISPATCHED');
-          await reqst.save();
-       }
+      const reqst = isQuotation ? await ProcurementRequest.findById(reqstId) : await ProcurementRequest.findOne({ requestId: reqstId });
+      if (reqst) {
+        reqst.status = isAdvancePayment ? 'PAYMENT_VERIFICATION' : (isQuotation ? 'Paid' : 'DISPATCHED');
+        await reqst.save();
+      }
     }
 
     // Adjust credits
@@ -327,7 +325,7 @@ router.put('/:storeId/b2b-invoices/:id/approve', async (req, res) => {
       profile.usedCredit = (profile.usedCredit || 0) + itemToApprove.amount;
     }
     await profile.save();
-    
+
     const user = await User.findOne({ role: 'franchise', storeId: { $regex: storeId } });
     if (user) {
       user.usedCredit = profile.usedCredit;
@@ -335,7 +333,7 @@ router.put('/:storeId/b2b-invoices/:id/approve', async (req, res) => {
 
       if (!isAdvancePayment) {
         const CreditTransaction = require('../models/CreditTransaction');
-        
+
         // Log Credit Deduction
         const creditTxn = new CreditTransaction({
           userId: user.userId,
@@ -375,14 +373,14 @@ router.put('/:storeId/b2b-invoices/:id/approve', async (req, res) => {
         await walletTxn.save();
       }
     }
-    
+
     // Update item
     if (isQuotation) {
       itemToApprove.paymentStatus = isAdvancePayment ? 'Pending Verification' : 'Paid';
     } else {
       itemToApprove.status = isAdvancePayment ? 'Payment Verification' : 'Paid';
     }
-    
+
     // Store payment details if needed
     if (paymentMethod && paymentMethod !== 'Credit') {
       if (isQuotation) {
@@ -401,7 +399,7 @@ router.put('/:storeId/b2b-invoices/:id/approve', async (req, res) => {
         };
       }
     }
-    
+
     await itemToApprove.save();
 
     res.json({ success: true, item: itemToApprove });
@@ -426,7 +424,7 @@ router.get('/:storeId/employees', async (req, res) => {
 router.post('/:storeId/employees', async (req, res) => {
   try {
     const { userId, password, name, phone, email, dailyTarget } = req.body;
-    
+
     // Check if user already exists
     const existingUser = await User.findOne({ userId });
     if (existingUser) {
@@ -460,11 +458,11 @@ router.post('/:storeId/employees', async (req, res) => {
 router.put('/:storeId/employees/:id', async (req, res) => {
   try {
     const { name, phone, email, password, dailyTarget } = req.body;
-    
+
     const mongoose = require('mongoose');
     const isValidObjectId = mongoose.Types.ObjectId.isValid(req.params.id);
     const query = { storeId: req.params.storeId, role: 'employee' };
-    
+
     if (isValidObjectId) {
       query.$or = [{ _id: req.params.id }, { userId: req.params.id }];
     } else {
@@ -527,7 +525,7 @@ router.post('/:storeId/requests', async (req, res) => {
   try {
     const { items, totalAmount, date } = req.body;
     const storeId = req.params.storeId;
-    
+
     // Auto-increment logic
     const lastRequest = await ProcurementRequest.findOne().sort({ createdAt: -1 });
     let nextNum = 1;
@@ -541,16 +539,16 @@ router.post('/:storeId/requests', async (req, res) => {
         // It's safer to just increment what we find. If they have 'REQ-17866...', next will be 'REQ-17866...+1'
         // But the user specifically wants REQ-001. We can just count documents as a fallback or enforce 3 digits.
         if (parsed > 1000000) {
-           // It's a timestamp, let's start fresh based on count
-           const count = await ProcurementRequest.countDocuments();
-           nextNum = count + 1;
+          // It's a timestamp, let's start fresh based on count
+          const count = await ProcurementRequest.countDocuments();
+          nextNum = count + 1;
         } else {
-           nextNum = parsed + 1;
+          nextNum = parsed + 1;
         }
       }
     }
     const requestId = `REQ-${String(nextNum).padStart(3, '0')}`;
-    
+
     // Removed credit limitation check here.
     // Procurement requests should NOT be blocked by credit limits because:
     // 1. The Admin manually sets the final B2BInvoice amount.
@@ -564,7 +562,7 @@ router.post('/:storeId/requests', async (req, res) => {
       totalAmount,
       total: totalAmount // keeping total for backward compatibility if needed
     });
-    
+
     await newRequest.save();
     res.status(201).json({ success: true, data: newRequest });
   } catch (error) {
@@ -573,7 +571,7 @@ router.post('/:storeId/requests', async (req, res) => {
   }
 });
 
-// 7. Get Techhansa Catalog (now from GlobalProduct)
+// 7. Get AK Solutions Catalog (now from GlobalProduct)
 router.get('/catalog/all', async (req, res) => {
   try {
     const catalog = await GlobalProduct.find({});

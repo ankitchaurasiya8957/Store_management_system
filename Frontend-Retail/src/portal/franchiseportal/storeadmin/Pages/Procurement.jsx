@@ -21,12 +21,12 @@ export default function Procurement() {
   const [trackingInvoice, setTrackingInvoice] = useState(null);
 
   const resolvedCompanySettings = companySettings || {
-    companyName: 'TECHHANSA RETAIL PVT LTD',
+    companyName: 'AK Solutions RETAIL PVT LTD',
     registeredAddress: 'REGD. OFF-SHI 8/27A-K-3 GILAT BAZAR BYPASS\nSHIVPURKOT, VARANASI, UP-221002',
     gstin: 'N/A',
     stateName: 'N/A',
     contactNumber: '+91-7007650206 , 9711888951',
-    email: 'finance@techhansa.com'
+    email: 'finance@AK Solutions.com'
   };
 
   const initialFormState = {
@@ -52,13 +52,13 @@ export default function Procurement() {
 
   const categories = [...new Set(techhansaCatalog.map(item => (item.category?.trim() || item.name?.trim())).filter(Boolean))];
   const brands = [...new Set(techhansaCatalog.filter(item => !selectedCategory || (item.category?.trim() || item.name?.trim()) === selectedCategory).map(item => item.brand?.trim()).filter(Boolean))];
-  const models = [...new Set(techhansaCatalog.filter(item => 
-    (!selectedCategory || (item.category?.trim() || item.name?.trim()) === selectedCategory) && 
+  const models = [...new Set(techhansaCatalog.filter(item =>
+    (!selectedCategory || (item.category?.trim() || item.name?.trim()) === selectedCategory) &&
     (!selectedBrand || item.brand?.trim() === selectedBrand)
   ).map(item => item.model?.trim()).filter(Boolean))];
-  
-  const specifications = techhansaCatalog.filter(item => 
-    (!selectedCategory || (item.category?.trim() || item.name?.trim()) === selectedCategory) && 
+
+  const specifications = techhansaCatalog.filter(item =>
+    (!selectedCategory || (item.category?.trim() || item.name?.trim()) === selectedCategory) &&
     (!selectedBrand || item.brand?.trim() === selectedBrand) &&
     (!selectedModel || item.model?.trim() === selectedModel)
   );
@@ -119,7 +119,7 @@ export default function Procurement() {
     const result = await submitOrderRequest(orderItems);
 
     if (result.success) {
-      toast.success("Order request sent to Techhansa Admin for verification.");
+      toast.success("Order request sent to AK Solutions Admin for verification.");
       setIsModalOpen(false);
       setOrderItems([]);
       setFormData(initialFormState);
@@ -139,7 +139,7 @@ export default function Procurement() {
     <div className="space-y-6 relative">
       <div>
         <h1 className="text-2xl font-bold text-slate-800">B2B Procurement</h1>
-        <p className="text-slate-500">Order new stock from Techhansa or approve pending invoices.</p>
+        <p className="text-slate-500">Order new stock from AK Solutions or approve pending invoices.</p>
       </div>
 
       <div className="flex border-b border-slate-200">
@@ -193,13 +193,12 @@ export default function Procurement() {
                     </div>
                     <div className="text-right">
                       <p className="text-sm text-slate-500 font-medium">Status</p>
-                      <span className={`inline-block px-3 py-1 rounded-full text-xs font-bold mt-1 ${
-                        order.status === 'DELIVERED' ? 'bg-emerald-100 text-emerald-700' :
-                        order.status === 'DISPATCHED' ? 'bg-blue-100 text-blue-700' :
-                        order.status === 'CANCELLED' ? 'bg-rose-100 text-rose-700' :
-                        order.status === 'APPROVED' ? 'bg-amber-100 text-amber-700' :
-                        'bg-slate-100 text-slate-700'
-                      }`}>
+                      <span className={`inline-block px-3 py-1 rounded-full text-xs font-bold mt-1 ${order.status === 'DELIVERED' ? 'bg-emerald-100 text-emerald-700' :
+                          order.status === 'DISPATCHED' ? 'bg-blue-100 text-blue-700' :
+                            order.status === 'CANCELLED' ? 'bg-rose-100 text-rose-700' :
+                              order.status === 'APPROVED' ? 'bg-amber-100 text-amber-700' :
+                                'bg-slate-100 text-slate-700'
+                        }`}>
                         {order.status || 'PENDING'}
                       </span>
                     </div>
@@ -302,73 +301,74 @@ export default function Procurement() {
                       itemsList = relatedOrder.items;
                     }
                   }
-                  
+
                   const gstMultiplier = 1 + (companySettings?.globalGstPercentage ?? 18) / 100;
-                  
+
                   if (itemsList.length > 0) {
                     const sum = itemsList.reduce((acc, curr) => acc + ((curr.rate || curr.unitPrice || curr.price || 0) * (curr.quantity || 1) * gstMultiplier), 0);
                     if (sum > 0) return sum;
                   }
                   return (inv.amount || 0) * gstMultiplier;
                 };
-                
+
                 return (
-                <tr key={inv._id || inv.id} className="hover:bg-slate-50">
-                  <td className="px-4 py-3 text-sm text-slate-600">{inv.requestId || 'N/A'}</td>
-                  <td className="px-4 py-3 font-semibold text-slate-800">{inv.documentNo || inv.invoiceNo || inv.id}</td>
-                  <td className="px-4 py-3 text-sm font-medium">
-                    <span className={`px-2 py-1 rounded-full text-[10px] uppercase ${inv.type === 'Quotation' ? 'bg-blue-100 text-blue-700' : 'bg-purple-100 text-purple-700'}`}>
-                      {inv.type || 'Invoice'}
-                    </span>
-                  </td>
-                  <td className="px-4 py-3 text-sm">{inv.date || new Date(inv.createdAt).toLocaleDateString()}</td>
-                  <td className="px-4 py-3 text-right font-medium text-rose-600">₹{getInvoiceAmount().toLocaleString('en-IN', { maximumFractionDigits: 0 })}</td>
-                  <td className="px-4 py-3 text-center">
-                    <span className={`px-2 py-1 rounded-full text-xs font-bold ${inv.status === 'Paid' ? 'bg-emerald-100 text-emerald-700' : 'bg-amber-100 text-amber-700'}`}>
-                      {inv.status}
-                    </span>
-                  </td>
-                  <td className="px-4 py-3 text-center">
-                    <button onClick={() => setSelectedInvoice(inv)} className="text-indigo-600 hover:bg-indigo-50 px-3 py-1.5 rounded-lg flex items-center justify-center gap-1.5 text-sm font-medium w-full transition-colors mx-auto">
-                      <Receipt className="w-4 h-4" /> View
-                    </button>
-                  </td>
-                  <td className="px-4 py-3 text-center">
-                    {inv.status === 'Pending' && (
-                      <button
-                        onClick={() => navigate('/franchise/checkout', { state: { invoice: inv, finalAmount: getInvoiceAmount() } })}
-                        className="px-4 py-1.5 bg-emerald-50 text-emerald-600 rounded-lg text-xs font-bold hover:bg-emerald-100"
-                      >
-                        Proceed to Checkout
+                  <tr key={inv._id || inv.id} className="hover:bg-slate-50">
+                    <td className="px-4 py-3 text-sm text-slate-600">{inv.requestId || 'N/A'}</td>
+                    <td className="px-4 py-3 font-semibold text-slate-800">{inv.documentNo || inv.invoiceNo || inv.id}</td>
+                    <td className="px-4 py-3 text-sm font-medium">
+                      <span className={`px-2 py-1 rounded-full text-[10px] uppercase ${inv.type === 'Quotation' ? 'bg-blue-100 text-blue-700' : 'bg-purple-100 text-purple-700'}`}>
+                        {inv.type || 'Invoice'}
+                      </span>
+                    </td>
+                    <td className="px-4 py-3 text-sm">{inv.date || new Date(inv.createdAt).toLocaleDateString()}</td>
+                    <td className="px-4 py-3 text-right font-medium text-rose-600">₹{getInvoiceAmount().toLocaleString('en-IN', { maximumFractionDigits: 0 })}</td>
+                    <td className="px-4 py-3 text-center">
+                      <span className={`px-2 py-1 rounded-full text-xs font-bold ${inv.status === 'Paid' ? 'bg-emerald-100 text-emerald-700' : 'bg-amber-100 text-amber-700'}`}>
+                        {inv.status}
+                      </span>
+                    </td>
+                    <td className="px-4 py-3 text-center">
+                      <button onClick={() => setSelectedInvoice(inv)} className="text-indigo-600 hover:bg-indigo-50 px-3 py-1.5 rounded-lg flex items-center justify-center gap-1.5 text-sm font-medium w-full transition-colors mx-auto">
+                        <Receipt className="w-4 h-4" /> View
                       </button>
-                    )}
-                    {inv.status === 'Paid' && (
-                      <button
-                        onClick={() => {
-                          const relOrder = orders?.find(o => o.requestId === inv.requestId);
-                          setTrackingInvoice(relOrder || { requestId: inv.requestId, notDispatched: true });
-                        }}
-                        className="text-indigo-600 hover:bg-indigo-50 px-3 py-1.5 rounded-lg flex items-center justify-center gap-1.5 text-sm font-medium w-full transition-colors mx-auto"
-                      >
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18"/><path d="M14 9h4"/><path d="M14 15h4"/></svg>
-                        Track
-                      </button>
-                    )}
-                  </td>
-                </tr>
-              )})}
+                    </td>
+                    <td className="px-4 py-3 text-center">
+                      {inv.status === 'Pending' && (
+                        <button
+                          onClick={() => navigate('/franchise/checkout', { state: { invoice: inv, finalAmount: getInvoiceAmount() } })}
+                          className="px-4 py-1.5 bg-emerald-50 text-emerald-600 rounded-lg text-xs font-bold hover:bg-emerald-100"
+                        >
+                          Proceed to Checkout
+                        </button>
+                      )}
+                      {inv.status === 'Paid' && (
+                        <button
+                          onClick={() => {
+                            const relOrder = orders?.find(o => o.requestId === inv.requestId);
+                            setTrackingInvoice(relOrder || { requestId: inv.requestId, notDispatched: true });
+                          }}
+                          className="text-indigo-600 hover:bg-indigo-50 px-3 py-1.5 rounded-lg flex items-center justify-center gap-1.5 text-sm font-medium w-full transition-colors mx-auto"
+                        >
+                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" /><path d="M9 3v18" /><path d="M14 9h4" /><path d="M14 15h4" /></svg>
+                          Track
+                        </button>
+                      )}
+                    </td>
+                  </tr>
+                )
+              })}
               {b2bInvoices.filter(inv => {
                 if (activeTab === 'approvals') return inv.status === 'Pending';
                 if (activeTab === 'quotations') return inv.status !== 'Pending' && inv.type === 'Quotation';
                 if (activeTab === 'invoices') return inv.status !== 'Pending' && inv.type === 'Invoice';
                 return false;
               }).length === 0 && (
-                <tr>
-                  <td colSpan="8" className="px-4 py-6 text-center text-slate-500 italic">
-                    No {activeTab === 'approvals' ? 'pending approvals' : activeTab === 'quotations' ? 'quotations' : 'invoices'} found.
-                  </td>
-                </tr>
-              )}
+                  <tr>
+                    <td colSpan="8" className="px-4 py-6 text-center text-slate-500 italic">
+                      No {activeTab === 'approvals' ? 'pending approvals' : activeTab === 'quotations' ? 'quotations' : 'invoices'} found.
+                    </td>
+                  </tr>
+                )}
             </tbody>
           </table>
         </div>
@@ -406,8 +406,8 @@ export default function Procurement() {
                   <div className="bg-slate-50 p-4 rounded-xl border border-slate-100">
                     <h3 className="text-sm font-semibold text-slate-500 uppercase tracking-wider mb-3">Expected Delivery</h3>
                     <p className="font-bold text-slate-800 text-lg">
-                      {trackingInvoice.expectedDelivery 
-                        ? new Date(trackingInvoice.expectedDelivery).toLocaleDateString('en-GB') 
+                      {trackingInvoice.expectedDelivery
+                        ? new Date(trackingInvoice.expectedDelivery).toLocaleDateString('en-GB')
                         : 'N/A'}
                     </p>
                   </div>
@@ -521,544 +521,547 @@ export default function Procurement() {
                         value={formData.catalogItemId}
                         onChange={e => {
                           const item = techhansaCatalog.find(i => i._id === e.target.value);
-                          if (item) {
+                      if (item) {
                             const itemPrice = item.b2bPrice || item.price || item.sellingPrice || 0;
                             setFormData(prev => ({
-                              ...prev,
-                              catalogItemId: item._id,
-                              hardwareType: item.name?.trim(),
-                              brand: item.brand?.trim() || 'N/A',
-                              specs: { Category: item.category?.trim(), Model: item.model?.trim(), Specs: item.specs },
-                              price: item.sellingPrice || 0,
-                              amount: (item.sellingPrice || 0) * formData.quantity
+                        ...prev,
+                        catalogItemId: item._id,
+                      hardwareType: item.name?.trim(),
+                      brand: item.brand?.trim() || 'N/A',
+                      specs: {Category: item.category?.trim(), Model: item.model?.trim(), Specs: item.specs },
+                      price: item.sellingPrice || 0,
+                      amount: (item.sellingPrice || 0) * formData.quantity
                             }));
                           } else {
-                            setFormData(prev => ({ ...prev, catalogItemId: '', price: 0, amount: 0, specs: {} }));
+                        setFormData(prev => ({ ...prev, catalogItemId: '', price: 0, amount: 0, specs: {} }));
                           }
                         }}
-                        className="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-slate-50"
+                      className="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-slate-50"
                       >
-                        <option value="">Select Specific Variant</option>
-                        {specifications.map(item => {
-                          const itemPrice = item.b2bPrice || item.price || item.sellingPrice || 0;
+                      <option value="">Select Specific Variant</option>
+                      {specifications.map(item => {
+                        const itemPrice = item.b2bPrice || item.price || item.sellingPrice || 0;
 
-                          let specStr = item.model || 'Variant';
-                          if (typeof item.specs === 'string' && item.specs) {
-                            specStr = item.specs;
-                          } else if (typeof item.specifications === 'string' && item.specifications) {
-                            specStr = item.specifications;
-                          } else if (item.specs && typeof item.specs === 'object' && Object.keys(item.specs).length > 0) {
-                            specStr = Object.values(item.specs).filter(Boolean).join(', ') || item.model;
-                          } else if (item.specifications && typeof item.specifications === 'object' && Object.keys(item.specifications).length > 0) {
-                            specStr = Object.values(item.specifications).filter(Boolean).join(', ') || item.model;
-                          } else if (typeof item.configuration === 'string' && item.configuration) {
-                            specStr = item.configuration;
-                          }
-
-                          return (
-                            <option key={item._id} value={item._id}>
-                              {specStr} - Rs. {itemPrice.toLocaleString('en-IN')}
-                            </option>
-                          );
-                        })}
-                      </select>
-                    </div>
-
-                    <div className="space-y-1">
-                      <label className="text-sm font-semibold text-slate-700">Quantity</label>
-                      <input
-                        type="number"
-                        name="quantity"
-                        min="1"
-                        value={formData.quantity}
-                        onChange={e => {
-                          const qty = parseInt(e.target.value) || 1;
-                          setFormData(prev => ({ ...prev, quantity: qty, amount: prev.price * qty }));
-                        }}
-                        className="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-slate-50"
-                        required
-                      />
-                    </div>
-                  </div>
-
-                  {/* Pricing Info */}
-                  <div className="p-4 bg-indigo-50 rounded-xl flex items-center justify-between border border-indigo-100">
-                    <div>
-                      <p className="text-sm font-medium text-indigo-900">Unit Price: <span className="font-bold">Rs. {(formData.price || 0).toLocaleString('en-IN')}</span></p>
-                    </div>
-                    <div>
-                      <p className="text-sm font-medium text-indigo-900">Item Total: <span className="font-bold text-lg text-indigo-700">Rs. {(formData.amount || 0).toLocaleString('en-IN')}</span></p>
-                    </div>
-                  </div>
-
-                  {/* Comments */}
-                  <div className="space-y-1">
-                    <label className="text-sm font-semibold text-slate-700">Additional Comments / Remarks</label>
-                    <textarea
-                      name="comments"
-                      value={formData.comments}
-                      onChange={handleInputChange}
-                      className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-slate-50"
-                      rows="2"
-                    />
-                  </div>
-                </form>
-              </div>
-              <div className="p-6 border-t border-slate-100 bg-slate-50 flex-shrink-0 flex justify-between items-center">
-                <button
-                  type="button"
-                  onClick={() => setIsModalOpen(false)}
-                  className="px-6 py-2.5 text-slate-600 font-semibold hover:bg-slate-200 rounded-xl transition-colors"
-                >
-                  Cancel
-                </button>
-                <button
-                  type="submit"
-                  form="add-item-form"
-                  className="px-6 py-2.5 bg-indigo-600 text-white font-semibold rounded-xl hover:bg-indigo-700 transition-colors shadow-sm flex items-center gap-2"
-                >
-                  <Plus className="w-5 h-5" /> Add to Order
-                </button>
-              </div>
-            </div>
-
-            {/* Right Column: Order Summary & Submission */}
-            <div className="w-2/5 flex flex-col h-full bg-slate-50 min-h-0">
-              <div className="flex justify-between items-center p-6 border-b border-slate-200 flex-shrink-0">
-                <h3 className="text-xl font-bold text-slate-800 flex items-center gap-2">
-                  <ShoppingCart className="w-6 h-6 text-indigo-600" />
-                  Order Summary
-                </h3>
-                <button onClick={() => setIsModalOpen(false)} className="text-slate-400 hover:text-slate-600 p-1 bg-white rounded-full shadow-sm">
-                  <X className="w-5 h-5" />
-                </button>
-              </div>
-
-              <div className="p-6 overflow-y-auto flex-1">
-                {orderItems.length === 0 ? (
-                  <div className="h-full flex flex-col items-center justify-center text-slate-400">
-                    <ShoppingCart className="w-12 h-12 mb-3 text-slate-300" />
-                    <p className="font-medium">No items added yet</p>
-                    <p className="text-sm text-center mt-1">Fill the form and add items to your order list.</p>
-                  </div>
-                ) : (
-                  <div className="space-y-4">
-                    {orderItems.map((item, index) => (
-                      <div key={item.id} className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm relative group">
-                        <div className="flex justify-between items-start mb-2">
-                          <h4 className="font-bold text-slate-800">
-                            {item.hardwareType === 'Others' ? item.otherType : item.hardwareType}
-                          </h4>
-                          <span className="bg-indigo-100 text-indigo-700 text-xs font-bold px-2 py-1 rounded-lg">
-                            Qty: {item.quantity}
-                          </span>
-                        </div>
-                        <p className="text-sm text-slate-600 mb-1">
-                          <span className="font-semibold text-slate-700">Brand:</span> {item.brand}
-                        </p>
-
-                        {/* Display Specs summary */}
-                        {(typeof item.specs === 'string' && item.specs) ? (
-                          <div className="text-xs text-slate-500 bg-slate-50 p-2 rounded-lg mt-2 mb-1">
-                            {item.specs}
-                          </div>
-                        ) : (item.specs && typeof item.specs === 'object' && Object.keys(item.specs).length > 0) ? (
-                          <div className="text-xs text-slate-500 bg-slate-50 p-2 rounded-lg mt-2 mb-1">
-                            {Object.entries(item.specs).map(([key, val]) => (
-                              val ? <div key={key}><span className="capitalize font-medium">{key.replace(/([A-Z])/g, ' $1').trim()}:</span> {val}</div> : null
-                            ))}
-                          </div>
-                        ) : null}
-
-                        {item.comments && (
-                          <p className="text-xs text-slate-500 mt-2 line-clamp-2 italic">
-                            "{item.comments}"
-                          </p>
-                        )}
-
-                        <div className="mt-3 pt-3 border-t border-slate-100 flex justify-between items-center">
-                          <p className="text-xs text-slate-500">Unit: ₹{item.price?.toLocaleString() || 0}</p>
-                          <p className="text-sm font-bold text-slate-800">
-                            Total: ₹{item.amount?.toLocaleString() || (item.price * item.quantity).toLocaleString()}
-                          </p>
-                        </div>
-
-                        <button
-                          onClick={() => handleRemoveItem(item.id)}
-                          className="absolute -top-2 -right-2 bg-rose-100 text-rose-600 p-1.5 rounded-full shadow-sm opacity-0 group-hover:opacity-100 transition-opacity hover:bg-rose-200"
-                          title="Remove item"
-                        >
-                          <Trash2 className="w-4 h-4" />
-                        </button>
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </div>
-
-              <div className="p-6 border-t border-slate-200 bg-white shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)] flex-shrink-0">
-                <div className="flex justify-between items-center mb-4">
-                  <span className="font-semibold text-slate-600">Total Items:</span>
-                  <span className="text-lg font-bold text-slate-800">{orderItems.reduce((acc, item) => acc + Number(item.quantity), 0)}</span>
-                </div>
-                <button
-                  onClick={handleSubmitOrder}
-                  disabled={orderItems.length === 0}
-                  className={`w-full py-3.5 rounded-xl font-bold shadow-sm transition-colors text-white ${orderItems.length > 0
-                      ? 'bg-indigo-600 hover:bg-indigo-700'
-                      : 'bg-slate-300 cursor-not-allowed'
-                    }`}
-                >
-                  Submit Order Request
-                </button>
-              </div>
-            </div>
-
-          </div>
-        </div>
-      )}
-
-      {/* View Invoice Modal */}
-      {selectedInvoice && (
-        <div className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm">
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            className="bg-white rounded-2xl shadow-xl w-full max-w-7xl h-[125vh] max-h-[125vh] overflow-hidden flex flex-col"
-          >
-            <div className="flex items-center justify-between p-6 border-b border-slate-100">
-              <div>
-                <h2 className="text-xl font-bold text-slate-900">Invoice Details</h2>
-                <p className="text-sm text-slate-500 mt-1">{selectedInvoice.invoiceNo || selectedInvoice.invoiceId || 'N/A'}</p>
-              </div>
-              <button onClick={() => setSelectedInvoice(null)} className="p-2 text-slate-400 hover:text-slate-600 hover:bg-slate-100 rounded-full transition-colors">
-                <XCircle className="w-6 h-6" />
-              </button>
-            </div>
-
-            <div className="p-6 overflow-y-auto">
-              <div className="flex flex-col md:flex-row border border-slate-700 mb-6">
-                <div className="flex-1 flex flex-col border-b md:border-b-0 md:border-r border-slate-700">
-                  <div className="p-4 border-b border-slate-700">
-                    <h3 className="font-bold text-slate-900 uppercase">{resolvedCompanySettings.companyName}</h3>
-                    <p className="text-sm text-slate-700 whitespace-pre-wrap">{resolvedCompanySettings.registeredAddress}</p>
-                    <div className="mt-2 text-sm text-slate-700 space-y-0.5">
-                      <p><strong>GSTIN/UIN:</strong> {resolvedCompanySettings.gstin}</p>
-                      <p><strong>State Name:</strong> {resolvedCompanySettings.stateName}</p>
-                      <p><strong>Contact:</strong> {resolvedCompanySettings.contactNumber}</p>
-                      <p><strong>E-Mail:</strong> {resolvedCompanySettings.email}</p>
-                    </div>
-                  </div>
-                  <div className="p-4 flex-1">
-                    <h4 className="text-sm text-slate-500 mb-1">Buyer (Bill to)</h4>
-                    <p className="font-bold text-slate-900 uppercase">{storeProfileData?.storeName || storeProfileData?.companyName || storeProfileData?.franchiseName || user?.companyName || user?.name || 'Techhansa Franchise'}</p>
-                    <p className="text-sm text-slate-700">{storeProfileData?.address || storeProfileData?.location || user?.address || 'Franchise Address'}</p>
-                    <p className="text-sm text-slate-700 mt-1"><strong>Phone:</strong> {storeProfileData?.contact || storeProfileData?.phone || storeProfileData?.contactNumber || user?.phone || 'N/A'}</p>
-                    <p className="text-sm text-slate-700"><strong>Email:</strong> {storeProfileData?.email || user?.email || 'N/A'}</p>
-                  </div>
-                </div>
-
-                <div className="flex-1 flex flex-col">
-                  <div className="flex border-b border-slate-700">
-                    <div className="flex-1 p-4 border-r border-slate-700">
-                      <p className="text-sm text-slate-500">Invoice No.</p>
-                      <p className="font-bold text-slate-900">{selectedInvoice.documentNo || selectedInvoice.invoiceNo || selectedInvoice.invoiceNumber || selectedInvoice.invoiceId || selectedInvoice.id || selectedInvoice._id || 'N/A'}</p>
-                    </div>
-                    <div className="flex-1 p-4">
-                      <p className="text-sm text-slate-500">Dated</p>
-                      <p className="font-bold text-slate-900">{selectedInvoice.date || new Date(selectedInvoice.createdAt || Date.now()).toLocaleDateString('en-GB')}</p>
-                    </div>
-                  </div>
-                  <div className="flex border-b border-slate-700">
-                    <div className="flex-1 p-4 border-r border-slate-700">
-                      <p className="text-sm text-slate-500">Related Order</p>
-                      <p className="font-bold text-slate-900">{selectedInvoice.requestId || selectedInvoice.orderId || selectedInvoice.orderRequestId || selectedInvoice.orderReference?.orderId || selectedInvoice.orderReference?.orderNumber || (typeof selectedInvoice.orderReference === 'string' ? selectedInvoice.orderReference : 'N/A')}</p>
-                    </div>
-                    <div className="flex-1 p-4">
-                      <p className="text-sm text-slate-500">Mode/Terms of Payment</p>
-                      <p className="font-bold text-slate-900">{selectedInvoice.paymentStatus || selectedInvoice.status || 'Paid'}</p>
-                    </div>
-                  </div>
-                  <div className="flex-1 p-4 border-b border-slate-700 flex flex-col justify-center">
-                    <p className="text-sm text-slate-500">Country</p>
-                    <p className="font-bold text-slate-900">India</p>
-                  </div>
-                  <div className="flex-1 p-4 flex flex-col justify-center">
-                    <p className="text-sm text-slate-500">Terms of Delivery</p>
-                    <p className="font-bold text-slate-900">As per standard terms</p>
-                  </div>
-                </div>
-              </div>
-
-              <h3 className="text-lg font-bold text-slate-900 mb-4">Invoice Items</h3>
-              <div className="border border-slate-200 rounded-xl overflow-hidden mb-6">
-                <table className="w-full text-left border-collapse">
-                  <thead>
-                    <tr className="bg-slate-50 border-b border-slate-200">
-                      <th className="px-4 py-3 text-sm font-semibold text-slate-700 whitespace-nowrap">Serial No.</th>
-                      <th className="px-4 py-3 text-sm font-semibold text-slate-700 whitespace-nowrap">Item / Category</th>
-                      <th className="px-4 py-3 text-sm font-semibold text-slate-700 whitespace-nowrap">Brand</th>
-                      <th className="px-4 py-3 text-sm font-semibold text-slate-700 whitespace-nowrap">Model</th>
-                      <th className="px-4 py-3 text-sm font-semibold text-slate-700 whitespace-nowrap">Configuration</th>
-                      <th className="px-4 py-3 text-sm font-semibold text-slate-700 whitespace-nowrap">Purchase Date</th>
-                      <th className="px-4 py-3 text-sm font-semibold text-slate-700 text-center whitespace-nowrap">Qty</th>
-                      <th className="px-4 py-3 text-sm font-semibold text-slate-700 text-right whitespace-nowrap">Rate</th>
-                      <th className="px-4 py-3 text-sm font-semibold text-slate-700 text-right whitespace-nowrap">GST Amount</th>
-                      <th className="px-4 py-3 text-sm font-semibold text-slate-700 text-right whitespace-nowrap">Total Amount</th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-slate-100">
-                    {(() => {
-                      let itemsList = [];
-                      if (selectedInvoice.items && selectedInvoice.items.length > 0) {
-                        itemsList = selectedInvoice.items;
-                      } else if (selectedInvoice.requestId && orders && orders.length > 0) {
-                        const relatedOrder = orders.find(o => o.requestId === selectedInvoice.requestId);
-                        if (relatedOrder && relatedOrder.items && relatedOrder.items.length > 0) {
-                          itemsList = relatedOrder.items;
+                        let specStr = item.model || 'Variant';
+                        if (typeof item.specs === 'string' && item.specs) {
+                          specStr = item.specs;
+                        } else if (typeof item.specifications === 'string' && item.specifications) {
+                          specStr = item.specifications;
+                        } else if (item.specs && typeof item.specs === 'object' && Object.keys(item.specs).length > 0) {
+                          specStr = Object.values(item.specs).filter(Boolean).join(', ') || item.model;
+                        } else if (item.specifications && typeof item.specifications === 'object' && Object.keys(item.specifications).length > 0) {
+                          specStr = Object.values(item.specifications).filter(Boolean).join(', ') || item.model;
+                        } else if (typeof item.configuration === 'string' && item.configuration) {
+                          specStr = item.configuration;
                         }
-                      }
-                      
-                      if (itemsList.length === 0) {
-                        itemsList = [{ productName: 'Procurement Services / Goods', quantity: 1, unitPrice: selectedInvoice.amount }];
-                      }
-
-                      const totalQtyAcrossAllItems = itemsList.reduce((acc, curr) => acc + (curr.quantity || 1), 0);
-                      const assumedRate = totalQtyAcrossAllItems > 0 ? selectedInvoice.amount / totalQtyAcrossAllItems : 0;
-
-                      return itemsList.map((item, i) => {
-                        const baseRate = item.rate || item.unitPrice || item.price || assumedRate;
-                        const qty = item.quantity || 1;
-                        const gstRate = companySettings?.globalGstPercentage ?? 18;
-                        const baseAmt = baseRate * qty;
-                        const gstAmt = baseAmt * (gstRate / 100);
-                        const totalAmt = baseAmt + gstAmt;
-                        const inclusiveRate = baseRate;
-
-                        const configStr = (() => {
-                          if (typeof item.configuration === 'string' && item.configuration) {
-                            try {
-                              const parsed = JSON.parse(item.configuration);
-                              if (typeof parsed === 'object' && parsed !== null) {
-                                return Object.entries(parsed).map(([k, v]) => `${k}: ${v}`).join('\n');
-                              }
-                            } catch (e) {
-                              return item.configuration;
-                            }
-                            return item.configuration;
-                          }
-                          if (item.specs && typeof item.specs === 'object' && Object.keys(item.specs).length > 0) {
-                            return Object.entries(item.specs)
-                              .map(([k, v]) => `${k}: ${v}`)
-                              .join('\n');
-                          }
-                          if (item.configuration && typeof item.configuration === 'object') {
-                            return Object.entries(item.configuration).map(([k, v]) => `${k}: ${v}`).join('\n');
-                          }
-                          return '-';
-                        })();
 
                         return (
-                          <tr key={i} className="hover:bg-slate-50 transition-colors bg-white">
-                            <td className="px-4 py-3 text-sm text-slate-900 text-center">{i + 1}</td>
-                            <td className="px-4 py-3 text-sm text-slate-900">{item.hardwareType || item.productName || item.category || 'Item'}</td>
-                            <td className="px-4 py-3 text-sm text-slate-900">{item.brand || '-'}</td>
-                            <td className="px-4 py-3 text-sm text-slate-900">{item.model || item.hardwareType || item.productName || '-'}</td>
-                            <td className="px-4 py-3 text-sm text-slate-600 whitespace-pre-wrap break-words min-w-[200px]">{configStr}</td>
-                            <td className="px-4 py-3 text-sm text-slate-600">{selectedInvoice.date || new Date(selectedInvoice.createdAt || Date.now()).toLocaleDateString('en-GB')}</td>
-                            <td className="px-4 py-3 text-sm text-slate-900 text-center font-medium">{qty}</td>
-                            <td className="px-4 py-3 text-sm text-slate-900 text-right font-medium">{inclusiveRate.toLocaleString('en-IN', { minimumFractionDigits: 2 })}</td>
-                            <td className="px-4 py-3 text-sm text-slate-900 text-right font-medium">{gstAmt.toLocaleString('en-IN', { minimumFractionDigits: 2 })}</td>
-                            <td className="px-4 py-3 text-sm text-slate-900 text-right font-bold text-emerald-600">{totalAmt.toLocaleString('en-IN', { minimumFractionDigits: 2 })}</td>
-                          </tr>
+                          <option key={item._id} value={item._id}>
+                            {specStr} - Rs. {itemPrice.toLocaleString('en-IN')}
+                          </option>
                         );
-                      });
-                    })()}
-                  </tbody>
-                  <tfoot className="bg-slate-50 border-t border-slate-200">
-                    <tr>
-                      <td colSpan="6" className="px-4 py-3 text-sm font-bold text-right text-slate-900 uppercase">Total</td>
-                      <td className="px-4 py-3 text-sm font-bold text-center text-slate-900">
-                        {(() => {
-                          let itemsList = (selectedInvoice.items && selectedInvoice.items.length > 0) ? selectedInvoice.items : null;
-                          if (!itemsList && selectedInvoice.requestId && orders) {
-                            const relatedOrder = orders.find(o => o.requestId === selectedInvoice.requestId);
-                            if (relatedOrder && relatedOrder.items) itemsList = relatedOrder.items;
-                          }
-                          itemsList = itemsList || [{ quantity: 1 }];
-                          return itemsList.reduce((acc, curr) => acc + (curr.quantity || 1), 0);
-                        })()}
-                      </td>
-                      <td className="px-4 py-3 text-sm font-bold text-right text-slate-900">-</td>
-                      <td className="px-4 py-3 text-sm font-bold text-right text-slate-900">
-                        {(() => {
-                          let itemsList = (selectedInvoice.items && selectedInvoice.items.length > 0) ? selectedInvoice.items : null;
-                          if (!itemsList && selectedInvoice.requestId && orders) {
-                            const relatedOrder = orders.find(o => o.requestId === selectedInvoice.requestId);
-                            if (relatedOrder && relatedOrder.items) itemsList = relatedOrder.items;
-                          }
-                          itemsList = itemsList || [{ quantity: 1 }];
-                          const totalQty = itemsList.reduce((acc, curr) => acc + (curr.quantity || 1), 0);
-                          const assumedRate = totalQty > 0 ? selectedInvoice.amount / totalQty : 0;
-                          const totalGst = itemsList.reduce((acc, curr) => {
-                            const rate = curr.rate || curr.unitPrice || curr.price || assumedRate;
-                            const qty = curr.quantity || 1;
-                            const gstRate = companySettings?.globalGstPercentage ?? 18;
-                            return acc + (rate * qty * (gstRate / 100));
-                          }, 0);
-                          return totalGst.toLocaleString('en-IN', { minimumFractionDigits: 2 });
-                        })()}
-                      </td>
-                      <td className="px-4 py-3 text-sm font-bold text-right text-emerald-600">
-                        {(() => {
-                          let itemsList = (selectedInvoice.items && selectedInvoice.items.length > 0) ? selectedInvoice.items : null;
-                          if (!itemsList && selectedInvoice.requestId && orders) {
-                            const relatedOrder = orders.find(o => o.requestId === selectedInvoice.requestId);
-                            if (relatedOrder && relatedOrder.items) itemsList = relatedOrder.items;
-                          }
-                          itemsList = itemsList || [{ quantity: 1 }];
-                          const totalQty = itemsList.reduce((acc, curr) => acc + (curr.quantity || 1), 0);
-                          const assumedRate = totalQty > 0 ? selectedInvoice.amount / totalQty : 0;
-                          const finalAmt = itemsList.reduce((acc, curr) => {
-                            const rate = curr.rate || curr.unitPrice || curr.price || assumedRate;
-                            const qty = curr.quantity || 1;
-                            const gstRate = companySettings?.globalGstPercentage ?? 18;
-                            const taxable = rate * qty;
-                            return acc + taxable + (taxable * (gstRate / 100));
-                          }, 0);
-                          return finalAmt.toLocaleString('en-IN', { minimumFractionDigits: 2 });
-                        })()}
-                      </td>
-                    </tr>
-                  </tfoot>
-                </table>
-              </div>
-
-              {/* Financial Balances */}
-              <div className="p-4 border-b border-slate-700 flex justify-between bg-white border border-slate-200 border-b-0 rounded-t-xl">
-                <div className="text-sm flex items-center gap-2">
-                  <span className="text-slate-500">Received Amount:</span>
-                  <span className="font-bold text-emerald-600"> {(() => {
-                    const getModalTotal = () => {
-                      let itemsList = (selectedInvoice.items && selectedInvoice.items.length > 0) ? selectedInvoice.items : null;
-                      if (!itemsList && selectedInvoice.requestId && orders) {
-                        const relatedOrder = orders.find(o => o.requestId === selectedInvoice.requestId);
-                        if (relatedOrder && relatedOrder.items) itemsList = relatedOrder.items;
-                      }
-                      itemsList = itemsList || [{ quantity: 1 }];
-                      const totalQty = itemsList.reduce((acc, curr) => acc + (curr.quantity || 1), 0);
-                      const assumedRate = totalQty > 0 ? selectedInvoice.amount / totalQty : 0;
-                      return itemsList.reduce((acc, curr) => {
-                        const rate = curr.rate || curr.unitPrice || curr.price || assumedRate;
-                        const qty = curr.quantity || 1;
-                        const gstRate = companySettings?.globalGstPercentage ?? 18;
-                        return acc + (rate * qty) * (1 + (gstRate / 100));
-                      }, 0);
-                    };
-                    const modalTotal = getModalTotal();
-                    const received = (selectedInvoice.paymentStatus === 'Paid' || selectedInvoice.status === 'Paid') ? modalTotal : 0;
-                    return received.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-                  })()}</span>
-                </div>
-                <div className="text-sm flex items-center gap-2">
-                  <span className="text-slate-500">Balance Amount:</span>
-                  <span className="font-bold text-amber-600"> {(() => {
-                    const getModalTotal = () => {
-                      let itemsList = (selectedInvoice.items && selectedInvoice.items.length > 0) ? selectedInvoice.items : null;
-                      if (!itemsList && selectedInvoice.requestId && orders) {
-                        const relatedOrder = orders.find(o => o.requestId === selectedInvoice.requestId);
-                        if (relatedOrder && relatedOrder.items) itemsList = relatedOrder.items;
-                      }
-                      itemsList = itemsList || [{ quantity: 1 }];
-                      const totalQty = itemsList.reduce((acc, curr) => acc + (curr.quantity || 1), 0);
-                      const assumedRate = totalQty > 0 ? selectedInvoice.amount / totalQty : 0;
-                      return itemsList.reduce((acc, curr) => {
-                        const rate = curr.rate || curr.unitPrice || curr.price || assumedRate;
-                        const qty = curr.quantity || 1;
-                        const gstRate = companySettings?.globalGstPercentage ?? 18;
-                        return acc + (rate * qty) * (1 + (gstRate / 100));
-                      }, 0);
-                    };
-                    const modalTotal = getModalTotal();
-                    const received = (selectedInvoice.paymentStatus === 'Paid' || selectedInvoice.status === 'Paid') ? modalTotal : 0;
-                    const balance = Math.max(0, modalTotal - received);
-                    return balance.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-                  })()}</span>
-                </div>
-              </div>
-
-              {/* Bottom Section: Declaration & Bank Details */}
-              <div className="flex flex-col md:flex-row border border-slate-700 mb-6 rounded-b-xl overflow-hidden">
-                {/* Left: Declaration */}
-                <div className="flex-1 p-4 border-b md:border-b-0 md:border-r border-slate-700 flex flex-col bg-white">
-                  <div className="mb-4 text-sm">
-                    <p className="underline font-medium mb-1">Declaration</p>
-                    <p className="text-slate-700">We declare that this invoice shows the actual price of the goods described and that all particulars are true and correct.</p>
-                  </div>
-                </div>
-
-                {/* Right: Bank Details & Signatory */}
-                <div className="flex-1 flex flex-col bg-white">
-                  <div className="p-4 border-b border-slate-700 text-sm">
-                    <p className="underline font-medium mb-1">Company's Bank Details</p>
-                    <div className="grid grid-cols-[120px_1fr] gap-x-2 gap-y-0.5">
-                      <span className="text-slate-600">A/c Holder's Name</span>
-                      <span className="font-bold text-slate-900">: {resolvedCompanySettings.bankDetails?.accountHolderName || 'N/A'}</span>
-                      <span className="text-slate-600">Bank Name</span>
-                      <span className="font-bold text-slate-900">: {resolvedCompanySettings.bankDetails?.bankName || 'N/A'}</span>
-                      <span className="text-slate-600">A/c No.</span>
-                      <span className="font-bold text-slate-900">: {resolvedCompanySettings.bankDetails?.accountNo || 'N/A'}</span>
-                      <span className="text-slate-600">Branch & IFS Code</span>
-                      <span className="font-bold text-slate-900">: {resolvedCompanySettings.bankDetails?.branchName ? `${resolvedCompanySettings.bankDetails.branchName}, ` : ''}{resolvedCompanySettings.bankDetails?.ifscCode || 'N/A'}</span>
-                    </div>
+                      })}
+                    </select>
                   </div>
 
-                  {/* Signatory */}
-                  <div className="p-4 flex-1 flex flex-col justify-between min-h-[120px] text-right text-sm">
-                    <p className="font-bold text-slate-900">for {resolvedCompanySettings.companyName}</p>
-                    <div className="mt-auto">
-                      <p className="text-slate-500 whitespace-pre-wrap leading-tight">Verified by & Authorised Signatory<br />Company Secretary</p>
-                    </div>
+                  <div className="space-y-1">
+                    <label className="text-sm font-semibold text-slate-700">Quantity</label>
+                    <input
+                      type="number"
+                      name="quantity"
+                      min="1"
+                      value={formData.quantity}
+                      onChange={e => {
+                        const qty = parseInt(e.target.value) || 1;
+                        setFormData(prev => ({ ...prev, quantity: qty, amount: prev.price * qty }));
+                      }}
+                      className="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-slate-50"
+                      required
+                    />
                   </div>
+              </div>
+
+              {/* Pricing Info */}
+              <div className="p-4 bg-indigo-50 rounded-xl flex items-center justify-between border border-indigo-100">
+                <div>
+                  <p className="text-sm font-medium text-indigo-900">Unit Price: <span className="font-bold">Rs. {(formData.price || 0).toLocaleString('en-IN')}</span></p>
+                </div>
+                <div>
+                  <p className="text-sm font-medium text-indigo-900">Item Total: <span className="font-bold text-lg text-indigo-700">Rs. {(formData.amount || 0).toLocaleString('en-IN')}</span></p>
                 </div>
               </div>
 
-              {/* Amount in words */}
-              <div className="mb-6 bg-blue-50/50 p-4 rounded-xl border border-blue-100">
-                <p className="text-sm font-semibold text-blue-900 mb-1">Total Amount (in words)</p>
-                <p className="text-sm text-blue-800 font-medium">INR {(() => {
-                  const getModalTotal = () => {
-                    let itemsList = (selectedInvoice.items && selectedInvoice.items.length > 0) ? selectedInvoice.items : null;
-                    if (!itemsList && selectedInvoice.requestId && orders) {
-                      const relatedOrder = orders.find(o => o.requestId === selectedInvoice.requestId);
-                      if (relatedOrder && relatedOrder.items) itemsList = relatedOrder.items;
-                    }
-                    itemsList = itemsList || [{ quantity: 1 }];
-                    const totalQty = itemsList.reduce((acc, curr) => acc + (curr.quantity || 1), 0);
-                    const assumedRate = totalQty > 0 ? selectedInvoice.amount / totalQty : 0;
-                    return itemsList.reduce((acc, curr) => {
-                      const rate = curr.rate || curr.unitPrice || curr.price || assumedRate;
-                      const qty = curr.quantity || 1;
-                      const gstRate = companySettings?.globalGstPercentage ?? 18;
-                      return acc + (rate * qty) * (1 + (gstRate / 100));
-                    }, 0);
-                  };
-                  return numberToWords(Math.round(getModalTotal()));
-                })()} Only</p>
+              {/* Comments */}
+              <div className="space-y-1">
+                <label className="text-sm font-semibold text-slate-700">Additional Comments / Remarks</label>
+                <textarea
+                  name="comments"
+                  value={formData.comments}
+                  onChange={handleInputChange}
+                  className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-slate-50"
+                  rows="2"
+                />
               </div>
-            </div>
-
-            <div className="p-4 border-t border-slate-100 bg-slate-50 flex justify-end gap-3">
-              <button onClick={() => setSelectedInvoice(null)} className="px-6 py-2 bg-white border border-slate-200 text-slate-700 font-medium rounded-lg hover:bg-slate-100 transition-colors">
-                Close
-              </button>
-              <button onClick={() => printInvoice({ invoice: selectedInvoice, companySettings: resolvedCompanySettings, user: storeProfileData || user })} className="flex items-center gap-2 px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors shadow-sm">
-                <Printer className="w-4 h-4" /> Print PDF
-              </button>
-            </div>
-          </motion.div>
+            </form>
+          </div>
+          <div className="p-6 border-t border-slate-100 bg-slate-50 flex-shrink-0 flex justify-between items-center">
+            <button
+              type="button"
+              onClick={() => setIsModalOpen(false)}
+              className="px-6 py-2.5 text-slate-600 font-semibold hover:bg-slate-200 rounded-xl transition-colors"
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              form="add-item-form"
+              className="px-6 py-2.5 bg-indigo-600 text-white font-semibold rounded-xl hover:bg-indigo-700 transition-colors shadow-sm flex items-center gap-2"
+            >
+              <Plus className="w-5 h-5" /> Add to Order
+            </button>
+          </div>
         </div>
-      )}
+
+            {/* Right Column: Order Summary & Submission */}
+      <div className="w-2/5 flex flex-col h-full bg-slate-50 min-h-0">
+        <div className="flex justify-between items-center p-6 border-b border-slate-200 flex-shrink-0">
+          <h3 className="text-xl font-bold text-slate-800 flex items-center gap-2">
+            <ShoppingCart className="w-6 h-6 text-indigo-600" />
+            Order Summary
+          </h3>
+          <button onClick={() => setIsModalOpen(false)} className="text-slate-400 hover:text-slate-600 p-1 bg-white rounded-full shadow-sm">
+            <X className="w-5 h-5" />
+          </button>
+        </div>
+
+        <div className="p-6 overflow-y-auto flex-1">
+          {orderItems.length === 0 ? (
+            <div className="h-full flex flex-col items-center justify-center text-slate-400">
+              <ShoppingCart className="w-12 h-12 mb-3 text-slate-300" />
+              <p className="font-medium">No items added yet</p>
+              <p className="text-sm text-center mt-1">Fill the form and add items to your order list.</p>
+            </div>
+          ) : (
+            <div className="space-y-4">
+              {orderItems.map((item, index) => (
+                <div key={item.id} className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm relative group">
+                  <div className="flex justify-between items-start mb-2">
+                    <h4 className="font-bold text-slate-800">
+                      {item.hardwareType === 'Others' ? item.otherType : item.hardwareType}
+                    </h4>
+                    <span className="bg-indigo-100 text-indigo-700 text-xs font-bold px-2 py-1 rounded-lg">
+                      Qty: {item.quantity}
+                    </span>
+                  </div>
+                  <p className="text-sm text-slate-600 mb-1">
+                    <span className="font-semibold text-slate-700">Brand:</span> {item.brand}
+                  </p>
+
+                  {/* Display Specs summary */}
+                  {(typeof item.specs === 'string' && item.specs) ? (
+                    <div className="text-xs text-slate-500 bg-slate-50 p-2 rounded-lg mt-2 mb-1">
+                      {item.specs}
+                    </div>
+                  ) : (item.specs && typeof item.specs === 'object' && Object.keys(item.specs).length > 0) ? (
+                    <div className="text-xs text-slate-500 bg-slate-50 p-2 rounded-lg mt-2 mb-1">
+                      {Object.entries(item.specs).map(([key, val]) => (
+                        val ? <div key={key}><span className="capitalize font-medium">{key.replace(/([A-Z])/g, ' $1').trim()}:</span> {val}</div> : null
+                      ))}
+                    </div>
+                  ) : null}
+
+                  {item.comments && (
+                    <p className="text-xs text-slate-500 mt-2 line-clamp-2 italic">
+                      "{item.comments}"
+                    </p>
+                  )}
+
+                  <div className="mt-3 pt-3 border-t border-slate-100 flex justify-between items-center">
+                    <p className="text-xs text-slate-500">Unit: ₹{item.price?.toLocaleString() || 0}</p>
+                    <p className="text-sm font-bold text-slate-800">
+                      Total: ₹{item.amount?.toLocaleString() || (item.price * item.quantity).toLocaleString()}
+                    </p>
+                  </div>
+
+                  <button
+                    onClick={() => handleRemoveItem(item.id)}
+                    className="absolute -top-2 -right-2 bg-rose-100 text-rose-600 p-1.5 rounded-full shadow-sm opacity-0 group-hover:opacity-100 transition-opacity hover:bg-rose-200"
+                    title="Remove item"
+                  >
+                    <Trash2 className="w-4 h-4" />
+                  </button>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+
+        <div className="p-6 border-t border-slate-200 bg-white shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)] flex-shrink-0">
+          <div className="flex justify-between items-center mb-4">
+            <span className="font-semibold text-slate-600">Total Items:</span>
+            <span className="text-lg font-bold text-slate-800">{orderItems.reduce((acc, item) => acc + Number(item.quantity), 0)}</span>
+          </div>
+          <button
+            onClick={handleSubmitOrder}
+            disabled={orderItems.length === 0}
+            className={`w-full py-3.5 rounded-xl font-bold shadow-sm transition-colors text-white ${orderItems.length > 0
+              ? 'bg-indigo-600 hover:bg-indigo-700'
+              : 'bg-slate-300 cursor-not-allowed'
+              }`}
+          >
+            Submit Order Request
+          </button>
+        </div>
+      </div>
+
     </div>
+        </div >
+      )
+}
+
+{/* View Invoice Modal */ }
+{
+  selectedInvoice && (
+    <div className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm">
+      <motion.div
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={{ opacity: 1, scale: 1 }}
+        className="bg-white rounded-2xl shadow-xl w-full max-w-7xl h-[125vh] max-h-[125vh] overflow-hidden flex flex-col"
+      >
+        <div className="flex items-center justify-between p-6 border-b border-slate-100">
+          <div>
+            <h2 className="text-xl font-bold text-slate-900">Invoice Details</h2>
+            <p className="text-sm text-slate-500 mt-1">{selectedInvoice.invoiceNo || selectedInvoice.invoiceId || 'N/A'}</p>
+          </div>
+          <button onClick={() => setSelectedInvoice(null)} className="p-2 text-slate-400 hover:text-slate-600 hover:bg-slate-100 rounded-full transition-colors">
+            <XCircle className="w-6 h-6" />
+          </button>
+        </div>
+
+        <div className="p-6 overflow-y-auto">
+          <div className="flex flex-col md:flex-row border border-slate-700 mb-6">
+            <div className="flex-1 flex flex-col border-b md:border-b-0 md:border-r border-slate-700">
+              <div className="p-4 border-b border-slate-700">
+                <h3 className="font-bold text-slate-900 uppercase">{resolvedCompanySettings.companyName}</h3>
+                <p className="text-sm text-slate-700 whitespace-pre-wrap">{resolvedCompanySettings.registeredAddress}</p>
+                <div className="mt-2 text-sm text-slate-700 space-y-0.5">
+                  <p><strong>GSTIN/UIN:</strong> {resolvedCompanySettings.gstin}</p>
+                  <p><strong>State Name:</strong> {resolvedCompanySettings.stateName}</p>
+                  <p><strong>Contact:</strong> {resolvedCompanySettings.contactNumber}</p>
+                  <p><strong>E-Mail:</strong> {resolvedCompanySettings.email}</p>
+                </div>
+              </div>
+              <div className="p-4 flex-1">
+                <h4 className="text-sm text-slate-500 mb-1">Buyer (Bill to)</h4>
+                <p className="font-bold text-slate-900 uppercase">{storeProfileData?.storeName || storeProfileData?.companyName || storeProfileData?.franchiseName || user?.companyName || user?.name || 'AK Solutions Franchise'}</p>
+                <p className="text-sm text-slate-700">{storeProfileData?.address || storeProfileData?.location || user?.address || 'Franchise Address'}</p>
+                <p className="text-sm text-slate-700 mt-1"><strong>Phone:</strong> {storeProfileData?.contact || storeProfileData?.phone || storeProfileData?.contactNumber || user?.phone || 'N/A'}</p>
+                <p className="text-sm text-slate-700"><strong>Email:</strong> {storeProfileData?.email || user?.email || 'N/A'}</p>
+              </div>
+            </div>
+
+            <div className="flex-1 flex flex-col">
+              <div className="flex border-b border-slate-700">
+                <div className="flex-1 p-4 border-r border-slate-700">
+                  <p className="text-sm text-slate-500">Invoice No.</p>
+                  <p className="font-bold text-slate-900">{selectedInvoice.documentNo || selectedInvoice.invoiceNo || selectedInvoice.invoiceNumber || selectedInvoice.invoiceId || selectedInvoice.id || selectedInvoice._id || 'N/A'}</p>
+                </div>
+                <div className="flex-1 p-4">
+                  <p className="text-sm text-slate-500">Dated</p>
+                  <p className="font-bold text-slate-900">{selectedInvoice.date || new Date(selectedInvoice.createdAt || Date.now()).toLocaleDateString('en-GB')}</p>
+                </div>
+              </div>
+              <div className="flex border-b border-slate-700">
+                <div className="flex-1 p-4 border-r border-slate-700">
+                  <p className="text-sm text-slate-500">Related Order</p>
+                  <p className="font-bold text-slate-900">{selectedInvoice.requestId || selectedInvoice.orderId || selectedInvoice.orderRequestId || selectedInvoice.orderReference?.orderId || selectedInvoice.orderReference?.orderNumber || (typeof selectedInvoice.orderReference === 'string' ? selectedInvoice.orderReference : 'N/A')}</p>
+                </div>
+                <div className="flex-1 p-4">
+                  <p className="text-sm text-slate-500">Mode/Terms of Payment</p>
+                  <p className="font-bold text-slate-900">{selectedInvoice.paymentStatus || selectedInvoice.status || 'Paid'}</p>
+                </div>
+              </div>
+              <div className="flex-1 p-4 border-b border-slate-700 flex flex-col justify-center">
+                <p className="text-sm text-slate-500">Country</p>
+                <p className="font-bold text-slate-900">India</p>
+              </div>
+              <div className="flex-1 p-4 flex flex-col justify-center">
+                <p className="text-sm text-slate-500">Terms of Delivery</p>
+                <p className="font-bold text-slate-900">As per standard terms</p>
+              </div>
+            </div>
+          </div>
+
+          <h3 className="text-lg font-bold text-slate-900 mb-4">Invoice Items</h3>
+          <div className="border border-slate-200 rounded-xl overflow-hidden mb-6">
+            <table className="w-full text-left border-collapse">
+              <thead>
+                <tr className="bg-slate-50 border-b border-slate-200">
+                  <th className="px-4 py-3 text-sm font-semibold text-slate-700 whitespace-nowrap">Serial No.</th>
+                  <th className="px-4 py-3 text-sm font-semibold text-slate-700 whitespace-nowrap">Item / Category</th>
+                  <th className="px-4 py-3 text-sm font-semibold text-slate-700 whitespace-nowrap">Brand</th>
+                  <th className="px-4 py-3 text-sm font-semibold text-slate-700 whitespace-nowrap">Model</th>
+                  <th className="px-4 py-3 text-sm font-semibold text-slate-700 whitespace-nowrap">Configuration</th>
+                  <th className="px-4 py-3 text-sm font-semibold text-slate-700 whitespace-nowrap">Purchase Date</th>
+                  <th className="px-4 py-3 text-sm font-semibold text-slate-700 text-center whitespace-nowrap">Qty</th>
+                  <th className="px-4 py-3 text-sm font-semibold text-slate-700 text-right whitespace-nowrap">Rate</th>
+                  <th className="px-4 py-3 text-sm font-semibold text-slate-700 text-right whitespace-nowrap">GST Amount</th>
+                  <th className="px-4 py-3 text-sm font-semibold text-slate-700 text-right whitespace-nowrap">Total Amount</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-slate-100">
+                {(() => {
+                  let itemsList = [];
+                  if (selectedInvoice.items && selectedInvoice.items.length > 0) {
+                    itemsList = selectedInvoice.items;
+                  } else if (selectedInvoice.requestId && orders && orders.length > 0) {
+                    const relatedOrder = orders.find(o => o.requestId === selectedInvoice.requestId);
+                    if (relatedOrder && relatedOrder.items && relatedOrder.items.length > 0) {
+                      itemsList = relatedOrder.items;
+                    }
+                  }
+
+                  if (itemsList.length === 0) {
+                    itemsList = [{ productName: 'Procurement Services / Goods', quantity: 1, unitPrice: selectedInvoice.amount }];
+                  }
+
+                  const totalQtyAcrossAllItems = itemsList.reduce((acc, curr) => acc + (curr.quantity || 1), 0);
+                  const assumedRate = totalQtyAcrossAllItems > 0 ? selectedInvoice.amount / totalQtyAcrossAllItems : 0;
+
+                  return itemsList.map((item, i) => {
+                    const baseRate = item.rate || item.unitPrice || item.price || assumedRate;
+                    const qty = item.quantity || 1;
+                    const gstRate = companySettings?.globalGstPercentage ?? 18;
+                    const baseAmt = baseRate * qty;
+                    const gstAmt = baseAmt * (gstRate / 100);
+                    const totalAmt = baseAmt + gstAmt;
+                    const inclusiveRate = baseRate;
+
+                    const configStr = (() => {
+                      if (typeof item.configuration === 'string' && item.configuration) {
+                        try {
+                          const parsed = JSON.parse(item.configuration);
+                          if (typeof parsed === 'object' && parsed !== null) {
+                            return Object.entries(parsed).map(([k, v]) => `${k}: ${v}`).join('\n');
+                          }
+                        } catch (e) {
+                          return item.configuration;
+                        }
+                        return item.configuration;
+                      }
+                      if (item.specs && typeof item.specs === 'object' && Object.keys(item.specs).length > 0) {
+                        return Object.entries(item.specs)
+                          .map(([k, v]) => `${k}: ${v}`)
+                          .join('\n');
+                      }
+                      if (item.configuration && typeof item.configuration === 'object') {
+                        return Object.entries(item.configuration).map(([k, v]) => `${k}: ${v}`).join('\n');
+                      }
+                      return '-';
+                    })();
+
+                    return (
+                      <tr key={i} className="hover:bg-slate-50 transition-colors bg-white">
+                        <td className="px-4 py-3 text-sm text-slate-900 text-center">{i + 1}</td>
+                        <td className="px-4 py-3 text-sm text-slate-900">{item.hardwareType || item.productName || item.category || 'Item'}</td>
+                        <td className="px-4 py-3 text-sm text-slate-900">{item.brand || '-'}</td>
+                        <td className="px-4 py-3 text-sm text-slate-900">{item.model || item.hardwareType || item.productName || '-'}</td>
+                        <td className="px-4 py-3 text-sm text-slate-600 whitespace-pre-wrap break-words min-w-[200px]">{configStr}</td>
+                        <td className="px-4 py-3 text-sm text-slate-600">{selectedInvoice.date || new Date(selectedInvoice.createdAt || Date.now()).toLocaleDateString('en-GB')}</td>
+                        <td className="px-4 py-3 text-sm text-slate-900 text-center font-medium">{qty}</td>
+                        <td className="px-4 py-3 text-sm text-slate-900 text-right font-medium">{inclusiveRate.toLocaleString('en-IN', { minimumFractionDigits: 2 })}</td>
+                        <td className="px-4 py-3 text-sm text-slate-900 text-right font-medium">{gstAmt.toLocaleString('en-IN', { minimumFractionDigits: 2 })}</td>
+                        <td className="px-4 py-3 text-sm text-slate-900 text-right font-bold text-emerald-600">{totalAmt.toLocaleString('en-IN', { minimumFractionDigits: 2 })}</td>
+                      </tr>
+                    );
+                  });
+                })()}
+              </tbody>
+              <tfoot className="bg-slate-50 border-t border-slate-200">
+                <tr>
+                  <td colSpan="6" className="px-4 py-3 text-sm font-bold text-right text-slate-900 uppercase">Total</td>
+                  <td className="px-4 py-3 text-sm font-bold text-center text-slate-900">
+                    {(() => {
+                      let itemsList = (selectedInvoice.items && selectedInvoice.items.length > 0) ? selectedInvoice.items : null;
+                      if (!itemsList && selectedInvoice.requestId && orders) {
+                        const relatedOrder = orders.find(o => o.requestId === selectedInvoice.requestId);
+                        if (relatedOrder && relatedOrder.items) itemsList = relatedOrder.items;
+                      }
+                      itemsList = itemsList || [{ quantity: 1 }];
+                      return itemsList.reduce((acc, curr) => acc + (curr.quantity || 1), 0);
+                    })()}
+                  </td>
+                  <td className="px-4 py-3 text-sm font-bold text-right text-slate-900">-</td>
+                  <td className="px-4 py-3 text-sm font-bold text-right text-slate-900">
+                    {(() => {
+                      let itemsList = (selectedInvoice.items && selectedInvoice.items.length > 0) ? selectedInvoice.items : null;
+                      if (!itemsList && selectedInvoice.requestId && orders) {
+                        const relatedOrder = orders.find(o => o.requestId === selectedInvoice.requestId);
+                        if (relatedOrder && relatedOrder.items) itemsList = relatedOrder.items;
+                      }
+                      itemsList = itemsList || [{ quantity: 1 }];
+                      const totalQty = itemsList.reduce((acc, curr) => acc + (curr.quantity || 1), 0);
+                      const assumedRate = totalQty > 0 ? selectedInvoice.amount / totalQty : 0;
+                      const totalGst = itemsList.reduce((acc, curr) => {
+                        const rate = curr.rate || curr.unitPrice || curr.price || assumedRate;
+                        const qty = curr.quantity || 1;
+                        const gstRate = companySettings?.globalGstPercentage ?? 18;
+                        return acc + (rate * qty * (gstRate / 100));
+                      }, 0);
+                      return totalGst.toLocaleString('en-IN', { minimumFractionDigits: 2 });
+                    })()}
+                  </td>
+                  <td className="px-4 py-3 text-sm font-bold text-right text-emerald-600">
+                    {(() => {
+                      let itemsList = (selectedInvoice.items && selectedInvoice.items.length > 0) ? selectedInvoice.items : null;
+                      if (!itemsList && selectedInvoice.requestId && orders) {
+                        const relatedOrder = orders.find(o => o.requestId === selectedInvoice.requestId);
+                        if (relatedOrder && relatedOrder.items) itemsList = relatedOrder.items;
+                      }
+                      itemsList = itemsList || [{ quantity: 1 }];
+                      const totalQty = itemsList.reduce((acc, curr) => acc + (curr.quantity || 1), 0);
+                      const assumedRate = totalQty > 0 ? selectedInvoice.amount / totalQty : 0;
+                      const finalAmt = itemsList.reduce((acc, curr) => {
+                        const rate = curr.rate || curr.unitPrice || curr.price || assumedRate;
+                        const qty = curr.quantity || 1;
+                        const gstRate = companySettings?.globalGstPercentage ?? 18;
+                        const taxable = rate * qty;
+                        return acc + taxable + (taxable * (gstRate / 100));
+                      }, 0);
+                      return finalAmt.toLocaleString('en-IN', { minimumFractionDigits: 2 });
+                    })()}
+                  </td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+
+          {/* Financial Balances */}
+          <div className="p-4 border-b border-slate-700 flex justify-between bg-white border border-slate-200 border-b-0 rounded-t-xl">
+            <div className="text-sm flex items-center gap-2">
+              <span className="text-slate-500">Received Amount:</span>
+              <span className="font-bold text-emerald-600"> {(() => {
+                const getModalTotal = () => {
+                  let itemsList = (selectedInvoice.items && selectedInvoice.items.length > 0) ? selectedInvoice.items : null;
+                  if (!itemsList && selectedInvoice.requestId && orders) {
+                    const relatedOrder = orders.find(o => o.requestId === selectedInvoice.requestId);
+                    if (relatedOrder && relatedOrder.items) itemsList = relatedOrder.items;
+                  }
+                  itemsList = itemsList || [{ quantity: 1 }];
+                  const totalQty = itemsList.reduce((acc, curr) => acc + (curr.quantity || 1), 0);
+                  const assumedRate = totalQty > 0 ? selectedInvoice.amount / totalQty : 0;
+                  return itemsList.reduce((acc, curr) => {
+                    const rate = curr.rate || curr.unitPrice || curr.price || assumedRate;
+                    const qty = curr.quantity || 1;
+                    const gstRate = companySettings?.globalGstPercentage ?? 18;
+                    return acc + (rate * qty) * (1 + (gstRate / 100));
+                  }, 0);
+                };
+                const modalTotal = getModalTotal();
+                const received = (selectedInvoice.paymentStatus === 'Paid' || selectedInvoice.status === 'Paid') ? modalTotal : 0;
+                return received.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+              })()}</span>
+            </div>
+            <div className="text-sm flex items-center gap-2">
+              <span className="text-slate-500">Balance Amount:</span>
+              <span className="font-bold text-amber-600"> {(() => {
+                const getModalTotal = () => {
+                  let itemsList = (selectedInvoice.items && selectedInvoice.items.length > 0) ? selectedInvoice.items : null;
+                  if (!itemsList && selectedInvoice.requestId && orders) {
+                    const relatedOrder = orders.find(o => o.requestId === selectedInvoice.requestId);
+                    if (relatedOrder && relatedOrder.items) itemsList = relatedOrder.items;
+                  }
+                  itemsList = itemsList || [{ quantity: 1 }];
+                  const totalQty = itemsList.reduce((acc, curr) => acc + (curr.quantity || 1), 0);
+                  const assumedRate = totalQty > 0 ? selectedInvoice.amount / totalQty : 0;
+                  return itemsList.reduce((acc, curr) => {
+                    const rate = curr.rate || curr.unitPrice || curr.price || assumedRate;
+                    const qty = curr.quantity || 1;
+                    const gstRate = companySettings?.globalGstPercentage ?? 18;
+                    return acc + (rate * qty) * (1 + (gstRate / 100));
+                  }, 0);
+                };
+                const modalTotal = getModalTotal();
+                const received = (selectedInvoice.paymentStatus === 'Paid' || selectedInvoice.status === 'Paid') ? modalTotal : 0;
+                const balance = Math.max(0, modalTotal - received);
+                return balance.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+              })()}</span>
+            </div>
+          </div>
+
+          {/* Bottom Section: Declaration & Bank Details */}
+          <div className="flex flex-col md:flex-row border border-slate-700 mb-6 rounded-b-xl overflow-hidden">
+            {/* Left: Declaration */}
+            <div className="flex-1 p-4 border-b md:border-b-0 md:border-r border-slate-700 flex flex-col bg-white">
+              <div className="mb-4 text-sm">
+                <p className="underline font-medium mb-1">Declaration</p>
+                <p className="text-slate-700">We declare that this invoice shows the actual price of the goods described and that all particulars are true and correct.</p>
+              </div>
+            </div>
+
+            {/* Right: Bank Details & Signatory */}
+            <div className="flex-1 flex flex-col bg-white">
+              <div className="p-4 border-b border-slate-700 text-sm">
+                <p className="underline font-medium mb-1">Company's Bank Details</p>
+                <div className="grid grid-cols-[120px_1fr] gap-x-2 gap-y-0.5">
+                  <span className="text-slate-600">A/c Holder's Name</span>
+                  <span className="font-bold text-slate-900">: {resolvedCompanySettings.bankDetails?.accountHolderName || 'N/A'}</span>
+                  <span className="text-slate-600">Bank Name</span>
+                  <span className="font-bold text-slate-900">: {resolvedCompanySettings.bankDetails?.bankName || 'N/A'}</span>
+                  <span className="text-slate-600">A/c No.</span>
+                  <span className="font-bold text-slate-900">: {resolvedCompanySettings.bankDetails?.accountNo || 'N/A'}</span>
+                  <span className="text-slate-600">Branch & IFS Code</span>
+                  <span className="font-bold text-slate-900">: {resolvedCompanySettings.bankDetails?.branchName ? `${resolvedCompanySettings.bankDetails.branchName}, ` : ''}{resolvedCompanySettings.bankDetails?.ifscCode || 'N/A'}</span>
+                </div>
+              </div>
+
+              {/* Signatory */}
+              <div className="p-4 flex-1 flex flex-col justify-between min-h-[120px] text-right text-sm">
+                <p className="font-bold text-slate-900">for {resolvedCompanySettings.companyName}</p>
+                <div className="mt-auto">
+                  <p className="text-slate-500 whitespace-pre-wrap leading-tight">Verified by & Authorised Signatory<br />Company Secretary</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Amount in words */}
+          <div className="mb-6 bg-blue-50/50 p-4 rounded-xl border border-blue-100">
+            <p className="text-sm font-semibold text-blue-900 mb-1">Total Amount (in words)</p>
+            <p className="text-sm text-blue-800 font-medium">INR {(() => {
+              const getModalTotal = () => {
+                let itemsList = (selectedInvoice.items && selectedInvoice.items.length > 0) ? selectedInvoice.items : null;
+                if (!itemsList && selectedInvoice.requestId && orders) {
+                  const relatedOrder = orders.find(o => o.requestId === selectedInvoice.requestId);
+                  if (relatedOrder && relatedOrder.items) itemsList = relatedOrder.items;
+                }
+                itemsList = itemsList || [{ quantity: 1 }];
+                const totalQty = itemsList.reduce((acc, curr) => acc + (curr.quantity || 1), 0);
+                const assumedRate = totalQty > 0 ? selectedInvoice.amount / totalQty : 0;
+                return itemsList.reduce((acc, curr) => {
+                  const rate = curr.rate || curr.unitPrice || curr.price || assumedRate;
+                  const qty = curr.quantity || 1;
+                  const gstRate = companySettings?.globalGstPercentage ?? 18;
+                  return acc + (rate * qty) * (1 + (gstRate / 100));
+                }, 0);
+              };
+              return numberToWords(Math.round(getModalTotal()));
+            })()} Only</p>
+          </div>
+        </div>
+
+        <div className="p-4 border-t border-slate-100 bg-slate-50 flex justify-end gap-3">
+          <button onClick={() => setSelectedInvoice(null)} className="px-6 py-2 bg-white border border-slate-200 text-slate-700 font-medium rounded-lg hover:bg-slate-100 transition-colors">
+            Close
+          </button>
+          <button onClick={() => printInvoice({ invoice: selectedInvoice, companySettings: resolvedCompanySettings, user: storeProfileData || user })} className="flex items-center gap-2 px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors shadow-sm">
+            <Printer className="w-4 h-4" /> Print PDF
+          </button>
+        </div>
+      </motion.div>
+    </div>
+  )
+}
+    </div >
   );
 }

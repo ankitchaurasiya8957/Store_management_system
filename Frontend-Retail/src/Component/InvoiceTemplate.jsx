@@ -5,38 +5,38 @@ export default function InvoiceTemplate({ invoice, storeData, companySettings })
   if (!invoice) return null;
 
   const invoiceDate = new Date(invoice.createdAt).toLocaleDateString('en-GB');
-  
+
   // Use backend calculated amounts if available, otherwise fallback
   const subtotal = invoice.subtotalAmount || invoice.items.reduce((acc, item) => acc + ((item.quantity || 1) * (item.sellingPrice || 0)), 0);
   const total = invoice.amount || subtotal;
   const taxAmount = total - subtotal;
   const gstMultiplier = subtotal > 0 ? (total / subtotal) : 1;
-  
+
   const amountInWords = `INR ${numberToWords(Math.round(total))} Only`;
   const taxInWords = `INR ${numberToWords(Math.round(taxAmount))} Only`;
 
   return (
     <div className="w-full bg-white text-black p-4 text-xs font-sans" id="invoice-print-area">
       <h1 className="text-center text-xl font-bold mb-4 uppercase tracking-wider">Invoice</h1>
-      
+
       <div className="border-2 border-black w-full flex flex-col">
-        
+
         {/* Top Section */}
         <div className="flex w-full border-b-2 border-black">
           {/* Company Details */}
           <div className="w-[60%] p-2 border-r-2 border-black flex flex-col justify-between">
             <div>
-              <h2 className="font-bold text-sm mb-1">{storeData?.storeName || 'Techhansa Retail'}</h2>
+              <h2 className="font-bold text-sm mb-1">{storeData?.storeName || 'AK Solutions Retail'}</h2>
               <p className="leading-tight">
                 {storeData?.address || 'REGD. OFF-SHI 8/27A-K-3 GILAT BAZAR BYPASS\nSHIVPURKOT, VARANASI, UP-221002'}
               </p>
               <p className="mt-1">GSTIN/UIN: {storeData?.gst || 'N/A'}</p>
               <p>State Name: {storeData?.state || 'Uttar Pradesh'}</p>
               <p>Contact: {storeData?.phone || storeData?.contact || '+91-7607650206 , 9711888951'}</p>
-              <p>E-Mail: {storeData?.email || 'finance@techhansa.com'}</p>
+              <p>E-Mail: {storeData?.email || 'finance@AK Solutions.com'}</p>
             </div>
           </div>
-          
+
           {/* Invoice Meta */}
           <div className="w-[40%] flex flex-col">
             <div className="flex border-b-2 border-black">
@@ -109,7 +109,7 @@ export default function InvoiceTemplate({ invoice, storeData, companySettings })
                       {(() => {
                         if (!item.specs) return '-';
                         if (typeof item.specs !== 'string') {
-                          try { return JSON.stringify(item.specs); } catch(e) { return '-'; }
+                          try { return JSON.stringify(item.specs); } catch (e) { return '-'; }
                         }
                         try {
                           const parsed = JSON.parse(item.specs);
@@ -156,7 +156,7 @@ export default function InvoiceTemplate({ invoice, storeData, companySettings })
               </div>
             </div>
           </div>
-          
+
           <div className="p-2 border-b border-black flex justify-between items-center">
             <div>
               <p className="text-[10px] text-gray-600">Amount Chargeable (in words)</p>
@@ -178,11 +178,11 @@ export default function InvoiceTemplate({ invoice, storeData, companySettings })
             <p className="text-[10px] text-gray-600 mb-1">Declaration</p>
             <p>We declare that this invoice shows the actual price of the goods described and that all particulars are true and correct.</p>
           </div>
-          
+
           {/* Signatory */}
           <div className="w-1/2 flex flex-col">
             <div className="p-2 text-right flex flex-col justify-between min-h-[120px]">
-              <p className="font-bold">for {storeData?.storeName || 'Techhansa Retail'}</p>
+              <p className="font-bold">for {storeData?.storeName || 'AK Solutions Retail'}</p>
               <div className="mt-8">
                 <p className="text-[10px]">Verified by & Authorised Signatory</p>
                 <p className="text-[10px]">Company Secretary</p>
@@ -192,7 +192,7 @@ export default function InvoiceTemplate({ invoice, storeData, companySettings })
         </div>
 
       </div>
-      
+
       <div className="text-center mt-2 text-[10px] text-gray-500">
         This is a Computer Generated Invoice
       </div>

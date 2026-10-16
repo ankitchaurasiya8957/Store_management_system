@@ -89,8 +89,8 @@ export default function Invoices() {
     const seqNum = index >= 0 ? index + 1 : 1;
 
     // Company Name Short
-    const compName = companySettings?.companyName || 'TECHHANSA RETAIL';
-    const compShort = compName.toLowerCase().includes('techhansa') ? 'THS' : compName.substring(0, 3).toUpperCase();
+    const compName = companySettings?.companyName || 'AK Solutions RETAIL';
+    const compShort = compName.toLowerCase().includes('AK Solutions') ? 'THS' : compName.substring(0, 3).toUpperCase();
 
     // State Name Short
     const stateStr = companySettings?.stateName || companySettings?.registeredAddress || 'Uttar Pradesh';
@@ -161,7 +161,7 @@ export default function Invoices() {
                 <div className="flex items-center gap-2">
                   {inv.paymentStatus === 'Paid' && (
                     <button onClick={() => setTrackingInvoice(inv)} className="p-2 text-slate-400 hover:text-emerald-600 hover:bg-emerald-50 rounded-lg transition-colors" title="Delivery Tracking">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18"/><path d="M14 9h4"/><path d="M14 15h4"/></svg>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" /><path d="M9 3v18" /><path d="M14 9h4" /><path d="M14 15h4" /></svg>
                     </button>
                   )}
                   <button onClick={() => setSelectedInvoice(inv)} className="p-2 text-slate-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors" title="View Details">
@@ -172,9 +172,9 @@ export default function Invoices() {
               <div className="flex flex-wrap gap-x-6 gap-y-2 text-sm text-slate-500 mt-4">
                 <div className="flex items-center gap-1.5">
                   <span className="text-slate-400 font-medium">Amount:</span>
-                  <span className="text-slate-700 font-semibold text-emerald-600"> 
-                    {((inv.items && inv.items.length > 0) 
-                      ? inv.items.reduce((acc, item) => acc + ((item.rate || item.unitPrice || 0) * (item.quantity || 0) * (1 + ((companySettings?.globalGstPercentage ?? 18) / 100))), 0) 
+                  <span className="text-slate-700 font-semibold text-emerald-600">
+                    {((inv.items && inv.items.length > 0)
+                      ? inv.items.reduce((acc, item) => acc + ((item.rate || item.unitPrice || 0) * (item.quantity || 0) * (1 + ((companySettings?.globalGstPercentage ?? 18) / 100))), 0)
                       : ((inv.amount || 0) * (1 + ((companySettings?.globalGstPercentage ?? 18) / 100)))).toLocaleString('en-IN', { maximumFractionDigits: 0 })}
                   </span>
                 </div>
@@ -220,8 +220,8 @@ export default function Invoices() {
                   <div className="bg-slate-50 p-4 rounded-xl border border-slate-100">
                     <h3 className="text-sm font-semibold text-slate-500 uppercase tracking-wider mb-3">Expected Delivery</h3>
                     <p className="font-bold text-slate-800 text-lg">
-                      {trackingInvoice.orderReference?.expectedDelivery 
-                        ? new Date(trackingInvoice.orderReference.expectedDelivery).toLocaleDateString('en-GB') 
+                      {trackingInvoice.orderReference?.expectedDelivery
+                        ? new Date(trackingInvoice.orderReference.expectedDelivery).toLocaleDateString('en-GB')
                         : 'N/A'}
                     </p>
                   </div>
@@ -292,7 +292,7 @@ export default function Invoices() {
                 <div className="flex-1 flex flex-col border-b md:border-b-0 md:border-r border-slate-700">
                   {/* Company Details */}
                   <div className="p-4 border-b border-slate-700">
-                    <h3 className="font-bold text-slate-900 uppercase">{companySettings?.companyName || 'TECHHANSA RETAIL PVT LTD'}</h3>
+                    <h3 className="font-bold text-slate-900 uppercase">{companySettings?.companyName || 'AK Solutions RETAIL PVT LTD'}</h3>
                     <p className="text-sm text-slate-700 whitespace-pre-wrap">{companySettings?.registeredAddress || 'Address'}</p>
                     <div className="mt-2 text-sm text-slate-700 space-y-0.5">
                       <p><strong>GSTIN/UIN:</strong> {companySettings?.gstin || 'N/A'}</p>
@@ -564,7 +564,7 @@ export default function Invoices() {
 
                         {/* Signatory */}
                         <div className="p-4 flex-1 flex flex-col justify-between min-h-[120px] text-right text-sm">
-                          <p className="font-bold text-slate-900">for TECHHANSA RETAIL PVT LTD</p>
+                          <p className="font-bold text-slate-900">for AK Solutions RETAIL PVT LTD</p>
                           <div className="mt-auto">
                             <p className="text-slate-500 whitespace-pre-wrap leading-tight">{companySettings?.authorizedSignatoryText || 'Authorised Signatory'}</p>
                           </div>
@@ -717,7 +717,7 @@ export default function Invoices() {
                   const formattedTotal = computedTotal.toLocaleString('en-IN', { style: 'currency', currency: 'INR' });
                   const date = new Date(selectedInvoice.createdAt).toLocaleDateString('en-GB');
 
-                  const message = `Hello,\n\nHere are the details for your recent Techhansa Retail Invoice:\n\n*Invoice No:* ${selectedInvoice.invoiceNumber || 'N/A'}\n*Date:* ${date}\n*Total Amount:* ${formattedTotal}\n*Status:* ${selectedInvoice.paymentStatus || 'Pending'}\n\nPlease check your email or partner portal to download the full PDF.`;
+                  const message = `Hello,\n\nHere are the details for your recent AK Solutions Retail Invoice:\n\n*Invoice No:* ${selectedInvoice.invoiceNumber || 'N/A'}\n*Date:* ${date}\n*Total Amount:* ${formattedTotal}\n*Status:* ${selectedInvoice.paymentStatus || 'Pending'}\n\nPlease check your email or partner portal to download the full PDF.`;
 
                   const encodedMessage = encodeURIComponent(message);
                   const waUrl = `https://wa.me/${formattedNumber}?text=${encodedMessage}`;

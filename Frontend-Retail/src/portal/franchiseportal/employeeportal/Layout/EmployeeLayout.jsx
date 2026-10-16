@@ -68,22 +68,22 @@ export default function EmployeeLayout() {
 
   return (
     <div style={{ zoom: 0.75, height: '133.333vh', width: '133.333vw' }} className="flex bg-slate-100 md:p-4 md:gap-4 text-slate-800 font-sans overflow-hidden">
-      
+
       {/* Mobile Overlay */}
-      <div 
-        className={`fixed inset-0 bg-slate-900/50 z-40 md:hidden transition-opacity duration-300 ${isSidebarOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`} 
-        onClick={() => setIsSidebarOpen(false)} 
+      <div
+        className={`fixed inset-0 bg-slate-900/50 z-40 md:hidden transition-opacity duration-300 ${isSidebarOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
+        onClick={() => setIsSidebarOpen(false)}
       />
 
       {/* Sidebar */}
-      <aside 
+      <aside
         className={`fixed md:relative inset-y-0 left-0 z-50 w-72 md:w-80 bg-white md:rounded-2xl flex flex-col shadow-2xl md:shadow-sm overflow-hidden shrink-0 transform transition-transform duration-300 ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'}`}
       >
         <div className="h-20 md:h-28 flex items-center px-4 md:px-6 border-b border-slate-100 justify-between">
           <div className="flex items-center min-w-0">
-            <img src={logo} alt="Techhansa Retail" className="h-12 md:h-24 w-auto -ml-2 md:-ml-4 object-contain shrink-0" />
+            <img src={logo} alt="AK Solutions Retail" className="h-12 md:h-24 w-auto -ml-2 md:-ml-4 object-contain shrink-0" />
             <span className="text-base md:text-lg font-black ml-2 text-[var(--premium-gold)] tracking-tight uppercase whitespace-nowrap truncate">
-              Techhansa Retail
+              AK Solutions Retail
             </span>
           </div>
           <button className="md:hidden text-slate-400 hover:text-slate-600 p-2 shrink-0 ml-1" onClick={() => setIsSidebarOpen(false)}>
@@ -98,10 +98,9 @@ export default function EmployeeLayout() {
               to={item.path}
               end={item.end}
               className={({ isActive }) =>
-                `flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 ${
-                  isActive
-                    ? 'bg-indigo-50 text-indigo-600 font-semibold shadow-sm'
-                    : 'text-slate-500 hover:bg-slate-50 hover:text-indigo-500'
+                `flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 ${isActive
+                  ? 'bg-indigo-50 text-indigo-600 font-semibold shadow-sm'
+                  : 'text-slate-500 hover:bg-slate-50 hover:text-indigo-500'
                 }`
               }
             >
@@ -114,7 +113,7 @@ export default function EmployeeLayout() {
 
       {/* Main Content Area */}
       <div className="flex-1 flex flex-col bg-white md:rounded-2xl shadow-sm overflow-hidden relative w-full">
-        
+
         {/* Top Header */}
         <header className="h-16 bg-white border-b border-slate-200 flex items-center justify-between px-4 md:px-8 z-10 shrink-0">
           <div className="flex items-center gap-3">
@@ -131,12 +130,12 @@ export default function EmployeeLayout() {
               </div>
             </div>
           </div>
-          
+
           <div className="flex items-center gap-4 md:gap-6">
 
-            
+
             <div className="relative border-l border-slate-200 pl-6">
-              <button 
+              <button
                 onClick={() => setIsProfileMenuOpen(!isProfileMenuOpen)}
                 className="flex items-center gap-3 hover:bg-slate-50 p-2 rounded-xl transition-colors text-left"
               >
@@ -149,7 +148,7 @@ export default function EmployeeLayout() {
                 </div>
                 <ChevronDown size={14} className="text-slate-400 hidden md:block" />
               </button>
-              
+
               {isProfileMenuOpen && (
                 <div className="absolute top-full right-0 mt-2 w-56 bg-white border border-slate-200 rounded-xl shadow-lg py-2 z-50">
                   <button onClick={() => { setIsProfileMenuOpen(false); navigate('/employee/profile'); }} className="w-full flex items-center gap-3 px-4 py-2 text-sm text-slate-700 hover:bg-slate-50">

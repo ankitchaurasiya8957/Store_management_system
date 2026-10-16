@@ -1,5 +1,5 @@
 import React, { useEffect, useContext } from 'react';
-import { BrowserRouter as Router, Routes, Route, useLocation, Navigate, Outlet } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation, Navigate } from 'react-router-dom';
 
 // --- Auth Context ---
 import { AuthContext, AuthProvider } from './context/AuthContext';
@@ -97,11 +97,12 @@ function ScrollToTop() {
 // --- Role-Based Protection Wrapper ---
 const ProtectedRoute = ({ children, allowedRoles }) => {
   const { user, loading } = useContext(AuthContext);
+  const location = useLocation();
 
   if (loading) return <div className="flex min-h-screen items-center justify-center">Loading...</div>;
 
   // If not logged in, redirect to login page
-  if (!user) return <Navigate to="/login" replace />;
+  if (!user) return <Navigate to="/login" state={{ from: location }} replace />;
 
   if (allowedRoles && !allowedRoles.includes(user.role) && user.role !== 'admin') {
     return (

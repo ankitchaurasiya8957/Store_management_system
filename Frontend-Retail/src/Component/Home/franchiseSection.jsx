@@ -42,18 +42,18 @@ export default function FranchiseSection() {
 
   return (
     <section className="relative w-full py-24 bg-white overflow-hidden">
-      
+
       {/* Background Decorators */}
       <div className="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-[var(--soft-bg)] to-transparent z-0 pointer-events-none"></div>
       <div className="absolute top-[-10%] left-[-10%] w-[500px] h-[500px] bg-[var(--tech-blue)]/5 rounded-full blur-[100px] pointer-events-none z-0"></div>
 
       <div className="max-w-[1300px] mx-auto px-6 md:px-12 relative z-10">
-        
+
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-          
+
           {/* ================= LEFT COLUMN: CONTENT & CTA ================= */}
           <div className="flex flex-col" data-aos="fade-right">
-            
+
             <div className="flex items-center gap-3 mb-5">
               <span className="w-10 h-0.5 bg-[var(--premium-gold)]"></span>
               <span className="text-[13px] md:text-[14px] font-extrabold text-[var(--tech-blue)] uppercase tracking-[0.2em]">
@@ -69,7 +69,7 @@ export default function FranchiseSection() {
             </h2>
 
             <p className="text-gray-600 text-[16px] md:text-[17.5px] leading-relaxed font-medium mb-5">
-              Become a Techhansa Retail Franchise Partner and gain access to factory pricing, premium technology brands, marketing support, business guidance, and exclusive territory benefits.
+              Become a AK Solutions Retail Franchise Partner and gain access to factory pricing, premium technology brands, marketing support, business guidance, and exclusive territory benefits.
             </p>
 
             <p className="text-gray-600 text-[16px] md:text-[17.5px] leading-relaxed font-medium mb-10">
@@ -78,15 +78,15 @@ export default function FranchiseSection() {
 
             {/* CTA Button */}
             <div>
-              <Link 
+              <Link
                 to="/partnerpage?franchise"
                 className="group relative inline-flex items-center justify-center gap-3 px-9 py-4 bg-[var(--tech-blue)] rounded-xl font-bold text-white text-[16px] overflow-hidden shadow-[0_8px_20px_rgba(13,56,99,0.25)] hover:shadow-[0_15px_30px_rgba(13,56,99,0.4)] hover:-translate-y-1 transition-all duration-300"
               >
                 {/* Button Hover Sweep Effect */}
                 <span className="absolute inset-0 w-full h-full -ml-[-100%] bg-gradient-to-r from-transparent via-white/20 to-transparent group-hover:animate-sweep pointer-events-none"></span>
-                
+
                 Apply for Franchise
-                
+
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 transform group-hover:translate-x-1.5 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
                 </svg>
@@ -96,12 +96,12 @@ export default function FranchiseSection() {
 
           {/* ================= RIGHT COLUMN: BENEFITS GRID ================= */}
           <div className="relative w-full" data-aos="fade-left" data-aos-delay="200">
-            
+
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-5">
-              
+
               {/* Top 6 Benefits mapped dynamically */}
               {benefits.map((benefit, index) => (
-                <div 
+                <div
                   key={index}
                   className="group flex items-start gap-4 p-5 rounded-2xl bg-[var(--soft-bg)]/60 border border-gray-100 hover:bg-white hover:shadow-[0_10px_30px_rgba(13,56,99,0.08)] hover:border-[var(--tech-blue)]/20 transition-all duration-300 ease-out cursor-default"
                 >

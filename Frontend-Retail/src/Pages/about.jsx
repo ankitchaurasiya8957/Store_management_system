@@ -1,14 +1,14 @@
 import React, { useRef } from 'react';
 import { motion, useMotionValue } from 'framer-motion';
-import { 
-  ArrowRight, ShieldCheck, Award, Zap, Users, Target, 
+import {
+  ArrowRight, ShieldCheck, Award, Zap, Users, Target,
   Briefcase, Server, TrendingUp, CheckCircle2, Eye, Building2,
   CheckCircle, Globe, HeadphonesIcon, ThumbsUp, HeartHandshake, Shield
 } from 'lucide-react';
 
 // --- IMAGE IMPORTS ---
 import headerImg from '../assets/about-banner.jpg';
-import aboutBannerImg from '../assets/retail-store-banner.jpg'; 
+import aboutBannerImg from '../assets/retail-store-banner.jpg';
 import integrity from '../assets/integrity.jpg';
 import excellenceImg from '../assets/excellence.jpg';
 import innovationImg from '../assets/innovation.jpg';
@@ -37,28 +37,28 @@ import procureWithConfidenceImg from '../assets/procurewithconfidence.jpg';
 // --- DATA ARRAYS ---
 
 const productPortfolio = [
-  "Business Laptops", "Desktop Computers", "Workstations", 
-  "Enterprise Servers", "Networking Solutions", "Monitors", 
-  "Printers & Scanners", "Storage Devices", "CCTV & Security Systems", 
+  "Business Laptops", "Desktop Computers", "Workstations",
+  "Enterprise Servers", "Networking Solutions", "Monitors",
+  "Printers & Scanners", "Storage Devices", "CCTV & Security Systems",
   "UPS & Power Backup Solutions", "IT Accessories & Peripherals", "Custom Enterprise IT Solutions"
 ];
 
 const pillars = [
-  { 
-    title: "Solutions for Every Industry", 
-    icon: Building2, 
+  {
+    title: "Solutions for Every Industry",
+    icon: Building2,
     desc: "We proudly serve Corporate Offices, IT Companies, Educational Institutions, Universities & Colleges, Schools, Hospitals, Public Sector Enterprises, Banking & Financial Institutions, Manufacturing Industries, Startups, MSMEs, System Integrators, and Business Consultants.",
     image: everyIndustryImg
   },
-  { 
-    title: "Partner Portal", 
-    icon: Users, 
+  {
+    title: "Partner Portal",
+    icon: Users,
     desc: "Designed for IT distributors, suppliers, OEMs, authorized dealers, and system integrators. Partners can participate in live bidding opportunities, receive qualified leads, submit quotations, manage orders, and expand their customer base.",
     image: partnerPortalImg
   },
-  { 
-    title: "Franchise Opportunities", 
-    icon: Globe, 
+  {
+    title: "Franchise Opportunities",
+    icon: Globe,
     desc: "Our nationwide franchise program offers an established business model, brand support, technical assistance, business training, marketing support, lead generation, sales guidance, and continuous operational support.",
     image: franchiseOpportunityImg
   }
@@ -74,33 +74,33 @@ const whyChooseUs = [
 ];
 
 const coreValues = [
-  { 
-    title: "Integrity", 
-    desc: "Honesty, transparency, and accountability in every interaction. We build trust by delivering on our promises and maintaining the highest ethical standards.", 
+  {
+    title: "Integrity",
+    desc: "Honesty, transparency, and accountability in every interaction. We build trust by delivering on our promises and maintaining the highest ethical standards.",
     icon: ShieldCheck,
-    image: integrity 
+    image: integrity
   },
-  { 
-    title: "Excellence", 
-    desc: "Continuously improving to deliver exceptional customer experiences. We settle for nothing less than superior quality in our network and services.", 
+  {
+    title: "Excellence",
+    desc: "Continuously improving to deliver exceptional customer experiences. We settle for nothing less than superior quality in our network and services.",
     icon: Award,
     image: excellenceImg
   },
-  { 
-    title: "Innovation", 
-    desc: "Technology driving smarter procurement and better outcomes. We constantly adapt our platform to meet the evolving needs of modern enterprises.", 
+  {
+    title: "Innovation",
+    desc: "Technology driving smarter procurement and better outcomes. We constantly adapt our platform to meet the evolving needs of modern enterprises.",
     icon: Zap,
     image: innovationImg
   },
-  { 
-    title: "Partnership", 
-    desc: "Building long-term relationships through trust and shared success. We believe in collaborative growth with both our buyers and suppliers.", 
+  {
+    title: "Partnership",
+    desc: "Building long-term relationships through trust and shared success. We believe in collaborative growth with both our buyers and suppliers.",
     icon: Users,
     image: partnershipImg
   },
-  { 
-    title: "Customer Success", 
-    desc: "Measured strictly by the growth, efficiency, and satisfaction of our ecosystem. Your operational success is our primary benchmark.", 
+  {
+    title: "Customer Success",
+    desc: "Measured strictly by the growth, efficiency, and satisfaction of our ecosystem. Your operational success is our primary benchmark.",
     icon: Target,
     image: customerSuccessImg
   }
@@ -118,7 +118,7 @@ const whoCanJoin = [
 // missing images, since the render was mistakenly reading from "steps"
 // while the real image URLs lived only in "process".
 const process = [
-  { title: "Register", desc: "Create your verified business profile on the Techhansa platform.", image: registerImg },
+  { title: "Register", desc: "Create your verified business profile on the AK Solutions platform.", image: registerImg },
   { title: "Submit Requirements", desc: "Share your bulk hardware needs with complete specifications.", image: serviceRequirementImg },
   { title: "Receive Competitive Bids", desc: "Verified suppliers submit competitive quotations transparently.", image: competitiveBidsImg },
   { title: "Compare & Select", desc: "Evaluate pricing and offerings before making your decision.", image: compareSelectImg },
@@ -135,15 +135,15 @@ export default function AboutPage() {
 
   const handleMouseMove = (e) => {
     const { clientX, clientY } = e;
-    const x = (clientX / window.innerWidth - 0.5) * 2; 
-    const y = (clientY / window.innerHeight - 0.5) * 2; 
+    const x = (clientX / window.innerWidth - 0.5) * 2;
+    const y = (clientY / window.innerHeight - 0.5) * 2;
     mouseX.set(x);
     mouseY.set(y);
   };
 
   return (
     <div ref={containerRef} className="relative min-h-screen text-gray-600 font-sans bg-transparent overflow-hidden selection:bg-[#0d3863]/20 selection:text-[#0d3863]">
-      
+
       {/* --- INJECT CUSTOM CSS FOR SINGLE UPWARD SCANNING ANIMATION --- */}
       <style>{`
         @keyframes scanUpOnce {
@@ -159,7 +159,7 @@ export default function AboutPage() {
 
       {/* --- TOP BANNER SECTION --- */}
       <section className="relative w-full h-[300px] flex items-center justify-center overflow-hidden bg-slate-700">
-        <div 
+        <div
           className="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat"
           style={{ backgroundImage: `url(${aboutBannerImg})` }}
         >
@@ -167,7 +167,7 @@ export default function AboutPage() {
         </div>
 
         <div className="relative z-10 text-center px-6 max-w-4xl mx-auto flex flex-col items-center">
-          <motion.h1 
+          <motion.h1
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
@@ -175,8 +175,8 @@ export default function AboutPage() {
           >
             About Us
           </motion.h1>
-          
-          <motion.div 
+
+          <motion.div
             initial={{ width: 0, opacity: 0 }}
             animate={{ width: "80px", opacity: 1 }}
             transition={{ delay: 0.4, duration: 0.8, ease: "anticipate" }}
@@ -186,13 +186,13 @@ export default function AboutPage() {
       </section>
 
       {/* --- HERO SECTION --- */}
-      <section 
+      <section
         onMouseMove={handleMouseMove}
         className="relative z-10 pt-16 pb-12 px-6 lg:px-12 w-full flex items-center"
       >
         <div className="relative z-10 max-w-7xl mx-auto w-full grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           <div className="flex flex-col items-center text-center lg:items-start lg:text-left">
-            <motion.h1 
+            <motion.h1
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
@@ -201,17 +201,17 @@ export default function AboutPage() {
               Empowering Businesses with Smarter IT Procurement
             </motion.h1>
 
-            <motion.p 
-              initial={{ opacity: 0, y: 20 }} 
-              animate={{ opacity: 1, y: 0 }} 
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2, duration: 0.8 }}
               className="text-lg text-gray-600 max-w-xl leading-relaxed mb-6 font-medium"
             >
-              Welcome to Techhansa Retail, a next-generation B2B IT hardware procurement platform dedicated to simplifying enterprise technology purchasing. We connect organizations with trusted suppliers through a transparent, efficient, and competitive procurement ecosystem.
+              Welcome to AK Solutions Retail, a next-generation B2B IT hardware procurement platform dedicated to simplifying enterprise technology purchasing. We connect organizations with trusted suppliers through a transparent, efficient, and competitive procurement ecosystem.
             </motion.p>
-            <motion.p 
-              initial={{ opacity: 0, y: 20 }} 
-              animate={{ opacity: 1, y: 0 }} 
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3, duration: 0.8 }}
               className="text-lg text-gray-600 max-w-xl leading-relaxed mb-6 font-medium"
             >
@@ -219,16 +219,16 @@ export default function AboutPage() {
             </motion.p>
           </div>
 
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, x: 40 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.4, duration: 1, ease: "easeOut" }}
             className="relative w-full h-full flex justify-center lg:justify-end"
           >
             <div className="relative w-full max-w-md lg:max-w-full rounded-[2.5rem] overflow-hidden shadow-2xl border-[4px] border-white/60">
-              <img 
-                src={headerImg} 
-                alt="IT Hardware Procurement" 
+              <img
+                src={headerImg}
+                alt="IT Hardware Procurement"
                 className="w-full h-auto md:h-[500px] object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-tr from-[#0d3863]/20 to-transparent pointer-events-none mix-blend-overlay"></div>
@@ -240,13 +240,13 @@ export default function AboutPage() {
       {/* --- WHO WE ARE & MISSION / VISION (WITH IMAGE BACKGROUNDS) --- */}
       <section className="relative z-10 py-24 px-6 lg:px-12 bg-gray-50/50 backdrop-blur-lg border-y border-gray-200/50">
         <div className="max-w-7xl mx-auto">
-          
+
           <div className="text-center max-w-3xl mx-auto mb-20">
             <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-6">
               <span className="text-gray-600">Who We</span> <span className="text-[#0d3863]">Are</span>
             </h2>
             <p className="text-gray-600 text-lg leading-relaxed">
-              At Techhansa Retail, we believe technology procurement should be simple, transparent, and value-driven. Our centralized marketplace enables verified suppliers to compete for your business, helping organizations make smarter purchasing decisions while creating new opportunities for suppliers, partners, and entrepreneurs.
+              At AK Solutions Retail, we believe technology procurement should be simple, transparent, and value-driven. Our centralized marketplace enables verified suppliers to compete for your business, helping organizations make smarter purchasing decisions while creating new opportunities for suppliers, partners, and entrepreneurs.
             </p>
           </div>
 
@@ -258,20 +258,20 @@ export default function AboutPage() {
                 <img src={missionImg} alt="Mission Background" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
                 <div className="absolute inset-0 bg-slate-900/35 transition-colors duration-500 group-hover:bg-slate-900/80"></div>
               </div>
-              
+
               {/* Default View Content */}
               <div className="absolute inset-0 flex flex-col items-center justify-center p-8 transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:-translate-y-10 group-hover:opacity-0">
                 <div className="w-20 h-20 rounded-2xl bg-white/10 backdrop-blur-sm border border-white/20 flex items-center justify-center text-white mb-6">
                   <Target className="w-10 h-10" />
                 </div>
-               
+
               </div>
-              
+
               {/* Hover View Slide Up */}
               <div className="absolute inset-0 bg-[#0d3863] rounded-[2rem] p-10 flex flex-col justify-center translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-[cubic-bezier(0.23,1,0.32,1)]">
                 <h3 className="text-2xl font-bold text-white mb-4">Our Mission</h3>
                 <p className="text-blue-100 leading-relaxed md:text-lg">
-                 To revolutionize B2B IT hardware procurement through a transparent, technology-driven platform connecting buyers, suppliers, partners, and franchise businesses while making procurement smarter, faster, and more cost-effective.
+                  To revolutionize B2B IT hardware procurement through a transparent, technology-driven platform connecting buyers, suppliers, partners, and franchise businesses while making procurement smarter, faster, and more cost-effective.
                 </p>
               </div>
             </motion.div>
@@ -319,7 +319,7 @@ export default function AboutPage() {
           <h3 className="text-xl font-bold text-[#0d3863] mb-8 text-center uppercase tracking-wider">Product Portfolio</h3>
           <div className="flex flex-wrap justify-center gap-4">
             {productPortfolio.map((item, i) => (
-              <motion.div 
+              <motion.div
                 key={i}
                 initial={{ opacity: 0, scale: 0.9 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ delay: i * 0.05 }}
                 className="flex items-center gap-3 bg-white px-6 py-3 rounded-full shadow-sm border border-gray-100 text-gray-600 font-medium hover:bg-[#0d3863] hover:text-white transition-colors cursor-default"
@@ -335,7 +335,7 @@ export default function AboutPage() {
       <section className="relative z-10 py-24 px-6 lg:px-12 bg-gray-50/50 border-y border-gray-200/50">
         <div className="max-w-7xl mx-auto grid md:grid-cols-3 gap-8">
           {pillars.map((pillar, i) => (
-            <motion.div 
+            <motion.div
               key={i}
               initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.15 }}
               className="group relative bg-slate-900 rounded-[2rem] shadow-sm border border-gray-100 overflow-hidden h-[380px] md:h-[420px] cursor-pointer isolation-isolate"
@@ -353,7 +353,7 @@ export default function AboutPage() {
                 </div>
                 <h3 className="text-2xl font-bold text-white text-center px-4">{pillar.title}</h3>
               </div>
-              
+
               {/* Hover View Slide Up */}
               <div className="absolute inset-0 bg-[#0d3863] rounded-[2rem] p-10 flex flex-col justify-center translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-[cubic-bezier(0.23,1,0.32,1)]">
                 <h3 className="text-2xl font-bold text-white mb-6 border-b border-white/20 pb-4">{pillar.title}</h3>
@@ -370,11 +370,11 @@ export default function AboutPage() {
       <section id='BuyBulk' className="relative z-10 py-24 px-6 lg:px-12">
         <div className="max-w-7xl mx-auto text-center">
           <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-16">
-            <span className="text-gray-600">Why Choose</span> <span className="text-[#0d3863]">Techhansa Retail</span>
+            <span className="text-gray-600">Why Choose</span> <span className="text-[#0d3863]">AK Solutions Retail</span>
           </h2>
           <div className="grid grid-cols-2 md:grid-cols-3 gap-6 lg:gap-10">
             {whyChooseUs.map((item, i) => (
-              <motion.div 
+              <motion.div
                 key={i}
                 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}
                 className="group relative bg-slate-900 rounded-3xl border border-gray-100 shadow-sm overflow-hidden h-[220px] cursor-pointer isolation-isolate"
@@ -413,13 +413,13 @@ export default function AboutPage() {
             <span className="text-[#6d6c6c]">Our Core</span> <span className="text-[#0d3863]">Values</span>
           </h2>
         </div>
-        
+
         <div className="relative max-w-6xl mx-auto">
           {/* Base Background Line */}
           <div className="absolute left-[24px] md:left-1/2 top-0 bottom-0 w-[2px] bg-gray-200/20 transform md:-translate-x-1/2 rounded-full z-0"></div>
-          
+
           {/* Animated Gradient Line that automatically slides down based on Viewport instead of scroll */}
-          <motion.div 
+          <motion.div
             className="absolute left-[24px] md:left-1/2 top-0 bottom-0 w-[2px] bg-gradient-to-b from-gray-700 to-[#0d3863] transform md:-translate-x-1/2 rounded-full origin-top z-0"
             initial={{ scaleY: 0 }}
             whileInView={{ scaleY: 1 }}
@@ -430,8 +430,8 @@ export default function AboutPage() {
           <div className="flex flex-col gap-20 md:gap-32">
             {coreValues.map((val, i) => (
               <div key={i} className={`relative flex flex-col md:flex-row items-center w-full ${i % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'}`}>
-                
-                <motion.div 
+
+                <motion.div
                   initial={{ scale: 0 }} whileInView={{ scale: 1 }} viewport={{ once: true, margin: "-100px" }} transition={{ type: "spring" }}
                   className="absolute left-[24px] md:left-1/2 w-5 h-5 rounded-full bg-white border-[4px] border-[#0d3863] transform -translate-x-1/2 z-10 shadow-[0_0_15px_rgba(13,56,99,0.4)]"
                 ></motion.div>
@@ -451,7 +451,7 @@ export default function AboutPage() {
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-[#0d3863]/20 to-transparent pointer-events-none"></div>
                   </div>
-                  
+
                   <div className={`absolute top-6 ${i % 2 === 0 ? 'right-6 md:-right-6 lg:-right-8' : 'left-6 md:-left-6 lg:-left-8'} bg-white/90 backdrop-blur-md p-3.5 rounded-2xl shadow-xl z-20`}>
                     <val.icon strokeWidth={2} className="w-6 h-6 text-[#0d3863]" />
                   </div>
@@ -482,7 +482,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-     {/* --- HOW IT WORKS (PURCHASING PROCESS - WITH IMAGES) --- */}
+      {/* --- HOW IT WORKS (PURCHASING PROCESS - WITH IMAGES) --- */}
       <section className="relative z-10 py-32 px-6 lg:px-12 max-w-7xl mx-auto">
         <div className="text-center mb-24">
           <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-4">
@@ -517,7 +517,7 @@ export default function AboutPage() {
 
               {/* Hover View (Slide Up + Scanner) */}
               <div className="absolute inset-0 bg-[#0d3863] rounded-[2.5rem] p-10 flex flex-col justify-center translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-[cubic-bezier(0.23,1,0.32,1)]">
-                
+
                 {/* Scanner Effect */}
                 <div className="absolute inset-0 pointer-events-none rounded-[2.5rem] overflow-hidden">
                   <div className="absolute -bottom-10 left-0 w-full h-[150px] bg-gradient-to-t from-transparent via-[#ffffff]/5 to-[#ffffff]/15 border-t-2 border-white/20 opacity-0 animate-scanner-once"></div>
@@ -542,7 +542,7 @@ export default function AboutPage() {
           <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-center mb-16">
             <span className="text-gray-500">One Ecosystem,</span> <span className="text-[#0d3863]">Endless Possibilities</span>
           </h2>
-          
+
           <div className="grid md:grid-cols-3 gap-8">
             {whoCanJoin.map((group, i) => (
               <motion.div
@@ -582,7 +582,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-    
+
     </div>
   );
 }

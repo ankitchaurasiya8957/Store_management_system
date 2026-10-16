@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { motion } from 'framer-motion';
 import { Search, Filter, MoreHorizontal, ChevronDown, XCircle } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';const tableVariants = {
+import { useNavigate } from 'react-router-dom'; const tableVariants = {
   hidden: { opacity: 0, y: 20 },
   visible: { opacity: 1, y: 0, transition: { type: 'spring', stiffness: 300, damping: 24 } }
 };
@@ -84,121 +84,121 @@ export default function ProcurementTables() {
     <>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
 
-      {/* Recent RFPs - Card List Layout */}
-      <motion.div variants={tableVariants} className="bg-white rounded-2xl shadow-sm border border-slate-100 flex flex-col">
-        {/* HATA DIYA GAYA HAI: border-b border-slate-100 */}
-        <div className="p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-          <h2 className="text-lg font-bold text-slate-900">Recent RFPs</h2>
-          <div className="flex items-center gap-2 relative">
-            {showRfpSearch && (
-              <input
-                type="text"
-                placeholder="Search RFPs..."
-                value={rfpSearch}
-                onChange={(e) => setRfpSearch(e.target.value)}
-                className="px-3 py-1.5 text-sm border border-slate-200 rounded-lg focus:outline-none focus:border-blue-500 w-40"
-                autoFocus
-              />
-            )}
-            <button onClick={() => setShowRfpSearch(!showRfpSearch)} className="p-2 text-slate-400 hover:text-slate-600 hover:bg-slate-50 rounded-lg transition-colors">
-              <Search className="w-4 h-4" />
-            </button>
-            <div className="relative group">
-              <button className="p-2 text-slate-400 hover:text-slate-600 hover:bg-slate-50 rounded-lg transition-colors">
-                <Filter className="w-4 h-4" />
+        {/* Recent RFPs - Card List Layout */}
+        <motion.div variants={tableVariants} className="bg-white rounded-2xl shadow-sm border border-slate-100 flex flex-col">
+          {/* HATA DIYA GAYA HAI: border-b border-slate-100 */}
+          <div className="p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <h2 className="text-lg font-bold text-slate-900">Recent RFPs</h2>
+            <div className="flex items-center gap-2 relative">
+              {showRfpSearch && (
+                <input
+                  type="text"
+                  placeholder="Search RFPs..."
+                  value={rfpSearch}
+                  onChange={(e) => setRfpSearch(e.target.value)}
+                  className="px-3 py-1.5 text-sm border border-slate-200 rounded-lg focus:outline-none focus:border-blue-500 w-40"
+                  autoFocus
+                />
+              )}
+              <button onClick={() => setShowRfpSearch(!showRfpSearch)} className="p-2 text-slate-400 hover:text-slate-600 hover:bg-slate-50 rounded-lg transition-colors">
+                <Search className="w-4 h-4" />
+              </button>
+              <div className="relative group">
+                <button className="p-2 text-slate-400 hover:text-slate-600 hover:bg-slate-50 rounded-lg transition-colors">
+                  <Filter className="w-4 h-4" />
+                </button>
+                <div className="absolute right-0 top-full mt-2 w-40 bg-white border border-slate-100 shadow-xl rounded-xl py-1 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-20">
+                  {statuses.map(s => (
+                    <button key={s} onClick={() => setRfpFilter(s)} className={`block w-full text-left px-4 py-2 text-sm ${rfpFilter === s ? 'text-blue-600 bg-blue-50 font-medium' : 'text-slate-600 hover:bg-slate-50'}`}>
+                      {s === 'Submitted' ? 'Pending' : s}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* HATA DIYA GAYA HAI: divide-y divide-slate-100 */}
+          <div className="pb-2">
+            {filteredRfps.length > 0 ? filteredRfps.map((rfp) => {
+              const styles = getStatusStyles(rfp.status);
+              const date = new Date(rfp.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+              return (
+                <div
+                  key={rfp._id}
+                  onClick={() => setSelectedRfp(rfp)}
+                  className="p-4 hover:bg-slate-50/80 transition-colors group cursor-pointer"
+                >
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="font-semibold text-blue-600 text-sm group-hover:underline">{rfp.rfpId}</span>
+                    <span className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold ${styles.bg} ${styles.text}`}>
+                      <span className="w-1.5 h-1.5 rounded-full mr-1.5 bg-current"></span>
+                      {styles.label || rfp.status}
+                    </span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm text-slate-700 font-medium">{rfp.title}</span>
+                    <span className="text-sm text-slate-600 font-semibold">{date}</span>
+                  </div>
+                </div>
+              );
+            }) : <div className="p-4 text-sm text-slate-500">No recent RFPs.</div>}
+
+          </div>
+        </motion.div>
+
+        {/* Recent Quotations - Card List Layout */}
+        <motion.div variants={tableVariants} className="bg-white rounded-2xl shadow-sm border border-slate-100 flex flex-col">
+          {/* HATA DIYA GAYA HAI: border-b border-slate-100 */}
+          <div className="p-5 flex items-center justify-between">
+            <h2 className="text-lg font-bold text-slate-900">Recent Quotations</h2>
+            <div className="flex gap-2 relative group">
+              <button className="flex items-center gap-1 px-3 py-1.5 text-sm font-medium text-slate-600 hover:bg-slate-50 rounded-lg border border-slate-200 transition-colors">
+                {qtFilter === 'All' ? 'Filter' : (qtFilter === 'Pending' ? 'Pending Admin Approval' : qtFilter)} <ChevronDown className="w-4 h-4" />
               </button>
               <div className="absolute right-0 top-full mt-2 w-40 bg-white border border-slate-100 shadow-xl rounded-xl py-1 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-20">
-                {statuses.map(s => (
-                  <button key={s} onClick={() => setRfpFilter(s)} className={`block w-full text-left px-4 py-2 text-sm ${rfpFilter === s ? 'text-blue-600 bg-blue-50 font-medium' : 'text-slate-600 hover:bg-slate-50'}`}>
-                    {s === 'Submitted' ? 'Pending' : s}
+                {qtStatuses.map(s => (
+                  <button key={s} onClick={() => setQtFilter(s)} className={`block w-full text-left px-4 py-2 text-sm ${qtFilter === s ? 'text-blue-600 bg-blue-50 font-medium' : 'text-slate-600 hover:bg-slate-50'}`}>
+                    {s === 'Pending' ? 'Pending Admin Approval' : s}
                   </button>
                 ))}
               </div>
             </div>
           </div>
-        </div>
 
-        {/* HATA DIYA GAYA HAI: divide-y divide-slate-100 */}
-        <div className="pb-2">
-          {filteredRfps.length > 0 ? filteredRfps.map((rfp) => {
-            const styles = getStatusStyles(rfp.status);
-            const date = new Date(rfp.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
-            return (
-              <div 
-                key={rfp._id} 
-                onClick={() => setSelectedRfp(rfp)}
-                className="p-4 hover:bg-slate-50/80 transition-colors group cursor-pointer"
-              >
-                <div className="flex items-center justify-between mb-2">
-                  <span className="font-semibold text-blue-600 text-sm group-hover:underline">{rfp.rfpId}</span>
-                  <span className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold ${styles.bg} ${styles.text}`}>
-                    <span className="w-1.5 h-1.5 rounded-full mr-1.5 bg-current"></span>
-                    {styles.label || rfp.status}
-                  </span>
+          {/* HATA DIYA GAYA HAI: divide-y divide-slate-100 */}
+          <div className="pb-2">
+            {filteredQuotations.length > 0 ? filteredQuotations.map((qt) => {
+              const styles = getStatusStyles(qt.status);
+              const date = new Date(qt.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+              return (
+                <div
+                  key={qt._id}
+                  onClick={() => setSelectedQuotation(qt)}
+                  className="p-4 hover:bg-slate-50/80 transition-colors group cursor-pointer"
+                >
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="font-semibold text-blue-600 text-sm group-hover:underline">{qt.quotationNo || qt.quotationId || 'QT-XXXX'}</span>
+                    <span className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold ${styles.bg} ${styles.text}`}>
+                      {styles.label || qt.status}
+                    </span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm text-slate-700 font-medium">{qt.vendorName || (qt.vendor === 'TBD' ? 'AK Solutions Retail' : qt.vendor) || 'AK Solutions Retail'}</span>
+                    <span className="text-sm text-slate-600 font-semibold">{date}</span>
+                  </div>
                 </div>
-                <div className="flex items-center justify-between">
-                  <span className="text-sm text-slate-700 font-medium">{rfp.title}</span>
-                  <span className="text-sm text-slate-600 font-semibold">{date}</span>
-                </div>
-              </div>
-            );
-          }) : <div className="p-4 text-sm text-slate-500">No recent RFPs.</div>}
-
-        </div>
-      </motion.div>
-
-      {/* Recent Quotations - Card List Layout */}
-      <motion.div variants={tableVariants} className="bg-white rounded-2xl shadow-sm border border-slate-100 flex flex-col">
-        {/* HATA DIYA GAYA HAI: border-b border-slate-100 */}
-        <div className="p-5 flex items-center justify-between">
-          <h2 className="text-lg font-bold text-slate-900">Recent Quotations</h2>
-          <div className="flex gap-2 relative group">
-            <button className="flex items-center gap-1 px-3 py-1.5 text-sm font-medium text-slate-600 hover:bg-slate-50 rounded-lg border border-slate-200 transition-colors">
-              {qtFilter === 'All' ? 'Filter' : (qtFilter === 'Pending' ? 'Pending Admin Approval' : qtFilter)} <ChevronDown className="w-4 h-4" />
-            </button>
-            <div className="absolute right-0 top-full mt-2 w-40 bg-white border border-slate-100 shadow-xl rounded-xl py-1 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all z-20">
-              {qtStatuses.map(s => (
-                <button key={s} onClick={() => setQtFilter(s)} className={`block w-full text-left px-4 py-2 text-sm ${qtFilter === s ? 'text-blue-600 bg-blue-50 font-medium' : 'text-slate-600 hover:bg-slate-50'}`}>
-                  {s === 'Pending' ? 'Pending Admin Approval' : s}
-                </button>
-              ))}
-            </div>
+              );
+            }) : <div className="p-4 text-sm text-slate-500">No recent quotations.</div>}
           </div>
-        </div>
+        </motion.div>
 
-        {/* HATA DIYA GAYA HAI: divide-y divide-slate-100 */}
-        <div className="pb-2">
-          {filteredQuotations.length > 0 ? filteredQuotations.map((qt) => {
-            const styles = getStatusStyles(qt.status);
-            const date = new Date(qt.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
-            return (
-              <div 
-                key={qt._id} 
-                onClick={() => setSelectedQuotation(qt)}
-                className="p-4 hover:bg-slate-50/80 transition-colors group cursor-pointer"
-              >
-                <div className="flex items-center justify-between mb-2">
-                  <span className="font-semibold text-blue-600 text-sm group-hover:underline">{qt.quotationNo || qt.quotationId || 'QT-XXXX'}</span>
-                  <span className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold ${styles.bg} ${styles.text}`}>
-                    {styles.label || qt.status}
-                  </span>
-                </div>
-                <div className="flex items-center justify-between">
-                  <span className="text-sm text-slate-700 font-medium">{qt.vendorName || (qt.vendor === 'TBD' ? 'Techhansa Retail' : qt.vendor) || 'Techhansa Retail'}</span>
-                  <span className="text-sm text-slate-600 font-semibold">{date}</span>
-                </div>
-              </div>
-            );
-          }) : <div className="p-4 text-sm text-slate-500">No recent quotations.</div>}
-        </div>
-      </motion.div>
-
-    </div>
+      </div>
 
       {/* View RFP Modal */}
       {selectedRfp && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/50 backdrop-blur-sm">
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             className="bg-white rounded-2xl shadow-xl w-full max-w-4xl max-h-[90vh] overflow-hidden flex flex-col"
@@ -212,7 +212,7 @@ export default function ProcurementTables() {
                 <XCircle className="w-6 h-6" />
               </button>
             </div>
-            
+
             <div className="p-6 overflow-y-auto">
               <div className="grid grid-cols-2 gap-6 mb-8">
                 <div>
@@ -257,7 +257,7 @@ export default function ProcurementTables() {
                 </table>
               </div>
             </div>
-            
+
             <div className="p-4 border-t border-slate-100 bg-slate-50 flex justify-end">
               <button onClick={() => navigate('/channel/rfp', { state: { openRfp: selectedRfp } })} className="px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors mr-3">
                 Manage Details
@@ -292,7 +292,7 @@ export default function ProcurementTables() {
               <div className="grid grid-cols-2 gap-6 mb-8">
                 <div>
                   <p className="text-sm font-medium text-slate-500 mb-1">Vendor</p>
-                  <p className="text-slate-900 font-semibold">{selectedQuotation.vendorName || (selectedQuotation.vendor === 'TBD' ? 'Techhansa Retail' : selectedQuotation.vendor) || 'Techhansa Retail'}</p>
+                  <p className="text-slate-900 font-semibold">{selectedQuotation.vendorName || (selectedQuotation.vendor === 'TBD' ? 'AK Solutions Retail' : selectedQuotation.vendor) || 'AK Solutions Retail'}</p>
                 </div>
                 <div>
                   <p className="text-sm font-medium text-slate-500 mb-1">Total Amount</p>
@@ -317,7 +317,7 @@ export default function ProcurementTables() {
                   </span>
                 </div>
               </div>
-              
+
               {selectedQuotation.items && selectedQuotation.items.length > 0 && (
                 <>
                   <h3 className="text-lg font-bold text-slate-900 mb-4">Quoted Items</h3>
@@ -342,13 +342,13 @@ export default function ProcurementTables() {
                           const gst = total - base;
 
                           return (
-                          <tr key={i} className="hover:bg-slate-50 transition-colors">
-                            <td className="px-4 py-3 text-sm text-slate-900">{item.name || item.productName || item.brand}</td>
-                            <td className="px-4 py-3 text-sm text-slate-900 text-center font-medium">{qty}</td>
-                            <td className="px-4 py-3 text-sm text-slate-900 text-right font-medium">₹{base?.toLocaleString('en-IN', { maximumFractionDigits: 2 }) || 0}</td>
-                            <td className="px-4 py-3 text-sm text-slate-900 text-right font-medium">₹{gst.toLocaleString('en-IN', { maximumFractionDigits: 2 })}</td>
-                            <td className="px-4 py-3 text-sm text-slate-900 text-right font-medium">₹{total.toLocaleString('en-IN', { maximumFractionDigits: 2 })}</td>
-                          </tr>
+                            <tr key={i} className="hover:bg-slate-50 transition-colors">
+                              <td className="px-4 py-3 text-sm text-slate-900">{item.name || item.productName || item.brand}</td>
+                              <td className="px-4 py-3 text-sm text-slate-900 text-center font-medium">{qty}</td>
+                              <td className="px-4 py-3 text-sm text-slate-900 text-right font-medium">₹{base?.toLocaleString('en-IN', { maximumFractionDigits: 2 }) || 0}</td>
+                              <td className="px-4 py-3 text-sm text-slate-900 text-right font-medium">₹{gst.toLocaleString('en-IN', { maximumFractionDigits: 2 })}</td>
+                              <td className="px-4 py-3 text-sm text-slate-900 text-right font-medium">₹{total.toLocaleString('en-IN', { maximumFractionDigits: 2 })}</td>
+                            </tr>
                           );
                         })}
                       </tbody>

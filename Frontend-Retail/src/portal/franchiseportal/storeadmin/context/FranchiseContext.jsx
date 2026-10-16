@@ -15,7 +15,7 @@ export function FranchiseProvider({ children }) {
   const [orders, setOrders] = useState([]);
   const [storeProfileData, setStoreProfileData] = useState(null);
   const [globalCart, setGlobalCart] = useState([]);
-  
+
   const [techhansaCatalog, setTechhansaCatalog] = useState([]);
   const [b2bInvoices, setB2bInvoices] = useState([]);
   const [walletTransactions, setWalletTransactions] = useState([]);
@@ -81,16 +81,16 @@ export function FranchiseProvider({ children }) {
       }
 
       if (profileRes.status === 'fulfilled' && profileRes.value.data.success) {
-         setStoreProfileData(profileRes.value.data.data);
-         setMetrics({
-           todaysSales: dynTodaysSales,
-           monthlySales: dynMonthlySales,
-           walletBalance: profileRes.value.data.data.walletBalance || 0,
-           totalCredit: profileRes.value.data.data.totalCredit || 0,
-           usedCredit: profileRes.value.data.data.usedCredit || 0,
-           completedOrders: dynCompletedOrders,
-           pendingOrders: dynPendingOrders,
-         });
+        setStoreProfileData(profileRes.value.data.data);
+        setMetrics({
+          todaysSales: dynTodaysSales,
+          monthlySales: dynMonthlySales,
+          walletBalance: profileRes.value.data.data.walletBalance || 0,
+          totalCredit: profileRes.value.data.data.totalCredit || 0,
+          usedCredit: profileRes.value.data.data.usedCredit || 0,
+          completedOrders: dynCompletedOrders,
+          pendingOrders: dynPendingOrders,
+        });
       }
       if (inventoryRes.status === 'fulfilled' && inventoryRes.value.data.success) setInventory(inventoryRes.value.data.data);
       if (walletRes.status === 'fulfilled' && walletRes.value.data.success) setWalletTransactions(walletRes.value.data.data);
@@ -146,7 +146,7 @@ export function FranchiseProvider({ children }) {
     try {
       // Optimistic UI update
       setStoreProfileData(newProfile);
-      
+
       const res = await axios.put(`${import.meta.env.VITE_API_BASE_URL}/api/franchise/${storeId}/profile`, newProfile);
       if (res.data.success) {
         setStoreProfileData(res.data.data);

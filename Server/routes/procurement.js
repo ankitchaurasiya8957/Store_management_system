@@ -81,7 +81,7 @@ router.post('/rfp', async (req, res) => {
       const CompanySettings = require('../models/CompanySettings');
       let settings = await CompanySettings.findOne();
       const gstRate = settings && settings.globalGstPercentage !== undefined ? settings.globalGstPercentage : 18;
-      
+
       // Create placeholder Quotation
       // Build items array from RFP products
       const mappedItems = (newRFP.products || []).map(p => {
@@ -163,17 +163,17 @@ router.post('/quotations/:id/pay', async (req, res) => {
     quotation.paymentMethod = paymentMethod;
     if (utrNumber) quotation.utrNumber = utrNumber;
     quotation.transactionDate = new Date();
-    
+
     if (paymentMethod === 'Credit Lines') {
       const amountToPay = quotation.amount;
       const user = await User.findOne({ userId: quotation.userId });
-      
+
       if (!user) {
         return res.status(404).json({ error: 'User account not found for credit deduction' });
       }
-      
+
       const availableCredit = user.totalCredit - user.usedCredit;
-      
+
       if (availableCredit < amountToPay) {
         return res.status(400).json({ error: `Insufficient credit limit. Available: ₹${availableCredit.toLocaleString('en-IN')}` });
       }
@@ -191,12 +191,12 @@ router.post('/quotations/:id/pay', async (req, res) => {
         referenceId: quotation._id.toString()
       });
       await transaction.save();
-      
+
       quotation.paymentStatus = 'Pending Verification';
       await Order.findOneAndUpdate(
         { quotationReference: quotation._id },
-        { 
-          paymentStatus: 'Pending Verification', 
+        {
+          paymentStatus: 'Pending Verification',
           paymentMethod: quotation.paymentMethod,
           transactionDate: new Date()
         }
@@ -205,15 +205,15 @@ router.post('/quotations/:id/pay', async (req, res) => {
       quotation.paymentStatus = 'Pending Verification';
       await Order.findOneAndUpdate(
         { quotationReference: quotation._id },
-        { 
-          paymentStatus: 'Pending Verification', 
-          utrNumber: utrNumber, 
-          transactionDate: new Date(), 
-          paymentMethod: paymentMethod 
+        {
+          paymentStatus: 'Pending Verification',
+          utrNumber: utrNumber,
+          transactionDate: new Date(),
+          paymentMethod: paymentMethod
         }
       );
     }
-    
+
     await quotation.save();
 
     res.json({ message: 'Payment submitted successfully', quotation });
@@ -274,7 +274,7 @@ router.put('/rfp/:id', async (req, res) => {
         const newQuotation = new Quotation({
           quotationNo: `QT-${updatedRFP.rfpId}`,
           rfpReference: updatedRFP._id,
-          vendor: 'Techhansa Retail',
+          vendor: 'AK Solutions Retail',
           amount: updatedRFP.estimatedTotal || 0,
           validUntil: updatedRFP.expectedDeliveryDate,
           status: 'Pending',
@@ -507,7 +507,7 @@ router.post('/orders', async (req, res) => {
     const rfpProducts = quotation?.rfpReference?.products || [];
     for (const p of rfpProducts) {
       if (!p.brand || (!p.model && !p.category)) continue;
-      
+
       let product;
       if (p.model) {
         product = await GlobalProduct.findOne({ brand: p.brand, model: p.model });
@@ -515,7 +515,7 @@ router.post('/orders', async (req, res) => {
       if (!product && p.category) {
         product = await GlobalProduct.findOne({ name: p.category });
       }
-      
+
       if (product) {
         product.availableStock = Math.max(0, product.availableStock - p.quantity);
         product.reservedStock = (product.reservedStock || 0) + p.quantity;

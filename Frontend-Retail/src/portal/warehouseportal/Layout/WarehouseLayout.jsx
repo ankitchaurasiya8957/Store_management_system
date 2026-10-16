@@ -35,7 +35,7 @@ export default function WarehouseLayout() {
 
   return (
     <div style={{ zoom: 0.75, height: '133.333vh', width: '133.333vw' }} className="flex bg-slate-100 md:p-4 md:gap-4 text-slate-800 font-sans overflow-hidden">
-      
+
       {/* Mobile Overlay */}
       <div
         className={`fixed inset-0 bg-slate-900/50 z-40 md:hidden transition-opacity duration-300 ${isSidebarOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
@@ -48,9 +48,9 @@ export default function WarehouseLayout() {
       >
         <div className="h-20 md:h-28 flex items-center px-4 md:px-6 border-b border-slate-100 justify-between">
           <div className="flex items-center min-w-0">
-            <img src={logo} alt="Techhansa Retail" className="h-12 md:h-24 w-auto -ml-2 md:-ml-4 object-contain shrink-0" />
+            <img src={logo} alt="AK Solutions Retail" className="h-12 md:h-24 w-auto -ml-2 md:-ml-4 object-contain shrink-0" />
             <span className="text-base md:text-lg font-black ml-2 text-[var(--premium-gold)] tracking-tight uppercase whitespace-nowrap truncate">
-              Techhansa Retail
+              AK Solutions Retail
             </span>
           </div>
           <button className="md:hidden text-slate-400 hover:text-slate-600 p-2 shrink-0 ml-1" onClick={() => setIsSidebarOpen(false)}>
@@ -80,7 +80,7 @@ export default function WarehouseLayout() {
 
       {/* Main Content Area */}
       <div className="flex-1 flex flex-col bg-white md:rounded-2xl shadow-sm overflow-hidden relative w-full">
-        
+
         {/* Top Header */}
         <header className="h-16 bg-white border-b border-slate-200 flex items-center justify-between px-4 md:px-8 z-50 shrink-0 relative">
           <div className="flex items-center gap-3">

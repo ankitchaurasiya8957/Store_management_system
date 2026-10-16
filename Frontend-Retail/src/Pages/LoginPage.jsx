@@ -1,5 +1,5 @@
 import { useState, useRef, useCallback } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import './LoginPage.css';
 import { useContext } from 'react';
 import { AuthContext } from '../context/AuthContext';
@@ -13,6 +13,7 @@ export default function LoginPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const cardRef = useRef(null);
   const navigate = useNavigate();
+  const location = useLocation();
 
   // ===== MOUSE-TRACKING 3D TILT =====
   const handleMouseMove = useCallback((e) => {
@@ -63,7 +64,7 @@ export default function LoginPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!userId.trim() || !password.trim()) return;
-    
+
     setIsSubmitting(true);
 
     try {
@@ -89,7 +90,14 @@ export default function LoginPage() {
       if (response.ok) {
         // Save user data to context
         login(data.user, data.token);
-        
+
+        // If user attempted to open a specific panel in a new tab, redirect back there
+        const fromPath = location.state?.from?.pathname;
+        if (fromPath && fromPath !== '/login') {
+          navigate(fromPath);
+          return;
+        }
+
         // Route dynamically based on the role
         switch (data.user.role) {
           case 'admin':
@@ -180,9 +188,9 @@ export default function LoginPage() {
             {/* Logo & Brand */}
             <div className="login-logo-wrap">
               <div className="login-logo-container">
-                <img src={logo} alt="Techhansa Retail" />
+                <img src={logo} alt="AK Solutions Retail" />
               </div>
-              <h2 className="login-brand-name">Techhansa Retail</h2>
+              <h2 className="login-brand-name">AK Solutions Retail</h2>
               <p className="login-brand-tagline">Login Portal</p>
             </div>
           </div>
@@ -300,7 +308,7 @@ export default function LoginPage() {
             <p>
               Need access? <Link to="/contact">Contact Admin</Link>
             </p>
-           
+
           </div>
         </div>
       </div>

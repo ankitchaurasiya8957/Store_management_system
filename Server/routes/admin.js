@@ -16,9 +16,7 @@ const Quotation = require('../models/Quotation');
 const RFP = require('../models/RFP');
 const StoreProfile = require('../models/StoreProfile');
 
-const { Resend } = require('resend');
-
-const resend = new Resend(process.env.RESEND_API_KEY);
+const resend = require('../utils/resendClient');
 
 // Middleware to check if user is admin (Assuming basic auth or we check token in a real scenario)
 // For simplicity and matching current setup, we might rely on the frontend to protect routes,
@@ -557,14 +555,14 @@ router.patch('/orders/:id/status', async (req, res) => {
                 <p style="color: #64748b; font-size: 14px; margin-top: 30px; border-top: 1px solid #e2e8f0; padding-top: 15px;">
                   If you have any questions about your delivery, please contact our support team.<br><br>
                   Best regards,<br>
-                  <strong>Techhansa Retail Team</strong>
+                  <strong>AK Solutions Retail Team</strong>
                 </p>
               </div>
             </div>
           `;
 
           await resend.emails.send({
-            from: 'Techhansa Notifications <onboarding@resend.dev>',
+            from: 'AK Solutions Notifications <onboarding@resend.dev>',
             to: [customerEmail], // Real app: replace with customerEmail. Using onboarding@resend.dev or customerEmail
             subject: `Order Dispatched: #${order.orderNumber} is on the way!`,
             html: emailHtml
@@ -584,13 +582,13 @@ router.patch('/orders/:id/status', async (req, res) => {
 
         if (storeId) {
           const itemsToAdd = [];
-          
+
           const groupedItems = {};
           for (const item of (order.items || [])) {
             const itemBrand = item.brand || 'N/A';
             const itemModel = item.model || item.productName || 'N/A';
             const modelKey = `${itemBrand}_${itemModel}`;
-            
+
             const qty = item.quantity || (item.assignedSerials && item.assignedSerials.length > 0 ? item.assignedSerials.length : 1);
             if (!groupedItems[modelKey]) {
               groupedItems[modelKey] = { ...(item.toObject ? item.toObject() : item), _quantity: qty, _assignedSerials: new Set(item.assignedSerials || []) };
@@ -631,9 +629,9 @@ router.patch('/orders/:id/status', async (req, res) => {
               }
               await existing.save();
             } else {
-              itemsToAdd.push({ 
-                ...basePayload, 
-                quantity: quantity, 
+              itemsToAdd.push({
+                ...basePayload,
+                quantity: quantity,
                 availableStock: quantity,
                 serialNumbers: assignedSerials
               });
@@ -747,7 +745,7 @@ router.post('/procurement-requests/:id/approve', async (req, res) => {
       quotationNo: `QT-PR-${Date.now()}`,
       procurementReference: request._id,
       storeId: request.storeId,
-      vendor: 'Techhansa Retail',
+      vendor: 'AK Solutions Retail',
       amount: totalAmount,
       validUntil: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // 7 days from now
       status: 'Pending',
@@ -965,14 +963,14 @@ router.patch('/procurement-requests/:id/status', async (req, res) => {
                 <p style="color: #64748b; font-size: 14px; margin-top: 30px; border-top: 1px solid #e2e8f0; padding-top: 15px;">
                   If you have any questions about your delivery, please contact our support team.<br><br>
                   Best regards,<br>
-                  <strong>Techhansa Retail Team</strong>
+                  <strong>AK Solutions Retail Team</strong>
                 </p>
               </div>
             </div>
           `;
 
           await resend.emails.send({
-            from: 'Techhansa Notifications <onboarding@resend.dev>',
+            from: 'AK Solutions Notifications <onboarding@resend.dev>',
             to: [customerEmail],
             subject: `Procurement Dispatched: Store ${request.storeId} shipment is on the way!`,
             html: emailHtml
@@ -989,13 +987,13 @@ router.patch('/procurement-requests/:id/status', async (req, res) => {
         const storeId = request.storeId;
         if (storeId) {
           const itemsToAdd = [];
-          
+
           const groupedItems = {};
           for (const item of (request.items || [])) {
             const itemBrand = item.brand || 'N/A';
             const itemModel = item.model || item.productName || item.hardwareType || item.otherType || 'N/A';
             const modelKey = `${itemBrand}_${itemModel}`;
-            
+
             const qty = item.quantity || (item.assignedSerials && item.assignedSerials.length > 0 ? item.assignedSerials.length : 1);
             if (!groupedItems[modelKey]) {
               groupedItems[modelKey] = { ...(item.toObject ? item.toObject() : item), _quantity: qty, _assignedSerials: new Set(item.assignedSerials || []) };
@@ -1036,9 +1034,9 @@ router.patch('/procurement-requests/:id/status', async (req, res) => {
               }
               await existing.save();
             } else {
-              itemsToAdd.push({ 
-                ...basePayload, 
-                quantity: quantity, 
+              itemsToAdd.push({
+                ...basePayload,
+                quantity: quantity,
                 availableStock: quantity,
                 serialNumbers: assignedSerials
               });
@@ -1697,7 +1695,7 @@ router.post('/orders/:id/tracking-email', async (req, res) => {
         </div>
         
         <p style="margin-top: 30px; font-size: 0.9em; color: #64748b; border-top: 1px solid #e2e8f0; padding-top: 15px;">
-          Thank you for partnering with Techhansa Retail!<br>
+          Thank you for partnering with AK Solutions Retail!<br>
           For any queries, please refer to invoice <strong>${invoiceNo}</strong>.
         </p>
       </div>
@@ -1706,7 +1704,7 @@ router.post('/orders/:id/tracking-email', async (req, res) => {
     // Send email using Resend
     try {
       await resend.emails.send({
-        from: 'Techhansa Notifications <onboarding@resend.dev>',
+        from: 'AK Solutions Notifications <onboarding@resend.dev>',
         to: ['onboarding@resend.dev'], // Use onboarding@resend.dev for test environment
         subject: `Your Order ${order.orderNumber || order.requestId} has been Dispatched!`,
         html: emailContent

@@ -57,7 +57,7 @@ app.get('/api/health', (req, res) => {
   })
 });
 // =========================================
-// FRONTEND SERVING (Techhansa Retail)
+// FRONTEND SERVING (AK Solutions Retail)
 // =========================================
 const clientBuildPath = path.join(__dirname, "../Frontend-Retail/dist");
 app.use(express.static(clientBuildPath));
@@ -81,7 +81,7 @@ async function startServer() {
   } catch (error) {
     console.error('❌ Failed to connect to MongoDB, but starting server anyway for debugging:', error.message);
   }
-  
+
   // Start the Express server regardless of DB status so it doesn't crash NGINX
   app.listen(PORT, () => {
     console.log(`🚀 Server is running on http://localhost:${PORT}`);

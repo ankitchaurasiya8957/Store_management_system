@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import { motion, useMotionValue, useSpring, useTransform, useScroll } from 'framer-motion';
-import { 
-  ArrowRight, ShieldCheck, Target, Users, TrendingUp, CheckCircle2, 
+import {
+  ArrowRight, ShieldCheck, Target, Users, TrendingUp, CheckCircle2,
   Globe, LineChart, Shield, Zap, Briefcase
 } from 'lucide-react';
 
@@ -21,30 +21,30 @@ const investors = [
   {
     name: "Shaatika Vastram",
     role: "Strategic Investor",
-    desc: "A valued strategic investor committed to supporting innovation and long-term business development. With a vision focused on sustainable growth and operational excellence, they contribute to strengthening Techhansa Retail's expansion and future-ready initiatives.",
-    logo: shaatikaLogo, 
+    desc: "A valued strategic investor committed to supporting innovation and long-term business development. With a vision focused on sustainable growth and operational excellence, they contribute to strengthening AK Solutions Retail's expansion and future-ready initiatives.",
+    logo: shaatikaLogo,
     link: "https://www.shaatikavastram.in/" // 
   },
   {
-    name: "Techhansa Private Limited",
+    name: "AK Solutions Private Limited",
     role: "Enterprise Growth Partner",
     desc: "Plays a vital role in strengthening our business foundation through strategic guidance and long-term investment. Their commitment to innovation and business excellence enables us to continuously enhance technology, infrastructure, and customer experience.",
-    logo: mainLogo, 
-    link: "https://techhansa.com/" //
+    logo: mainLogo,
+    link: "https://AK Solutions.com/" //
   },
   {
-    name: "Techhansa Solutions Pvt. Ltd.",
+    name: "AK Solutions Solutions Pvt. Ltd.",
     role: "Digital Transformation Partner",
     desc: "Brings deep expertise in digital transformation, enterprise technology, and business solutions. Their support enables us to build scalable digital platforms, optimize operations, and deliver seamless experiences for our ecosystem.",
-    logo: mainLogo, 
-    link: "https://techhansa.com" // 
+    logo: mainLogo,
+    link: "https://AK Solutions.com" // 
   },
   {
-    name: "Techhansa IT Private Limited",
+    name: "AK Solutions IT Private Limited",
     role: "Technology & Infrastructure Partner",
     desc: "Strengthens our technological capabilities by supporting innovation, IT infrastructure, and enterprise-grade digital solutions. Their expertise helps maintain a secure, scalable, and high-performance platform across India.",
-    logo: mainLogo, 
-    link: "https://techhansait.com/" // 
+    logo: mainLogo,
+    link: "https://AK Solutionsit.com/" // 
   }
 ];
 
@@ -69,25 +69,25 @@ const investmentHighlights = [
 // --- MAIN PAGE COMPONENT ---
 export default function InvestorsPage() {
   const containerRef = useRef(null);
-  
+
   // Parallax Mouse Tracking for Hero
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
 
   const handleMouseMove = (e) => {
     const { clientX, clientY } = e;
-    const x = (clientX / window.innerWidth - 0.5) * 2; 
-    const y = (clientY / window.innerHeight - 0.5) * 2; 
+    const x = (clientX / window.innerWidth - 0.5) * 2;
+    const y = (clientY / window.innerHeight - 0.5) * 2;
     mouseX.set(x);
     mouseY.set(y);
   };
 
   return (
     <div ref={containerRef} className="relative min-h-screen text-gray-600 font-sans bg-transparent overflow-hidden selection:bg-[#0d3863]/20 selection:text-[#0d3863]">
-      
+
       {/* --- TOP BANNER SECTION --- */}
       <section className="relative w-full h-[300px] flex items-center justify-center overflow-hidden bg-slate-900">
-        <div 
+        <div
           className="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat"
           style={{ backgroundImage: `url(${investorBannerImg})` }}
         >
@@ -95,7 +95,7 @@ export default function InvestorsPage() {
         </div>
 
         <div className="relative z-10 text-center px-6 max-w-4xl mx-auto flex flex-col items-center">
-          <motion.h1 
+          <motion.h1
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
@@ -103,8 +103,8 @@ export default function InvestorsPage() {
           >
             Investors
           </motion.h1>
-          
-          <motion.div 
+
+          <motion.div
             initial={{ width: 0, opacity: 0 }}
             animate={{ width: "80px", opacity: 1 }}
             transition={{ delay: 0.4, duration: 0.8, ease: "anticipate" }}
@@ -114,13 +114,13 @@ export default function InvestorsPage() {
       </section>
 
       {/* --- HERO SECTION --- */}
-      <section 
+      <section
         onMouseMove={handleMouseMove}
         className="relative z-10 pt-16 pb-12 px-6 lg:px-12 w-full flex items-center"
       >
         <div className="relative z-10 max-w-7xl mx-auto w-full grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           <div className="flex flex-col items-center text-center lg:items-start lg:text-left">
-            
+
             {/* Badge */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -133,7 +133,7 @@ export default function InvestorsPage() {
             </motion.div>
 
             {/* Dual Color Heading */}
-            <motion.h1 
+            <motion.h1
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.1 }}
@@ -142,17 +142,17 @@ export default function InvestorsPage() {
               <span className="text-gray-500">Backed by Vision.</span> <span className="text-[#0d3863]">Driven by Innovation.</span>
             </motion.h1>
 
-            <motion.p 
-              initial={{ opacity: 0, y: 20 }} 
-              animate={{ opacity: 1, y: 0 }} 
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2, duration: 0.8 }}
               className="text-base text-gray-500 max-w-xl leading-relaxed mb-6"
             >
-              Techhansa Retail is supported by a strong network of strategic investors and technology-focused organizations that share our vision of transforming India's IT hardware distribution ecosystem. 
+              AK Solutions Retail is supported by a strong network of strategic investors and technology-focused organizations that share our vision of transforming India's IT hardware distribution ecosystem.
             </motion.p>
-            <motion.p 
-              initial={{ opacity: 0, y: 20 }} 
-              animate={{ opacity: 1, y: 0 }} 
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3, duration: 0.8 }}
               className="text-base text-gray-500 max-w-xl leading-relaxed "
             >
@@ -161,33 +161,33 @@ export default function InvestorsPage() {
           </div>
 
           {/* 3D CINEMATIC VIDEO CONTAINER */}
-          <div 
-            className="relative w-full h-full flex justify-center lg:justify-end" 
+          <div
+            className="relative w-full h-full flex justify-center lg:justify-end"
             style={{ perspective: "1300px" }} // Added perspective to create 3D depth
           >
-            <motion.div 
+            <motion.div
               // rotateY: -35deg pushes the right side back and left side forward
               initial={{ opacity: 0, rotateY: -30, rotateX: 3, scale: 0.9 }}
               animate={{ opacity: 1, rotateY: -30, rotateX: 3, scale: 0.9 }}
               whileHover={{ rotateY: -20, rotateX: 2, scale: 0.95 }}
               transition={{ duration: 0.8, ease: "easeIn" }}
               className="relative w-full max-w-md lg:max-w-full rounded-[2.5rem] overflow-hidden border border-white/20 group"
-              style={{ 
+              style={{
                 transformStyle: "preserve-3d"
                 // Dynamic 3D shadow matching the angle
               }}
             >
-              
+
               {/* VIDEO TAG */}
-              <video 
-                src={investersVideo} 
-                autoPlay 
-                loop 
-                muted 
+              <video
+                src={investersVideo}
+                autoPlay
+                loop
+                muted
                 playsInline
                 className="w-full h-auto md:h-[350px] object-cover"
               />
-              
+
               {/* Cinematic Lighting Overlay */}
               <div className="absolute inset-0 bg-gradient-to-tr from-[#0d3863]/40 via-transparent to-white/20 pointer-events-none mix-blend-overlay"></div>
             </motion.div>
@@ -202,7 +202,7 @@ export default function InvestorsPage() {
             <span className="text-gray-500">Building the Future</span> <span className="text-[#0d3863]">Together</span>
           </h2>
           <p className="text-gray-500 text-base leading-relaxed mb-6">
-            At Techhansa Retail, we believe sustainable growth is built through strong partnerships. Our investors contribute more than capital—they bring industry knowledge, strategic direction, operational excellence, and a shared commitment to innovation.
+            At AK Solutions Retail, we believe sustainable growth is built through strong partnerships. Our investors contribute more than capital—they bring industry knowledge, strategic direction, operational excellence, and a shared commitment to innovation.
           </p>
           <p className="text-gray-500 text-base leading-relaxed">
             Together, we are creating a future-ready platform that connects businesses with world-class IT hardware solutions while expanding opportunities through our nationwide franchise network.
@@ -210,9 +210,9 @@ export default function InvestorsPage() {
         </div>
       </section>
 
-    
-  {/* --- INVESTOR PROFILES (FIXED TOP LINE BORDER RADIUS & MADE LINKABLE) --- */}
-    <section className="relative z-10 py-32 px-6 lg:px-12 max-w-7xl mx-auto">
+
+      {/* --- INVESTOR PROFILES (FIXED TOP LINE BORDER RADIUS & MADE LINKABLE) --- */}
+      <section className="relative z-10 py-32 px-6 lg:px-12 max-w-7xl mx-auto">
         <div className="text-center mb-20">
           <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-4">
             <span className="text-gray-500">Our Strategic</span> <span className="text-[#0d3863]">Investors</span>
@@ -238,9 +238,9 @@ export default function InvestorsPage() {
 
               {/* Logo Container */}
               <div className="w-24 h-24 mb-8 bg-gray-50 rounded-2xl border border-gray-100 flex items-center justify-center overflow-hidden p-2 group-hover:border-[#0d3863]/20 transition-all shadow-inner">
-                <img 
-                  src={investor.logo} 
-                  alt={`${investor.name} Logo`} 
+                <img
+                  src={investor.logo}
+                  alt={`${investor.name} Logo`}
                   className="w-full h-full object-contain"
                   onError={(e) => {
                     // Fallback if logo is missing
@@ -259,45 +259,45 @@ export default function InvestorsPage() {
         </div>
       </section>
 
-  
-      
+
+
       <section className="relative z-10 py-2 px-2 lg:px-2 h-100 bg-slate-50 overflow-hidden">
 
-  <div className="absolute inset-0 opacity-[0.05] bg-[linear-gradient(rgba(0,0,0,1)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,1)_1px,transparent_1px)] bg-[size:40px_40px]"></div>
-  
-  <div className="relative max-w-4xl mx-auto text-center">
+        <div className="absolute inset-0 opacity-[0.05] bg-[linear-gradient(rgba(0,0,0,1)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,1)_1px,transparent_1px)] bg-[size:40px_40px]"></div>
 
-    <h2 className="text-sm font-bold tracking-widest text-[#0d3863] uppercase mb-4">
-      Shared Vision
-    </h2>
+        <div className="relative max-w-4xl mx-auto text-center">
 
-    <h3 className="text-3xl md:text-5xl font-extrabold text-[#0d3863] mb-8 leading-tight">
-      Empowering Businesses Through Technology
-    </h3>
-    
+          <h2 className="text-sm font-bold tracking-widest text-[#0d3863] uppercase mb-4">
+            Shared Vision
+          </h2>
 
-    <p className="text-gray-600 text-base md:text-xl leading-relaxed mb-6">
-      Our investors share a common vision of building a trusted IT hardware ecosystem that delivers genuine products, transparent business practices, and innovative technology solutions for organizations of every size.
-    </p>
-    <p className="text-gray-600 text-base md:text-xl leading-relaxed">
-      Together, we are committed to enabling businesses, entrepreneurs, and franchise partners with the tools, resources, and technology they need to succeed in an increasingly digital world.
-    </p>
-  </div>
-</section>
+          <h3 className="text-3xl md:text-5xl font-extrabold text-[#0d3863] mb-8 leading-tight">
+            Empowering Businesses Through Technology
+          </h3>
+
+
+          <p className="text-gray-600 text-base md:text-xl leading-relaxed mb-6">
+            Our investors share a common vision of building a trusted IT hardware ecosystem that delivers genuine products, transparent business practices, and innovative technology solutions for organizations of every size.
+          </p>
+          <p className="text-gray-600 text-base md:text-xl leading-relaxed">
+            Together, we are committed to enabling businesses, entrepreneurs, and franchise partners with the tools, resources, and technology they need to succeed in an increasingly digital world.
+          </p>
+        </div>
+      </section>
 
       {/* --- WHY OUR INVESTORS MATTER & HIGHLIGHTS (SPLIT SECTION) --- */}
 
       <section className="relative z-10 py-32 px-6 lg:px-12 bg-white">
         <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 lg:gap-24">
-          
-      
+
+
           <div>
             <h2 className="text-3xl font-bold tracking-tight mb-10">
               <span className="text-gray-500">Why Our Investors</span> <span className="text-[#0d3863]">Matter</span>
             </h2>
             <div className="grid grid-cols-2 gap-6">
               {investorMatters.map((item, i) => (
-                <motion.div 
+                <motion.div
                   key={i}
                   initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}
                   className="flex flex-col bg-white rounded-2xl border border-gray-100 overflow-hidden shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-[0_15px_30px_rgba(13,56,99,0.1)] hover:-translate-y-1 group transition-all duration-300"
@@ -315,14 +315,14 @@ export default function InvestorsPage() {
             </div>
           </div>
 
-      
+
           <div>
             <h2 className="text-3xl font-bold tracking-tight mb-10">
               <span className="text-gray-500">Investment</span> <span className="text-[#0d3863]">Highlights</span>
             </h2>
             <div className="flex flex-col gap-4">
               {investmentHighlights.map((highlight, i) => (
-                <motion.div 
+                <motion.div
                   key={i}
                   initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}
                   className="flex items-center gap-4 bg-white p-5 rounded-2xl border border-gray-100 shadow-sm"

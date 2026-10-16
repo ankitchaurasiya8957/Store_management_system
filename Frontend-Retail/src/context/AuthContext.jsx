@@ -10,22 +10,56 @@ export const AuthProvider = ({ children }) => {
 
   // Check for existing token and sync with backend on initial load
   useEffect(() => {
+    const activeTabSessionId = sessionStorage.getItem('activeTabSessionId');
     const storedUser = sessionStorage.getItem('user');
     const token = sessionStorage.getItem('token');
 
+    // Tab isolation check: If window.name is missing or does not match this tab's session,
+    // it means this is a newly opened tab or a cloned tab. Require re-login!
+    if (!window.name || !activeTabSessionId || window.name !== activeTabSessionId) {
+      sessionStorage.removeItem('user');
+      sessionStorage.removeItem('token');
+      sessionStorage.removeItem('activeTabSessionId');
+      window.name = '';
+      setUser(null);
+      setLoading(false);
+      return;
+    }
+
+    // Set up BroadcastChannel to detect duplicated tabs (where window.name might have been cloned)
+    let channel;
+    try {
+      channel = new BroadcastChannel('ak_auth_tab_channel');
+      channel.onmessage = (event) => {
+        if (event.data?.type === 'PING_TAB' && event.data?.tabId === window.name) {
+          // Another tab is claiming this same tabId! Inform them it is already active in this tab.
+          channel.postMessage({ type: 'PONG_TAB_EXISTS', tabId: window.name });
+        } else if (event.data?.type === 'PONG_TAB_EXISTS' && event.data?.tabId === window.name) {
+          // We are a duplicated tab! Clear session so this tab requires re-login.
+          sessionStorage.removeItem('user');
+          sessionStorage.removeItem('token');
+          sessionStorage.removeItem('activeTabSessionId');
+          window.name = '';
+          setUser(null);
+          setLoading(false);
+        }
+      };
+      // Send ping to see if another tab already owns this tabId
+      channel.postMessage({ type: 'PING_TAB', tabId: window.name });
+    } catch {
+      // BroadcastChannel fallback silently if not supported in the browser
+    }
+
     const syncUser = async () => {
       if (storedUser && token) {
-        const parsedUser = JSON.parse(storedUser);
-        // Optimistically set the old user data
-        setUser(parsedUser);
-        
         try {
+          const parsedUser = JSON.parse(storedUser);
+          setUser(parsedUser);
+
           const res = await fetchWithAuth(`${import.meta.env.VITE_API_BASE_URL}/api/auth/me?userId=${parsedUser.userId}`);
           const contentType = res.headers.get("content-type") || "";
           
           if (!res.ok || !contentType.includes("application/json")) {
-            const text = await res.text();
-            console.error(`Sync API returned ${res.status}: ${text.slice(0, 200)}`);
             setLoading(false);
             return;
           }
@@ -41,13 +75,23 @@ export const AuthProvider = ({ children }) => {
     };
 
     syncUser();
+
+    return () => {
+      if (channel) {
+        channel.close();
+      }
+    };
   }, []);
 
   // Login function to save data globally and to sessionStorage
   const login = (userData, token) => {
-    setUser(userData);
+    // Generate a unique session ID tied strictly to this browser tab's window.name
+    const tabSessionId = 'tab_' + Date.now() + '_' + Math.random().toString(36).substring(2, 9);
+    window.name = tabSessionId;
+    sessionStorage.setItem('activeTabSessionId', tabSessionId);
     sessionStorage.setItem('user', JSON.stringify(userData));
     sessionStorage.setItem('token', token);
+    setUser(userData);
   };
 
   // Logout function to clear data
@@ -69,6 +113,8 @@ export const AuthProvider = ({ children }) => {
     setUser(null);
     sessionStorage.removeItem('user');
     sessionStorage.removeItem('token');
+    sessionStorage.removeItem('activeTabSessionId');
+    window.name = '';
   };
 
   const updateUser = async (newUserData) => {

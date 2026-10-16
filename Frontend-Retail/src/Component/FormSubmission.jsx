@@ -29,7 +29,7 @@ export default function FormSubmission() {
     try {
       // 1. Create a native FormData object
       const payload = new FormData();
-      
+
       // 2. Append text fields
       payload.append('name', formData.name);
       payload.append('email', formData.email);
@@ -42,7 +42,7 @@ export default function FormSubmission() {
 
       // 4. Send via Fetch (DO NOT set Content-Type header manually!)
       // Ensure the endpoint matches your backend route
-      const response = await fetchWithAuth('https://techhansaretail.com/api/submissions', {
+      const response = await fetchWithAuth(`${import.meta.env.VITE_API_BASE_URL || ''}/api/submissions`, {
         method: 'POST',
         body: payload,
       });
@@ -54,13 +54,13 @@ export default function FormSubmission() {
       }
 
       setStatus({ loading: false, error: null, success: 'Form submitted successfully!' });
-      
+
       // Reset form
       setFormData({ name: '', email: '', message: '' });
       setDocuments([]);
-      
+
       // Reset file input element visually
-      e.target.reset(); 
+      e.target.reset();
 
     } catch (error) {
       console.error("Error submitting form:", error);
@@ -71,13 +71,13 @@ export default function FormSubmission() {
   return (
     <div className="max-w-2xl mx-auto p-6 bg-white rounded-xl shadow-md border border-gray-100">
       <h2 className="text-2xl font-bold mb-6 text-gray-800">Contact Us</h2>
-      
+
       {status.error && (
         <div className="mb-4 p-4 bg-red-50 text-red-600 rounded-lg border border-red-200">
           {status.error}
         </div>
       )}
-      
+
       {status.success && (
         <div className="mb-4 p-4 bg-green-50 text-green-700 rounded-lg border border-green-200">
           {status.success}

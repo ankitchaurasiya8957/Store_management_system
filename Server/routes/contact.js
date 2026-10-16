@@ -1,10 +1,7 @@
 const express = require('express');
 const router = express.Router();
-// const pool = require('../db');
 const Contact = require('../models/Contact');
-const { Resend } = require('resend');
-
-const resend = new Resend(process.env.RESEND_API_KEY);
+const resend = require('../utils/resendClient');
 
 // POST Route: Save to DB
 router.post('/', async (req, res) => {
@@ -43,7 +40,7 @@ router.post('/', async (req, res) => {
     // Send email notification
     try {
       await resend.emails.send({
-        from: 'Techhansa Notifications <onboarding@resend.dev>',
+        from: 'AK Solutions Notifications <onboarding@resend.dev>',
         to: 'customer.support@techhansha.com',
         subject: emailSubject || 'Notification from Contact Form',
         html: `

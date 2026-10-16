@@ -1,19 +1,59 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
 @import "tailwindcss";
+
 @layer base {
   :root {
- 
-    --tech-blue: #0d3863;
-    --techgolden-hover: #D4A22E;
-    --premium-gold: #DDA73C;
-    --soft-bg: #ffffff;
-    --text-dark: #6b6b6b;
+    /* Brand Theme Colors derived from the AK Logo */
+    --tech-blue: #00D2FF;
+    --techgolden-hover: #FF5E00;
+    --premium-gold: #FFAE00;
+    --soft-bg: #07090E;
+    --text-dark: #F1F5F9;
+
+    /* Logo Specific Color Accents */
+    --logo-cyan: #00D2FF;
+    --logo-blue: #0066FF;
+    --logo-magenta: #FF007A;
+    --logo-purple: #7928CA;
+    --logo-orange: #FF5E00;
+    --logo-amber: #FFAE00;
+
+    /* Dark Mode Architecture */
+    --bg-dark-base: #07090E;
+    --bg-dark-surface: #0C101A;
+    --bg-dark-card: #101626;
+    --bg-dark-card-hover: #161E33;
+    --border-dark-subtle: rgba(255, 255, 255, 0.08);
+    --border-dark-glow: rgba(0, 210, 255, 0.35);
+
+    /* Logo Signature Multi-Color Gradient */
+    --logo-gradient: linear-gradient(135deg, #00D2FF 0%, #7928CA 35%, #FF007A 70%, #FF5E00 100%);
+    --logo-gradient-cyan: linear-gradient(135deg, #00D2FF 0%, #0066FF 100%);
+    --logo-gradient-pink: linear-gradient(135deg, #FF007A 0%, #7928CA 100%);
+    --logo-gradient-fire: linear-gradient(135deg, #FF5E00 0%, #FFAE00 100%);
   }
 
   body {
-    background-color: var(--soft-bg);
-    color: var(--text-dark);
+    background-color: #07090E;
+    color: #F1F5F9;
     font-family: 'Inter', sans-serif;
+    overflow-x: hidden;
+  }
+
+  /* Custom Smooth Dark Scrollbars */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #07090E;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #1E293B;
+    border-radius: 9999px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #00D2FF;
   }
 
   @keyframes shimmer {
@@ -22,26 +62,97 @@
     }
   }
 
-  /* Remove default black focus outlines globally, especially for charts */
+  @keyframes pulseGlow {
+    0%, 100% {
+      opacity: 0.4;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 0.8;
+      transform: scale(1.05);
+    }
+  }
+
   *:focus {
     outline: none !important;
   }
 }
 
+/* =========================================
+   AK LOGO BRANDED UTILITIES & GLASSMORPHISM
+   ========================================= */
+
+.ak-gradient-text {
+  background: linear-gradient(135deg, #00D2FF 0%, #7928CA 35%, #FF007A 70%, #FF5E00 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.ak-gradient-cyan {
+  background: linear-gradient(135deg, #00D2FF 0%, #0066FF 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.ak-gradient-pink {
+  background: linear-gradient(135deg, #FF007A 0%, #7928CA 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.ak-gradient-fire {
+  background: linear-gradient(135deg, #FF5E00 0%, #FFAE00 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.ak-card-dark {
+  background: #0C101A;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.7);
+}
+
+.ak-card-glass {
+  background: rgba(12, 16, 26, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.ak-btn-gradient {
+  background: linear-gradient(135deg, #00D2FF 0%, #FF007A 50%, #FF5E00 100%);
+  color: #FFFFFF;
+  font-weight: 700;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 20px rgba(0, 210, 255, 0.25);
+}
+
+.ak-btn-gradient:hover {
+  box-shadow: 0 6px 25px rgba(255, 0, 122, 0.4);
+  transform: translateY(-1px);
+}
+
+.ak-glow-cyan {
+  box-shadow: 0 0 25px rgba(0, 210, 255, 0.3);
+}
+
+.ak-glow-magenta {
+  box-shadow: 0 0 25px rgba(255, 0, 122, 0.3);
+}
+
+.ak-glow-orange {
+  box-shadow: 0 0 25px rgba(255, 94, 0, 0.3);
+}
+
 /* ======================== PRINT STYLES ======================== */
 @media print {
-  /* Hide everything by default */
   body * {
     visibility: hidden !important;
   }
-
-  /* Show only the invoice area and its children */
   #invoice-print-area,
   #invoice-print-area * {
     visibility: visible !important;
   }
-
-  /* Position invoice at top-left of page */
   #invoice-print-area {
     position: absolute !important;
     left: 0 !important;
@@ -53,21 +164,15 @@
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
   }
-
-  /* Reset page margins for clean print */
   @page {
     margin: 10mm;
     size: A4;
   }
-
-  /* Force all text to be black for print clarity */
   #invoice-print-area,
   #invoice-print-area * {
     color: black !important;
     border-color: black !important;
   }
-
-  /* Hide modals backdrop and action buttons during print */
   .no-print,
   [data-no-print] {
     display: none !important;

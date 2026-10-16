@@ -120,17 +120,16 @@ export default function Hero() {
         </h1>
 
         <p className="text-white text-xl sm:text-2xl md:text-4xl lg:text-[2rem] xl:text-[2.5rem] font-light mb-8 md:mb-12 drop-shadow-md" data-aos="fade-up" data-aos-delay="200">
-          powered by our <span className="text-[var(--premium-gold)] font-serif font-medium italic">IT Hardware</span> ecosystem
+          powered by our <span className="bg-gradient-to-r from-[#00D2FF] via-[#c084fc] to-[#FF007A] bg-clip-text text-transparent font-bold">IT Hardware</span> ecosystem
         </p>
 
         {/* 4. Action Buttons */}
         <div className="flex flex-col sm:flex-row gap-5" data-aos="fade-up" data-aos-delay="300">
           
-          {/* Primary CTA (Solid Gold with Arrow) */}
-          {/* UPDATED: to="/partner" so it goes to your new PartnerPage.jsx */}
+          {/* Primary CTA (AK Signature Gradient with Glow) */}
           <Link 
             to="/partnerpage"
-            className="group bg-[var(--premium-gold)] hover:bg-[var(--techgolden-hover)] text-white px-8 py-3.5 rounded-[4px] text-[13px] md:text-[14px] font-bold uppercase tracking-wider flex items-center justify-center gap-2 transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-0.5"
+            className="group bg-gradient-to-r from-[#00D2FF] via-[#7928CA] to-[#FF007A] text-white px-8 py-3.5 rounded-xl text-[13px] md:text-[14px] font-bold uppercase tracking-wider flex items-center justify-center gap-2 transition-all duration-300 shadow-[0_10px_30px_rgba(0,210,255,0.3)] hover:shadow-[0_15px_40px_rgba(0,210,255,0.5)] hover:-translate-y-0.5 active:translate-y-0.5"
           >
            Become a Partner
             <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 transform transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
@@ -138,10 +137,10 @@ export default function Hero() {
             </svg>
           </Link>
 
-          {/* Secondary CTA (Outline White - Keeps focus on the primary button) */}
+          {/* Secondary CTA (Glass Dark Outline with Cyan hover) */}
           <Link 
             to="/partnerpage?franchise"
-            className="group bg-transparent border-2 border-white/70 hover:bg-white hover:text-[var(--text-dark)] text-white px-8 py-3.5 rounded-[4px] text-[13px] md:text-[14px] font-bold uppercase tracking-wider flex items-center justify-center transition-all duration-300"
+            className="group bg-black/30 backdrop-blur-md border-2 border-white/40 hover:border-[#00D2FF] hover:bg-[#00D2FF]/10 hover:text-[#00D2FF] text-white px-8 py-3.5 rounded-xl text-[13px] md:text-[14px] font-bold uppercase tracking-wider flex items-center justify-center transition-all duration-300 shadow-lg"
           >
             Apply for Franchise
           </Link>
@@ -152,15 +151,15 @@ export default function Hero() {
       {/* ================= SCROLL DOWN INDICATOR ================= */}
       <div 
         onClick={handleScrollDown}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center opacity-70 hover:opacity-100 cursor-pointer transition-opacity duration-300" 
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center opacity-70 hover:opacity-100 hover:text-[#00D2FF] cursor-pointer transition-all duration-300" 
         data-aos="fade-in" 
         data-aos-delay="500"
       >
         <span className="text-white text-[11px] font-bold tracking-[0.2em] mb-2 uppercase">
           Scroll Down
         </span>
-        <div className="w-8 h-8 rounded-full border border-white/40 flex items-center justify-center">
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-white animate-bounce" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+        <div className="w-8 h-8 rounded-full border border-white/40 hover:border-[#00D2FF] flex items-center justify-center transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-white hover:text-[#00D2FF] animate-bounce" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
           </svg>
         </div>

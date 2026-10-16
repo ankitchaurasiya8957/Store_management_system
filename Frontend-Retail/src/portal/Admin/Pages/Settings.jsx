@@ -83,7 +83,7 @@ export default function Settings() {
         role: user.role
       });
       toast.success('Profile updated successfully!');
-      
+
       // Update local auth context
       login({ ...user, name: profileData.name, email: profileData.email }, sessionStorage.getItem('token'));
     } catch (error) {
@@ -182,7 +182,7 @@ export default function Settings() {
                 type="email"
                 value={profileData.email}
                 onChange={(e) => setProfileData({ ...profileData, email: e.target.value })}
-                placeholder="admin@techhansa.com"
+                placeholder="admin@AK Solutions.com"
                 className="w-full p-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-shadow"
               />
             </div>

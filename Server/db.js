@@ -1,5 +1,13 @@
 require('dotenv').config();
 const mongoose = require('mongoose');
+const dns = require('dns');
+
+// Configure public DNS resolvers to prevent querySrv ECONNREFUSED on Windows
+try {
+  dns.setServers(['8.8.8.8', '1.1.1.1', '8.8.4.4']);
+} catch (e) {
+  // Ignore in case of environment limitations
+}
 
 
 

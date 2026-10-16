@@ -28,7 +28,7 @@ export default function PartnerApplicationPage() {
 
   return (
     <div ref={containerRef} className="relative min-h-screen bg-transparent font-sans text-gray-600 selection:bg-[#0d3863]/20 selection:text-[#0d3863]">
-      
+
       {/* ================= TOAST POPUP ================= */}
       <AnimatePresence>
         {toast.visible && (
@@ -53,12 +53,12 @@ export default function PartnerApplicationPage() {
       <section className="relative w-full h-[300px] flex items-center justify-center overflow-hidden bg-slate-900">
         <div className="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat opacity-80" style={{ backgroundImage: `url(${franchiseBannerImg})` }}></div>
         <div className="relative z-10 text-center px-6 max-w-4xl mx-auto flex flex-col items-center pb-24">
-          
+
           <motion.h1 initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, ease: "easeOut" }} className="text-4xl md:text-5xl font-extrabold text-[#fff] tracking-tight drop-shadow-sm">
             Partner Application
           </motion.h1>
           <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2, duration: 0.8 }} className="mt-6 text-lg md:text-base text-gray-300 max-w-2xl font-medium">
-            Select your partnership model below and fill out the comprehensive form to start your journey with Techhansa Retail.
+            Select your partnership model below and fill out the comprehensive form to start your journey with AK Solutions Retail.
           </motion.p>
         </div>
       </section>
@@ -66,7 +66,7 @@ export default function PartnerApplicationPage() {
       {/* --- TABS & FORM CONTAINER --- */}
       <section className="relative z-10 pb-24 px-4 lg:px-12 -mt-24">
         <div className="max-w-5xl mx-auto">
-          
+
           {/* ================= ULTRA PREMIUM TAB SWITCHER ================= */}
           <div className="flex justify-center mb-12">
             <div className="relative flex p-1.5 bg-white/80 backdrop-blur-xl rounded-full shadow-[0_8px_32px_rgba(0,0,0,0.12)] border border-white">
@@ -75,14 +75,13 @@ export default function PartnerApplicationPage() {
                   key={tab}
                   type="button"
                   onClick={() => setPartnerType(tab)}
-                  className={`relative px-10 py-3.5 rounded-full text-[15px] font-bold z-10 transition-all duration-500 ease-out ${
-                    partnerType === tab 
-                      ? 'text-white drop-shadow-md' 
+                  className={`relative px-10 py-3.5 rounded-full text-[15px] font-bold z-10 transition-all duration-500 ease-out ${partnerType === tab
+                      ? 'text-white drop-shadow-md'
                       : 'text-gray-500 hover:text-gray-900'
-                  }`}
+                    }`}
                 >
                   {tab === 'partnerform' ? 'Channel Partner' : 'Franchise Partner'}
-                  
+
                   {/* Premium Sliding Background Animation */}
                   {partnerType === tab && (
                     <motion.div
@@ -100,22 +99,22 @@ export default function PartnerApplicationPage() {
           <div className="w-full">
             <AnimatePresence mode="wait">
               {partnerType === 'partnerform' ? (
-                <motion.div 
-                  key="partnerform" 
-                  initial={{ opacity: 0, y: 20 }} 
-                  animate={{ opacity: 1, y: 0 }} 
-                  exit={{ opacity: 0, y: -20 }} 
+                <motion.div
+                  key="partnerform"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -20 }}
                   transition={{ duration: 0.3 }}
                 >
                   {/* Rendering the Component and passing the toast function */}
                   <PartnerForm showToast={showToast} />
                 </motion.div>
               ) : (
-                <motion.div 
-                  key="franchise" 
-                  initial={{ opacity: 0, y: 20 }} 
-                  animate={{ opacity: 1, y: 0 }} 
-                  exit={{ opacity: 0, y: -20 }} 
+                <motion.div
+                  key="franchise"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -20 }}
                   transition={{ duration: 0.3 }}
                 >
                   {/* Rendering the Component and passing the toast function */}

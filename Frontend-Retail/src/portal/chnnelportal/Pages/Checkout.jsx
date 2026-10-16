@@ -14,7 +14,7 @@ export default function Checkout() {
 
   const [paymentMethod, setPaymentMethod] = useState(''); // 'Credit' | 'Advance Payment'
   const [advanceSubMethod, setAdvanceSubMethod] = useState(''); // 'NEFT' | 'UPI'
-  
+
   const [utrNumber, setUtrNumber] = useState('');
   const [transactionDate, setTransactionDate] = useState(new Date().toISOString().split('T')[0]);
   const [receiptUrl, setReceiptUrl] = useState('');
@@ -40,7 +40,7 @@ export default function Checkout() {
     return (
       <div className="p-12 text-center text-gray-500">
         No quotation selected for checkout.
-        <br/>
+        <br />
         <button onClick={() => navigate('/channel/quotations')} className="mt-4 text-blue-600 underline">Go Back</button>
       </div>
     );
@@ -57,12 +57,12 @@ export default function Checkout() {
 
   const handleSubmit = async () => {
     setError('');
-    
+
     if (!paymentMethod) {
       setError('Please select a payment method.');
       return;
     }
-    
+
     if (paymentMethod === 'Credit' && !hasEnoughCredit) {
       setError('Insufficient Credit Limit.');
       return;
@@ -107,7 +107,7 @@ export default function Checkout() {
           usedCredit: (user.usedCredit || 0) + totalAmount
         };
         const updatedUserFinal = { ...updatedUser, walletBalance: data.walletBalance };
-        login(updatedUserFinal, sessionStorage.getItem('token')); 
+        login(updatedUserFinal, sessionStorage.getItem('token'));
       }
 
       navigate('/channel/orders', { state: { success: 'Order placed successfully!' } });
@@ -143,11 +143,11 @@ export default function Checkout() {
               <label className={`block p-4 border rounded-xl cursor-pointer transition-colors ${paymentMethod === 'Credit' ? 'border-blue-600 bg-blue-50/50' : 'border-gray-200 hover:border-blue-300'}`}>
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
-                    <input 
-                      type="radio" 
-                      name="paymentMethod" 
-                      value="Credit" 
-                      checked={paymentMethod === 'Credit'} 
+                    <input
+                      type="radio"
+                      name="paymentMethod"
+                      value="Credit"
+                      checked={paymentMethod === 'Credit'}
                       onChange={() => setPaymentMethod('Credit')}
                       className="w-4 h-4 text-blue-600"
                     />
@@ -166,11 +166,11 @@ export default function Checkout() {
               <label className={`block p-4 border rounded-xl cursor-pointer transition-colors ${paymentMethod === 'Advance Payment' ? 'border-blue-600 bg-blue-50/50' : 'border-gray-200 hover:border-blue-300'}`}>
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
-                    <input 
-                      type="radio" 
-                      name="paymentMethod" 
-                      value="Advance Payment" 
-                      checked={paymentMethod === 'Advance Payment'} 
+                    <input
+                      type="radio"
+                      name="paymentMethod"
+                      value="Advance Payment"
+                      checked={paymentMethod === 'Advance Payment'}
                       onChange={() => setPaymentMethod('Advance Payment')}
                       className="w-4 h-4 text-blue-600"
                     />
@@ -187,13 +187,13 @@ export default function Checkout() {
             {paymentMethod === 'Advance Payment' && (
               <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} className="mt-4 p-4 border-t border-gray-100">
                 <div className="flex gap-4 mb-6">
-                  <button 
+                  <button
                     onClick={() => setAdvanceSubMethod('NEFT')}
                     className={`flex-1 py-2 px-4 rounded-lg border text-sm font-medium transition-colors ${advanceSubMethod === 'NEFT' ? 'bg-slate-900 text-white border-slate-900' : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-50'}`}
                   >
                     NEFT / RTGS
                   </button>
-                  <button 
+                  <button
                     onClick={() => setAdvanceSubMethod('UPI')}
                     className={`flex-1 py-2 px-4 rounded-lg border text-sm font-medium transition-colors ${advanceSubMethod === 'UPI' ? 'bg-slate-900 text-white border-slate-900' : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-50'}`}
                   >
@@ -203,9 +203,9 @@ export default function Checkout() {
 
                 {advanceSubMethod === 'NEFT' && (
                   <div className="mb-6 p-4 bg-gray-50 rounded-lg border border-gray-200">
-                    <h4 className="font-semibold text-gray-900 mb-2 flex items-center gap-2"><Building2 className="w-4 h-4"/> Bank Details</h4>
+                    <h4 className="font-semibold text-gray-900 mb-2 flex items-center gap-2"><Building2 className="w-4 h-4" /> Bank Details</h4>
                     <div className="text-sm text-gray-600 space-y-1">
-                      <p><span className="font-medium text-gray-900">Account Name:</span> {companySettings?.bankDetails?.accountHolderName || 'Techhansa Solutions Pvt Ltd'}</p>
+                      <p><span className="font-medium text-gray-900">Account Name:</span> {companySettings?.bankDetails?.accountHolderName || 'AK Solutions Solutions Pvt Ltd'}</p>
                       <p><span className="font-medium text-gray-900">Bank Name:</span> {companySettings?.bankDetails?.bankName || 'HDFC Bank'}</p>
                       <p><span className="font-medium text-gray-900">Branch Name:</span> {companySettings?.bankDetails?.branchName || 'N/A'}</p>
                       <p><span className="font-medium text-gray-900">Account Number:</span> {companySettings?.bankDetails?.accountNo || '50200012345678'}</p>
@@ -220,7 +220,7 @@ export default function Checkout() {
                     <div className="w-40 h-40 bg-white border border-gray-300 rounded-xl flex items-center justify-center mb-2">
                       <span className="text-gray-400 text-sm">QR Code Placeholder</span>
                     </div>
-                    <p className="text-sm font-medium text-gray-900">techhansa@hdfcbank</p>
+                    <p className="text-sm font-medium text-gray-900">AK Solutions@hdfcbank</p>
                   </div>
                 )}
 
@@ -264,8 +264,8 @@ export default function Checkout() {
               </div>
             </div>
 
-            <button 
-              onClick={handleSubmit} 
+            <button
+              onClick={handleSubmit}
               disabled={isSubmitting}
               className="w-full flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white py-3 px-4 rounded-xl font-semibold transition-colors disabled:opacity-50"
             >
@@ -273,7 +273,7 @@ export default function Checkout() {
               <ArrowRight className="w-4 h-4" />
             </button>
             <p className="text-xs text-gray-500 text-center mt-3 flex items-center justify-center gap-1">
-              <ShieldCheck className="w-4 h-4 text-emerald-500"/> Secure and encrypted
+              <ShieldCheck className="w-4 h-4 text-emerald-500" /> Secure and encrypted
             </p>
           </div>
         </div>

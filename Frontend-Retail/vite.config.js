@@ -16,4 +16,4 @@ export default defineConfig({
     }
   }
 })
-// Trigger reload
+// Trigger reload with new env variables

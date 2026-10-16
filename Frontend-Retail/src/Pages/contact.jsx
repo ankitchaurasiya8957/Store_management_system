@@ -1,13 +1,13 @@
 import React, { useRef, useState } from 'react';
 import { motion, useMotionValue, AnimatePresence } from 'framer-motion';
-import { 
-  ArrowRight, MapPin, Clock, Phone, Mail, Send, Zap, HeadphonesIcon, 
-  Map, ShieldCheck, Settings, HeartHandshake, ChevronDown, 
+import {
+  ArrowRight, MapPin, Clock, Phone, Mail, Send, Zap, HeadphonesIcon,
+  Map, ShieldCheck, Settings, HeartHandshake, ChevronDown,
   Briefcase, Store, MessageSquare, Loader2
 } from 'lucide-react';
 
 // --- IMAGE IMPORTS ---
-import contactBannerImg from '../assets/contact-banner.jpg'; 
+import contactBannerImg from '../assets/contact-banner.jpg';
 import fastResponseImg from '../assets/fastreponse.avif';
 import expertConsultationImg from '../assets/expertconsulation.avif';
 import nationwideServiceImg from '../assets/nationwideservice.avif';
@@ -34,24 +34,24 @@ const faqs = [
 ];
 
 const bulkServices = [
-  "Bulk Product Quotations", "Corporate Procurement", "Educational Institution Orders", 
+  "Bulk Product Quotations", "Corporate Procurement", "Educational Institution Orders",
   "Government Procurement", "Enterprise Hardware Solutions", "Custom Order Assistance"
 ];
 
 const franchiseSupport = [
-  "Franchise Information", "Investment Guidance", "Territory Availability", 
+  "Franchise Information", "Investment Guidance", "Territory Availability",
   "Business Setup Support", "Marketing Assistance", "Training & Operations"
 ];
 
 const businessTypes = [
-  "Corporate Buyer", "Franchise Inquiry", "Reseller", 
+  "Corporate Buyer", "Franchise Inquiry", "Reseller",
   "Educational Institution", "System Integrator", "Other"
 ];
 
 // --- INTERACTIVE FAQ COMPONENT ---
 const FAQItem = ({ question, answer, hoverColor }) => {
   const [isOpen, setIsOpen] = useState(false);
-  
+
   return (
     <div className={`border border-gray-100 rounded-2xl bg-white shadow-sm overflow-hidden mb-4 transition-all duration-300 hover:shadow-md ${hoverColor}`}>
       <button onClick={() => setIsOpen(!isOpen)} className="w-full flex items-center justify-between p-6 text-left focus:outline-none">
@@ -76,15 +76,15 @@ const FAQItem = ({ question, answer, hoverColor }) => {
 // --- MAIN PAGE COMPONENT ---
 export default function ContactPage() {
   const containerRef = useRef(null);
-  
+
   // Parallax Mouse Tracking for Hero
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
 
   const handleMouseMove = (e) => {
     const { clientX, clientY } = e;
-    const x = (clientX / window.innerWidth - 0.5) * 2; 
-    const y = (clientY / window.innerHeight - 0.5) * 2; 
+    const x = (clientX / window.innerWidth - 0.5) * 2;
+    const y = (clientY / window.innerHeight - 0.5) * 2;
     mouseX.set(x);
     mouseY.set(y);
   };
@@ -93,7 +93,7 @@ export default function ContactPage() {
   const [formData, setFormData] = useState({
     fullName: '',
     companyName: '',
-    email: '',   
+    email: '',
     phone: '',
     businessType: '',
     subject: '',
@@ -116,7 +116,7 @@ export default function ContactPage() {
     setFormStatus({ loading: true, message: '', isError: false });
 
     try {
-      const response = await fetchWithAuth('https://techhansaretail.com/api/contact', {
+      const response = await fetchWithAuth(`${import.meta.env.VITE_API_BASE_URL || ''}/api/contact`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData)
@@ -125,10 +125,10 @@ export default function ContactPage() {
       const data = await response.json();
 
       if (response.ok) {
-        setFormStatus({ 
-          loading: false, 
-          message: 'Thank you! Your message has been sent successfully.', 
-          isError: false 
+        setFormStatus({
+          loading: false,
+          message: 'Thank you! Your message has been sent successfully.',
+          isError: false
         });
         // Clear form after success
         setFormData({ fullName: '', companyName: '', email: '', phone: '', businessType: '', subject: '', message: '' });
@@ -142,7 +142,7 @@ export default function ContactPage() {
 
   return (
     <div ref={containerRef} className="relative min-h-screen text-gray-600 font-sans bg-transparent overflow-hidden selection:bg-[#0d3863]/20 selection:text-[#0d3863]">
-      
+
       <style>{`
         @keyframes scanUpOnce {
           0% { transform: translateY(200px); opacity: 0; }
@@ -186,25 +186,25 @@ export default function ContactPage() {
       {/* --- CONTACT INFO & FORM SECTION --- */}
       <section id="contactform" className="relative z-10 py-16 px-6 lg:px-12 max-w-7xl mx-auto">
         <div className="grid lg:grid-cols-3 gap-8 lg:gap-12">
-         {/* LEFT: Contact Information Card (Fixed Selection Colors) */}
-          <motion.div 
-            initial={{ opacity: 0, x: -30 }} 
-            whileInView={{ opacity: 1, x: 0 }} 
-            viewport={{ once: true }} 
-            transition={{ duration: 0.6 }} 
+          {/* LEFT: Contact Information Card (Fixed Selection Colors) */}
+          <motion.div
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
             className="lg:col-span-1 bg-[#0d3863] rounded-[2.5rem] p-8 lg:p-10 text-white shadow-2xl relative overflow-hidden flex flex-col justify-between selection:bg-white selection:text-[#0d3863]"
           >
             <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3"></div>
             <div className="relative z-10">
               <h3 className="text-3xl font-bold mb-6">Contact Info</h3>
               <div className="space-y-6">
-                
+
                 {/* Registered Office */}
                 <div className="flex items-start gap-4">
                   <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center shrink-0 mt-1"><MapPin className="w-5 h-5 text-blue-300" /></div>
                   <div>
                     <p className="font-bold text-base mb-1 text-white">Registered Office</p>
-                    <p className="text-blue-100/80 leading-relaxed font-light text-xs">Techhansa Retail<br />SHI 8/27 A K-3 Gilat Bazaar<br />Bypass Shivpur Varanasi<br />Uttar Pradesh, India 221002</p>
+                    <p className="text-blue-100/80 leading-relaxed font-light text-xs">AK Solutions Retail<br />SHI 8/27 A K-3 Gilat Bazaar<br />Bypass Shivpur Varanasi<br />Uttar Pradesh, India 221002</p>
                   </div>
                 </div>
 
@@ -246,7 +246,7 @@ export default function ContactPage() {
                   <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center shrink-0"><Mail className="w-5 h-5 text-blue-300" /></div>
                   <div>
                     <p className="font-bold text-base mb-1 text-white">Support</p>
-                    <p className="text-blue-100/80 font-light text-xs break-all">support@techhansaretail.com</p>
+                    <p className="text-blue-100/80 font-light text-xs break-all">support@AK Solutionsretail.com</p>
                   </div>
                 </div>
 
@@ -328,7 +328,7 @@ export default function ContactPage() {
       {/* --- BULK PURCHASE & FRANCHISE SUPPORT CARDS --- */}
       <section className="relative z-10 py-24 px-6 lg:px-12 bg-gray-50/50 border-y border-gray-200/50">
         <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-8 lg:gap-12">
-          
+
           <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.1 }} className="group relative bg-white rounded-[2.5rem] shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-100 overflow-hidden h-[450px] cursor-pointer isolation-isolate">
             <div className="absolute inset-0 flex flex-col items-center justify-center p-10 transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:-translate-y-10 group-hover:opacity-0 bg-white">
               <div className="w-24 h-24 rounded-[2rem] bg-gray-50 border border-gray-100 flex items-center justify-center text-[#0d3863] mb-8"><Briefcase strokeWidth={1.5} className="w-12 h-12" /></div>
@@ -356,7 +356,7 @@ export default function ContactPage() {
             <div className="absolute inset-0 flex flex-col items-center justify-center p-10 transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:-translate-y-10 group-hover:opacity-0 bg-white">
               <div className="w-24 h-24 rounded-[2rem] bg-gray-50 border border-gray-100 flex items-center justify-center text-[#0d3863] mb-8"><Store strokeWidth={1.5} className="w-12 h-12" /></div>
               <h3 className="text-3xl font-bold text-[#0d3863] text-center mb-2">Franchise Support</h3>
-              <p className="text-gray-500 font-medium">Become a Techhansa Retail Partner</p>
+              <p className="text-gray-500 font-medium">Become a AK Solutions Retail Partner</p>
             </div>
             <div className="absolute inset-0 bg-white/95 backdrop-blur-sm rounded-[2.5rem] p-10 flex flex-col justify-center translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] overflow-hidden">
               <div className="absolute inset-0 pointer-events-none rounded-[2.5rem] overflow-hidden">
@@ -378,11 +378,11 @@ export default function ContactPage() {
         </div>
       </section>
 
-      {/* --- WHY CONTACT TECHHANSA RETAIL --- */}
+      {/* --- WHY CONTACT AK Solutions RETAIL --- */}
       <section className="relative z-10 py-24 px-6 lg:px-12">
         <div className="max-w-7xl mx-auto text-center">
           <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-16">
-            <span className="text-gray-600">Why Contact</span> <span className="text-[#0d3863]">Techhansa Retail?</span>
+            <span className="text-gray-600">Why Contact</span> <span className="text-[#0d3863]">AK Solutions Retail?</span>
           </h2>
           <div className="grid grid-cols-2 md:grid-cols-3 gap-6 lg:gap-10">
             {whyContactUs.map((item, i) => (

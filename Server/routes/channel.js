@@ -5,9 +5,7 @@ const ChannelPartner = require('../models/ChannelPartner');
 const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
-const { Resend } = require('resend');
-
-const resend = new Resend(process.env.RESEND_API_KEY);
+const resend = require('../utils/resendClient');
 
 // Ensure uploads directory exists
 const uploadDir = path.join(__dirname, '../uploads/channel');
@@ -138,7 +136,7 @@ router.post('/apply', upload.single('documents'), async (req, res) => {
       }
 
       await resend.emails.send({
-        from: 'Techhansa Notifications <onboarding@resend.dev>',
+        from: 'AK Solutions Notifications <onboarding@resend.dev>',
         to: 'customer.support@techhansha.com',
         subject: 'Notification from Channel Partner Form',
         html: `
@@ -189,7 +187,7 @@ router.post('/apply', upload.single('documents'), async (req, res) => {
 
 const GlobalProduct = require('../models/GlobalProduct');
 
-// Get Techhansa Catalog
+// Get AK Solutions Catalog
 router.get('/catalog/all', async (req, res) => {
   try {
     const catalog = await GlobalProduct.find({});

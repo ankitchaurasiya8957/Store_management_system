@@ -1,12 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const multer = require('multer');
-const { Resend } = require('resend');
-// const pool = require('../db'); 
 const FormSubmission = require('../models/FormSubmission');
-
-// Initialize Resend SDK (uses HTTP port 443, bypassing SMTP blocks)
-const resend = new Resend(process.env.RESEND_API_KEY);
+const resend = require('../utils/resendClient');
 
 // Configure Multer for memory storage (files kept as buffers)
 const upload = multer({

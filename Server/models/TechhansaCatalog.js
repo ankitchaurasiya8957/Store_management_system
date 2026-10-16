@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const techhansaCatalogSchema = new mongoose.Schema({
+const TechhansaCatalogSchema = new mongoose.Schema({
   catalogId: { type: String, required: true, unique: true },
   category: { type: String, required: true },
   name: { type: String, required: true },
@@ -8,4 +8,4 @@ const techhansaCatalogSchema = new mongoose.Schema({
   b2bPrice: { type: Number, required: true }
 }, { timestamps: true });
 
-module.exports = mongoose.model('TechhansaCatalog', techhansaCatalogSchema);
+module.exports = mongoose.model('TechhansaCatalog', TechhansaCatalogSchema);

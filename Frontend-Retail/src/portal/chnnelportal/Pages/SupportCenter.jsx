@@ -13,7 +13,7 @@ export default function SupportCenter() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
-    
+
     try {
       const response = await fetchWithAuth(`${import.meta.env.VITE_API_BASE_URL}/api/contact`, {
         method: 'POST',
@@ -23,7 +23,7 @@ export default function SupportCenter() {
         body: JSON.stringify({
           fullName: user?.name || 'Channel Partner',
           companyName: user?.companyName || 'Channel Partner',
-          email: user?.email || 'partner@techhansa.com',
+          email: user?.email || 'partner@AK Solutions.com',
           phone: user?.phone || 'N/A',
           businessType: 'Channel Partner Support',
           subject: subject,
@@ -62,29 +62,29 @@ export default function SupportCenter() {
             <form onSubmit={handleSubmit} className="space-y-5">
               <div>
                 <label className="block text-sm font-medium text-slate-700 mb-1">Subject</label>
-                <input 
-                  type="text" 
+                <input
+                  type="text"
                   value={subject}
                   onChange={(e) => setSubject(e.target.value)}
-                  placeholder="e.g. Issue with Order #12345" 
+                  placeholder="e.g. Issue with Order #12345"
                   required
                   className="w-full px-4 py-2.5 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none"
                 />
               </div>
               <div>
                 <label className="block text-sm font-medium text-slate-700 mb-1">Message</label>
-                <textarea 
-                  rows="5" 
+                <textarea
+                  rows="5"
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
-                  placeholder="Describe your issue in detail..." 
+                  placeholder="Describe your issue in detail..."
                   required
                   className="w-full px-4 py-2.5 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none resize-none"
                 ></textarea>
               </div>
               <div className="pt-2">
-                <button 
-                  type="submit" 
+                <button
+                  type="submit"
                   disabled={isSubmitting}
                   className="flex items-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-xl font-semibold hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 >
@@ -109,7 +109,7 @@ export default function SupportCenter() {
             <p className="text-sm text-slate-600 mb-3">Available Mon-Fri, 9am - 6pm.</p>
             <a href="tel:+919876543210" className="text-blue-600 font-semibold hover:underline">+91 98765 43210</a>
           </div>
-          
+
           <div className="bg-emerald-50 border border-emerald-100 rounded-2xl p-6">
             <div className="w-10 h-10 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mb-4">
               <Mail className="w-5 h-5" />
